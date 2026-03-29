@@ -1,0 +1,39 @@
+# Secrets
+.env
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# ARC-AGI sessions & recordings
+.sessions/
+recordings/
+*.recording.jsonl
+
+# Logs
+*.log
+logs.log
+
+# Models (large binary)
+models/
+*.gguf
+
+# IDE
+.vscode/
+.idea/
+
+# Lock files (uv)
+uv.lock
+
+# External data (downloaded, not our code)
+code/arc_agi_3_wheels/
+code/environment_files/
+
+# Large files
+*.pdf
+*.whl
