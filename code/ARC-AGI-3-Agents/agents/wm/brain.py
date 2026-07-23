@@ -16,6 +16,7 @@ after a failed certification, the pointed-bug counterexample) and returns a
 
 from __future__ import annotations
 
+import re
 from typing import Optional, Protocol
 
 from .backtest import BacktestReport
@@ -90,8 +91,17 @@ class ClaudeBrain:
         "reproduces every recorded frame EXACTLY (it will be backtested)."
     )
 
-    def __init__(self, model_id: str = "claude-opus-4-8"):
+    def __init__(
+        self,
+        model_id: str = "claude-opus-4-8",
+        *,
+        effort: str = "high",
+        max_tokens: int = 32000,
+    ):
         self.model_id = model_id
+        self.effort = effort
+        self.max_tokens = max_tokens
+        self._client = None  # lazily constructed so offline tests need no SDK
 
     def build_prompt(
         self,
@@ -130,11 +140,75 @@ class ClaudeBrain:
         prev: Optional[WorldModel],
         last_report: Optional[BacktestReport],
     ) -> WorldModel:
-        raise NotImplementedError(
-            "ClaudeBrain.propose needs model access; wire the API call on a host "
-            "with credentials. Use build_prompt() to see the instruction, and "
-            "CallableBrain for offline tests."
+        """Ask Opus to (re)write the world-model code, then exec it into callables.
+
+        Streams the response (per the SDK guidance for large max_tokens) with
+        adaptive thinking. The model returns a single ```python block defining
+        reconstruct/step/render/is_goal; we exec it in a fresh namespace and wrap
+        the callables in a WorldModel.
+        """
+        import anthropic  # lazy: offline tests (CallableBrain) need no SDK
+
+        if self._client is None:
+            self._client = anthropic.Anthropic()
+
+        prompt = self.build_prompt(timeline, prev, last_report)
+        with self._client.messages.stream(
+            model=self.model_id,
+            max_tokens=self.max_tokens,
+            system=self.SYSTEM,
+            thinking={"type": "adaptive"},
+            output_config={"effort": self.effort},
+            messages=[{"role": "user", "content": prompt}],
+        ) as stream:
+            message = stream.get_final_message()
+
+        text = "".join(b.text for b in message.content if b.type == "text")
+        code = _extract_code(text)
+        callables = _exec_world_model(code)
+        return WorldModel(
+            version=(prev.version + 1) if prev else 1,
+            reconstruct=callables["reconstruct"],
+            step=callables["step"],
+            render=callables["render"],
+            is_goal=callables["is_goal"],
+            fingerprint=callables.get("fingerprint")
+            or WorldModel.__dataclass_fields__["fingerprint"].default,
+            notes=text.split("```")[0].strip()[:500],
+            source_code=code,
+            confidence=0.6,
         )
+
+
+def _extract_code(text: str) -> str:
+    """Pull the last ```python fenced block (or the whole text if unfenced)."""
+    fences = re.findall(r"```(?:python)?\s*(.*?)```", text, re.S)
+    if fences:
+        return fences[-1].strip()
+    return text.strip()
+
+
+_REQUIRED = ("reconstruct", "step", "render", "is_goal")
+
+
+def _exec_world_model(code: str) -> dict:
+    """Exec brain-written code in a fresh namespace; return its callables.
+
+    The model authors this code, so it runs on the host that holds the model
+    credentials (the operator's own machine) — not on untrusted input.
+    """
+    ns: dict = {}
+    exec(compile(code, "<world_model>", "exec"), ns)  # noqa: S102 - author-trusted
+    missing = [name for name in _REQUIRED if not callable(ns.get(name))]
+    if missing:
+        raise ValueError(
+            f"world-model code is missing callables: {missing}. "
+            f"Got: {[k for k, v in ns.items() if callable(v)]}"
+        )
+    out = {name: ns[name] for name in _REQUIRED}
+    if callable(ns.get("fingerprint")):
+        out["fingerprint"] = ns["fingerprint"]
+    return out
 
 
 def _render_frame_text(frame, indent: int = 0) -> str:
