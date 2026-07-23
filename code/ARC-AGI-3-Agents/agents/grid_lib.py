@@ -232,6 +232,49 @@ def summarize_state(
             parts.append(f"Diff: {n_changed} cells changed")
 
     parts.append(f"\nObjects:\n{find_objects(grid)}")
-    parts.append(f"\n2D Map:\n{map2d(grid)}")
 
+    # Compact map: sample every 4th row/col for small models, full for API
+    rows = len(grid)
+    cols = len(grid[0]) if grid else 0
+    if rows > 32:
+        # Sampled overview
+        lines = []
+        for r in range(0, rows, 4):
+            chars = "".join(CHAR_MAP.get(grid[r][c], '?') for c in range(0, cols, 2))
+            lines.append(f"R{r:02d} {chars}")
+        parts.append(f"\n2D Map (sampled):\n" + "\n".join(lines))
+    else:
+        parts.append(f"\n2D Map:\n{map2d(grid)}")
+
+    return "\n".join(parts)
+
+
+def summarize_state_full(
+    grid: list[list[int]],
+    prev_grid: Optional[list[list[int]]],
+    frame: FrameData,
+    action_counter: int,
+) -> str:
+    """Full state summary with complete 2D map. For API-based providers."""
+    from arcengine import GameAction
+    parts: list[str] = []
+    parts.append(f"State: {frame.state.name} | Level: {frame.levels_completed} | Step: {action_counter}")
+    if frame.available_actions:
+        avail = [GameAction.from_id(a).name for a in frame.available_actions]
+        parts.append(f"Available: {', '.join(avail)}")
+    energy = detect_energy(grid)
+    if energy:
+        parts.append(f"Energy: {energy[0]}/{energy[1]}")
+    if prev_grid is not None:
+        n_changed = diff_cell_count(prev_grid, grid)
+        if n_changed == 0:
+            parts.append("Diff: NO CHANGE")
+        elif n_changed < 10:
+            parts.append(f"Diff: {compute_diff(prev_grid, grid, max_show=10)}")
+        elif n_changed > 500:
+            parts.append(f"Diff: {n_changed} cells (level transition?)")
+        else:
+            parts.append(f"Diff: {n_changed} cells changed")
+    parts.append(f"\nObjects:\n{find_objects(grid)}")
+    parts.append(f"\n2D Map:\n{map2d(grid)}")
     return "\n".join(parts)

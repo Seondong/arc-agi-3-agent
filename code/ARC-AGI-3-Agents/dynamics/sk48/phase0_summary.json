@@ -1,0 +1,8982 @@
+{
+  "game_id": "sk48-41055498",
+  "game_prefix": "sk48",
+  "grid_shape": [
+    64,
+    64
+  ],
+  "perception": {
+    "background_values": [
+      4,
+      5
+    ],
+    "objects": [
+      {
+        "obj_id": "obj_2_1",
+        "value": 2,
+        "char": "②",
+        "cell_count": 4,
+        "center": [
+          14.5,
+          13.5
+        ],
+        "bbox": [
+          14,
+          15,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_3_2",
+        "value": 3,
+        "char": "·",
+        "cell_count": 8,
+        "center": [
+          17.5,
+          13.5
+        ],
+        "bbox": [
+          16,
+          19,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_8_3",
+        "value": 8,
+        "char": "♥",
+        "cell_count": 16,
+        "center": [
+          20.5,
+          43.5
+        ],
+        "bbox": [
+          19,
+          22,
+          42,
+          45
+        ]
+      },
+      {
+        "obj_id": "obj_2_4",
+        "value": 2,
+        "char": "②",
+        "cell_count": 4,
+        "center": [
+          20.5,
+          13.5
+        ],
+        "bbox": [
+          20,
+          21,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_3_5",
+        "value": 3,
+        "char": "·",
+        "cell_count": 8,
+        "center": [
+          23.5,
+          13.5
+        ],
+        "bbox": [
+          22,
+          25,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_9_6",
+        "value": 9,
+        "char": "◆",
+        "cell_count": 16,
+        "center": [
+          26.5,
+          43.5
+        ],
+        "bbox": [
+          25,
+          28,
+          42,
+          45
+        ]
+      },
+      {
+        "obj_id": "obj_2_7",
+        "value": 2,
+        "char": "②",
+        "cell_count": 4,
+        "center": [
+          26.5,
+          13.5
+        ],
+        "bbox": [
+          26,
+          27,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_3_8",
+        "value": 3,
+        "char": "·",
+        "cell_count": 8,
+        "center": [
+          29.5,
+          13.5
+        ],
+        "bbox": [
+          28,
+          31,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_14_9",
+        "value": 14,
+        "char": "⑭",
+        "cell_count": 16,
+        "center": [
+          32.5,
+          43.5
+        ],
+        "bbox": [
+          31,
+          34,
+          42,
+          45
+        ]
+      },
+      {
+        "obj_id": "obj_2_10",
+        "value": 2,
+        "char": "②",
+        "cell_count": 4,
+        "center": [
+          32.5,
+          13.5
+        ],
+        "bbox": [
+          32,
+          33,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_3_11",
+        "value": 3,
+        "char": "·",
+        "cell_count": 4,
+        "center": [
+          34.5,
+          13.5
+        ],
+        "bbox": [
+          34,
+          35,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_6_12",
+        "value": 6,
+        "char": "♦",
+        "cell_count": 18,
+        "center": [
+          38.5,
+          13.5
+        ],
+        "bbox": [
+          36,
+          41,
+          11,
+          16
+        ]
+      },
+      {
+        "obj_id": "obj_0_13",
+        "value": 0,
+        "char": "○",
+        "cell_count": 12,
+        "center": [
+          38.5,
+          13.5
+        ],
+        "bbox": [
+          37,
+          40,
+          12,
+          15
+        ]
+      },
+      {
+        "obj_id": "obj_6_14",
+        "value": 6,
+        "char": "♦",
+        "cell_count": 4,
+        "center": [
+          38.5,
+          13.5
+        ],
+        "bbox": [
+          38,
+          39,
+          13,
+          14
+        ]
+      },
+      {
+        "obj_id": "obj_1_15",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          38.0,
+          16.0
+        ],
+        "bbox": [
+          38,
+          38,
+          16,
+          16
+        ]
+      },
+      {
+        "obj_id": "obj_2_16",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          38.0,
+          17.0
+        ],
+        "bbox": [
+          38,
+          38,
+          17,
+          17
+        ]
+      },
+      {
+        "obj_id": "obj_1_17",
+        "value": 1,
+        "char": "●",
+        "cell_count": 4,
+        "center": [
+          38.5,
+          18.0
+        ],
+        "bbox": [
+          38,
+          39,
+          17,
+          19
+        ]
+      },
+      {
+        "obj_id": "obj_2_18",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          38.0,
+          20.0
+        ],
+        "bbox": [
+          38,
+          38,
+          20,
+          20
+        ]
+      },
+      {
+        "obj_id": "obj_1_19",
+        "value": 1,
+        "char": "●",
+        "cell_count": 4,
+        "center": [
+          38.5,
+          21.0
+        ],
+        "bbox": [
+          38,
+          39,
+          20,
+          22
+        ]
+      },
+      {
+        "obj_id": "obj_2_20",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          39.0,
+          16.0
+        ],
+        "bbox": [
+          39,
+          39,
+          16,
+          16
+        ]
+      },
+      {
+        "obj_id": "obj_2_21",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          39.0,
+          19.0
+        ],
+        "bbox": [
+          39,
+          39,
+          19,
+          19
+        ]
+      },
+      {
+        "obj_id": "obj_2_22",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          39.0,
+          22.0
+        ],
+        "bbox": [
+          39,
+          39,
+          22,
+          22
+        ]
+      },
+      {
+        "obj_id": "obj_2_23",
+        "value": 2,
+        "char": "②",
+        "cell_count": 64,
+        "center": [
+          53.0,
+          31.5
+        ],
+        "bbox": [
+          53,
+          53,
+          0,
+          63
+        ]
+      },
+      {
+        "obj_id": "obj_6_24",
+        "value": 6,
+        "char": "♦",
+        "cell_count": 18,
+        "center": [
+          58.5,
+          22.5
+        ],
+        "bbox": [
+          56,
+          61,
+          20,
+          25
+        ]
+      },
+      {
+        "obj_id": "obj_0_25",
+        "value": 0,
+        "char": "○",
+        "cell_count": 12,
+        "center": [
+          58.5,
+          22.5
+        ],
+        "bbox": [
+          57,
+          60,
+          21,
+          24
+        ]
+      },
+      {
+        "obj_id": "obj_8_26",
+        "value": 8,
+        "char": "♥",
+        "cell_count": 16,
+        "center": [
+          58.5,
+          28.5
+        ],
+        "bbox": [
+          57,
+          60,
+          27,
+          30
+        ]
+      },
+      {
+        "obj_id": "obj_14_27",
+        "value": 14,
+        "char": "⑭",
+        "cell_count": 16,
+        "center": [
+          58.5,
+          34.5
+        ],
+        "bbox": [
+          57,
+          60,
+          33,
+          36
+        ]
+      },
+      {
+        "obj_id": "obj_9_28",
+        "value": 9,
+        "char": "◆",
+        "cell_count": 16,
+        "center": [
+          58.5,
+          40.5
+        ],
+        "bbox": [
+          57,
+          60,
+          39,
+          42
+        ]
+      },
+      {
+        "obj_id": "obj_6_29",
+        "value": 6,
+        "char": "♦",
+        "cell_count": 4,
+        "center": [
+          58.5,
+          22.5
+        ],
+        "bbox": [
+          58,
+          59,
+          22,
+          23
+        ]
+      },
+      {
+        "obj_id": "obj_1_30",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          58.0,
+          25.0
+        ],
+        "bbox": [
+          58,
+          58,
+          25,
+          25
+        ]
+      },
+      {
+        "obj_id": "obj_2_31",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          58.0,
+          26.0
+        ],
+        "bbox": [
+          58,
+          58,
+          26,
+          26
+        ]
+      },
+      {
+        "obj_id": "obj_1_32",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          58.0,
+          31.0
+        ],
+        "bbox": [
+          58,
+          58,
+          31,
+          31
+        ]
+      },
+      {
+        "obj_id": "obj_2_33",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          58.0,
+          32.0
+        ],
+        "bbox": [
+          58,
+          58,
+          32,
+          32
+        ]
+      },
+      {
+        "obj_id": "obj_1_34",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          58.0,
+          37.0
+        ],
+        "bbox": [
+          58,
+          58,
+          37,
+          37
+        ]
+      },
+      {
+        "obj_id": "obj_2_35",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          58.0,
+          38.0
+        ],
+        "bbox": [
+          58,
+          58,
+          38,
+          38
+        ]
+      },
+      {
+        "obj_id": "obj_1_36",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          58.0,
+          43.0
+        ],
+        "bbox": [
+          58,
+          58,
+          43,
+          43
+        ]
+      },
+      {
+        "obj_id": "obj_2_37",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          59.0,
+          25.0
+        ],
+        "bbox": [
+          59,
+          59,
+          25,
+          25
+        ]
+      },
+      {
+        "obj_id": "obj_1_38",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          59.0,
+          26.0
+        ],
+        "bbox": [
+          59,
+          59,
+          26,
+          26
+        ]
+      },
+      {
+        "obj_id": "obj_2_39",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          59.0,
+          31.0
+        ],
+        "bbox": [
+          59,
+          59,
+          31,
+          31
+        ]
+      },
+      {
+        "obj_id": "obj_1_40",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          59.0,
+          32.0
+        ],
+        "bbox": [
+          59,
+          59,
+          32,
+          32
+        ]
+      },
+      {
+        "obj_id": "obj_2_41",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          59.0,
+          37.0
+        ],
+        "bbox": [
+          59,
+          59,
+          37,
+          37
+        ]
+      },
+      {
+        "obj_id": "obj_1_42",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          59.0,
+          38.0
+        ],
+        "bbox": [
+          59,
+          59,
+          38,
+          38
+        ]
+      },
+      {
+        "obj_id": "obj_2_43",
+        "value": 2,
+        "char": "②",
+        "cell_count": 1,
+        "center": [
+          59.0,
+          43.0
+        ],
+        "bbox": [
+          59,
+          59,
+          43,
+          43
+        ]
+      }
+    ],
+    "transitions": [],
+    "relations": [
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_3_2"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ADJACENT",
+        "object": "obj_3_2"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_8_3"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_8_3"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_4"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_3_5"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_1",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_8_3"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_4"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ADJACENT",
+        "object": "obj_2_4"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_3_5"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_2",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_4"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_3_5"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_8_3",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_3_5"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ADJACENT",
+        "object": "obj_3_5"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_4",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_9_6"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ADJACENT",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_5",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_7"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_9_6",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ADJACENT",
+        "object": "obj_3_8"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_7",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_14_9"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ADJACENT",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_8",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_10"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_14_9",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ADJACENT",
+        "object": "obj_3_11"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_10",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ADJACENT",
+        "object": "obj_6_12"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ADJACENT",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_3_11",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "INSIDE",
+        "object": "obj_0_13"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "INSIDE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "INSIDE",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ADJACENT",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ADJACENT",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "INSIDE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_6_12",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "INSIDE",
+        "object": "obj_6_14"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ADJACENT",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ADJACENT",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ADJACENT",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ADJACENT",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_0_13",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ADJACENT",
+        "object": "obj_1_15"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ADJACENT",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_6_14",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ADJACENT",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ADJACENT",
+        "object": "obj_1_17"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ADJACENT",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_15",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "INSIDE",
+        "object": "obj_2_16"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ADJACENT",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ADJACENT",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_16",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ADJACENT",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ADJACENT",
+        "object": "obj_1_19"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ADJACENT",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "INSIDE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_17",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "INSIDE",
+        "object": "obj_2_18"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ADJACENT",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ADJACENT",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_18",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_20"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ADJACENT",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "INSIDE",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_19",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_21"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_20",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_22"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_21",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_23"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_22",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_6_24"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_23",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "INSIDE",
+        "object": "obj_0_25"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "ADJACENT",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "INSIDE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "INSIDE",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "ADJACENT",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "INSIDE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "ADJACENT",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_6_24",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_8_26"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "INSIDE",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "ADJACENT",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "ADJACENT",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "ADJACENT",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "ADJACENT",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_0_25",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_14_27"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "ADJACENT",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_8_26",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "LEFT_OF",
+        "object": "obj_9_28"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "ADJACENT",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_14_27",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_6_29"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "ADJACENT",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "ADJACENT",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "ADJACENT",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "ADJACENT",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "ADJACENT",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_9_28",
+        "relation": "ADJACENT",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "ADJACENT",
+        "object": "obj_1_30"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "ADJACENT",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_6_29",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ADJACENT",
+        "object": "obj_2_31"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ADJACENT",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ADJACENT",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_30",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_1_32"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ADJACENT",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ADJACENT",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_31",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ADJACENT",
+        "object": "obj_2_33"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ADJACENT",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ADJACENT",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_32",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "LEFT_OF",
+        "object": "obj_1_34"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ADJACENT",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ADJACENT",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_33",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "LEFT_OF",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ADJACENT",
+        "object": "obj_2_35"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ADJACENT",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ADJACENT",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_34",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "LEFT_OF",
+        "object": "obj_1_36"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ADJACENT",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ADJACENT",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_35",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ABOVE",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_37"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ABOVE",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ABOVE",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ABOVE",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ABOVE",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "RIGHT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ABOVE",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ABOVE",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_36",
+        "relation": "ADJACENT",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_37",
+        "relation": "LEFT_OF",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_37",
+        "relation": "ADJACENT",
+        "object": "obj_1_38"
+      },
+      {
+        "subject": "obj_2_37",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_2_37",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_37",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_37",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_37",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_38",
+        "relation": "LEFT_OF",
+        "object": "obj_2_39"
+      },
+      {
+        "subject": "obj_1_38",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_1_38",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_38",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_38",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_39",
+        "relation": "LEFT_OF",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_39",
+        "relation": "ADJACENT",
+        "object": "obj_1_40"
+      },
+      {
+        "subject": "obj_2_39",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_2_39",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_39",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_40",
+        "relation": "LEFT_OF",
+        "object": "obj_2_41"
+      },
+      {
+        "subject": "obj_1_40",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_1_40",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_2_41",
+        "relation": "LEFT_OF",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_41",
+        "relation": "ADJACENT",
+        "object": "obj_1_42"
+      },
+      {
+        "subject": "obj_2_41",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      },
+      {
+        "subject": "obj_1_42",
+        "relation": "LEFT_OF",
+        "object": "obj_2_43"
+      }
+    ],
+    "affordances": {
+      "obj_2_1": 0.0,
+      "obj_3_2": 0.3,
+      "obj_8_3": 0.3,
+      "obj_2_4": 0.0,
+      "obj_3_5": 0.3,
+      "obj_9_6": 0.3,
+      "obj_2_7": 0.0,
+      "obj_3_8": 0.3,
+      "obj_14_9": 0.3,
+      "obj_2_10": 0.0,
+      "obj_3_11": 0.3,
+      "obj_6_12": 0.3,
+      "obj_0_13": 0.3,
+      "obj_6_14": 0.3,
+      "obj_1_15": 0.3,
+      "obj_2_16": 0.0,
+      "obj_1_17": 0.3,
+      "obj_2_18": 0.0,
+      "obj_1_19": 0.3,
+      "obj_2_20": 0.0,
+      "obj_2_21": 0.0,
+      "obj_2_22": 0.0,
+      "obj_2_23": 0.0,
+      "obj_6_24": 0.3,
+      "obj_0_25": 0.3,
+      "obj_8_26": 0.3,
+      "obj_14_27": 0.3,
+      "obj_9_28": 0.3,
+      "obj_6_29": 0.3,
+      "obj_1_30": 0.3,
+      "obj_2_31": 0.0,
+      "obj_1_32": 0.3,
+      "obj_2_33": 0.0,
+      "obj_1_34": 0.3,
+      "obj_2_35": 0.0,
+      "obj_1_36": 0.3,
+      "obj_2_37": 0.0,
+      "obj_1_38": 0.3,
+      "obj_2_39": 0.0,
+      "obj_1_40": 0.3,
+      "obj_2_41": 0.0,
+      "obj_1_42": 0.3,
+      "obj_2_43": 0.0
+    },
+    "goal_surfaces": [
+      {
+        "kind": "energy_bar",
+        "bbox": [
+          63,
+          63,
+          0,
+          63
+        ],
+        "detail": "remaining=44/64"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          40,
+          12,
+          15
+        ],
+        "detail": "border_value=0"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          60,
+          21,
+          24
+        ],
+        "detail": "border_value=0"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          19,
+          22,
+          42,
+          45
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          19,
+          22,
+          43,
+          45
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          20,
+          22,
+          42,
+          45
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          20,
+          22,
+          43,
+          45
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          60,
+          27,
+          30
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          60,
+          28,
+          30
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          60,
+          27,
+          30
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          60,
+          28,
+          30
+        ],
+        "detail": "border_value=8"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          28,
+          42,
+          45
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          28,
+          43,
+          45
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          28,
+          42,
+          45
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          28,
+          43,
+          45
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          60,
+          39,
+          42
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          60,
+          40,
+          42
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          60,
+          39,
+          42
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          60,
+          40,
+          42
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          34,
+          42,
+          45
+        ],
+        "detail": "border_value=14"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          34,
+          43,
+          45
+        ],
+        "detail": "border_value=14"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          34,
+          42,
+          45
+        ],
+        "detail": "border_value=14"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          34,
+          43,
+          45
+        ],
+        "detail": "border_value=14"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          60,
+          33,
+          36
+        ],
+        "detail": "border_value=14"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          60,
+          34,
+          36
+        ],
+        "detail": "border_value=14"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          60,
+          33,
+          36
+        ],
+        "detail": "border_value=14"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          60,
+          34,
+          36
+        ],
+        "detail": "border_value=14"
+      }
+    ],
+    "object_count": 43
+  },
+  "motifs": [
+    {
+      "name": "click-semantics",
+      "confidence": 0.28,
+      "evidence": [
+        "ACTION6 suggests coordinate interaction."
+      ]
+    },
+    {
+      "name": "navigation",
+      "confidence": 0.22,
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "name": "sorting",
+      "confidence": 0.2,
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    },
+    {
+      "name": "coordinate-selection",
+      "confidence": 0.14,
+      "evidence": [
+        "Pointer-like semantics are plausible."
+      ]
+    },
+    {
+      "name": "pattern-matching",
+      "confidence": 0.12,
+      "evidence": [
+        "Repeated object families may map to reference targets."
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1",
+      "summary": "Scene may follow a click-semantics motif.",
+      "confidence": 0.224,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with click-semantics."
+      ],
+      "evidence": [
+        "ACTION6 suggests coordinate interaction."
+      ]
+    },
+    {
+      "hypothesis_id": "H2",
+      "summary": "Scene may follow a navigation motif.",
+      "confidence": 0.176,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with navigation."
+      ],
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "hypothesis_id": "H3",
+      "summary": "Scene may follow a sorting motif.",
+      "confidence": 0.16,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with sorting."
+      ],
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    }
+  ],
+  "goal_beliefs": [
+    {
+      "summary": "Progress may require navigating a controllable object through space.",
+      "confidence": 0.35,
+      "evidence": [
+        "Directional actions are available."
+      ]
+    },
+    {
+      "summary": "Progress may depend on selecting coordinates or targeted regions.",
+      "confidence": 0.4,
+      "evidence": [
+        "ACTION6 is available."
+      ]
+    }
+  ],
+  "action_semantics": {
+    "ACTION1": [
+      "Possible upward move",
+      "May test vertical mobility"
+    ],
+    "ACTION2": [
+      "Possible downward move",
+      "May test vertical symmetry"
+    ],
+    "ACTION3": [
+      "Possible leftward move",
+      "May retract or reverse state"
+    ],
+    "ACTION4": [
+      "Possible rightward move",
+      "May extend or advance state"
+    ],
+    "ACTION6": [
+      "Coordinate action",
+      "May select an object or region"
+    ],
+    "ACTION7": [
+      "Undo or backtrack action"
+    ]
+  },
+  "probe_suggestion": {
+    "action": "ACTION1",
+    "rationale": "ACTION1 has not been tested yet in this episode bootstrap.",
+    "expected_information_gain": 0.75,
+    "expected_outcome": "Clarify the semantics of ACTION1."
+  }
+}

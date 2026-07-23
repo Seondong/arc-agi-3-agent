@@ -108,7 +108,7 @@ class Swarm:
         # Provide web link to scorecard
         if card_id:
             if self._arc.operation_mode == OperationMode.ONLINE:
-                scorecard_url = f"{self.ROOT_URL}/scorecards/{card_id}"
+                scorecard_url = f"https://arcprize.org/scorecards/{card_id}"
                 logger.info(f"View your scorecard online: {scorecard_url}")
             else:
                 logger.info(

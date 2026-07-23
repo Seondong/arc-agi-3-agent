@@ -1,0 +1,12 @@
+{
+  "episode_id": "sk48-41055498-71d41ff5e1",
+  "game_id": "sk48-41055498",
+  "created_at": "2026-03-30T14:42:46.053920+00:00",
+  "tags": [
+    "phase0",
+    "bootstrap"
+  ],
+  "notes": [
+    "Created by run_phase0.py"
+  ]
+}

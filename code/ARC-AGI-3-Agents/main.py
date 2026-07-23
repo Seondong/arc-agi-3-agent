@@ -60,7 +60,7 @@ def cleanup(
 
         # Provide web link to scorecard
         if card_id:
-            scorecard_url = f"{ROOT_URL}/scorecards/{card_id}"
+            scorecard_url = f"https://arcprize.org/scorecards/{card_id}"
             logger.info(f"View your scorecard online: {scorecard_url}")
 
     sys.exit(0)

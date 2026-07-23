@@ -1,0 +1,8133 @@
+{
+  "game_id": "ls20-9607627b",
+  "game_prefix": "ls20",
+  "grid_shape": [
+    64,
+    64
+  ],
+  "perception": {
+    "background_values": [
+      3,
+      4
+    ],
+    "objects": [
+      {
+        "obj_id": "obj_5_1",
+        "value": 5,
+        "char": "▓",
+        "cell_count": 208,
+        "center": [
+          25.5,
+          1.5
+        ],
+        "bbox": [
+          0,
+          51,
+          0,
+          3
+        ]
+      },
+      {
+        "obj_id": "obj_5_2",
+        "value": 5,
+        "char": "▓",
+        "cell_count": 43,
+        "center": [
+          12.0,
+          36.0
+        ],
+        "bbox": [
+          9,
+          15,
+          33,
+          39
+        ]
+      },
+      {
+        "obj_id": "obj_9_3",
+        "value": 9,
+        "char": "◆",
+        "cell_count": 5,
+        "center": [
+          12.0,
+          36.0
+        ],
+        "bbox": [
+          11,
+          13,
+          35,
+          37
+        ]
+      },
+      {
+        "obj_id": "obj_9_4",
+        "value": 9,
+        "char": "◆",
+        "cell_count": 1,
+        "center": [
+          13.0,
+          35.0
+        ],
+        "bbox": [
+          13,
+          13,
+          35,
+          35
+        ]
+      },
+      {
+        "obj_id": "obj_0_5",
+        "value": 0,
+        "char": "○",
+        "cell_count": 3,
+        "center": [
+          31.5,
+          21.5
+        ],
+        "bbox": [
+          31,
+          32,
+          21,
+          22
+        ]
+      },
+      {
+        "obj_id": "obj_1_6",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          32.0,
+          20.0
+        ],
+        "bbox": [
+          32,
+          32,
+          20,
+          20
+        ]
+      },
+      {
+        "obj_id": "obj_1_7",
+        "value": 1,
+        "char": "●",
+        "cell_count": 1,
+        "center": [
+          33.0,
+          21.0
+        ],
+        "bbox": [
+          33,
+          33,
+          21,
+          21
+        ]
+      },
+      {
+        "obj_id": "obj_12_8",
+        "value": 12,
+        "char": "▲",
+        "cell_count": 10,
+        "center": [
+          45.5,
+          36.0
+        ],
+        "bbox": [
+          45,
+          46,
+          34,
+          38
+        ]
+      },
+      {
+        "obj_id": "obj_9_9",
+        "value": 9,
+        "char": "◆",
+        "cell_count": 15,
+        "center": [
+          48.0,
+          36.0
+        ],
+        "bbox": [
+          47,
+          49,
+          34,
+          38
+        ]
+      },
+      {
+        "obj_id": "obj_5_10",
+        "value": 5,
+        "char": "▓",
+        "cell_count": 76,
+        "center": [
+          57.5,
+          5.5
+        ],
+        "bbox": [
+          53,
+          62,
+          1,
+          10
+        ]
+      },
+      {
+        "obj_id": "obj_9_11",
+        "value": 9,
+        "char": "◆",
+        "cell_count": 20,
+        "center": [
+          57.5,
+          5.5
+        ],
+        "bbox": [
+          55,
+          60,
+          3,
+          8
+        ]
+      },
+      {
+        "obj_id": "obj_9_12",
+        "value": 9,
+        "char": "◆",
+        "cell_count": 4,
+        "center": [
+          59.5,
+          7.5
+        ],
+        "bbox": [
+          59,
+          60,
+          7,
+          8
+        ]
+      },
+      {
+        "obj_id": "obj_5_13",
+        "value": 5,
+        "char": "▓",
+        "cell_count": 112,
+        "center": [
+          61.5,
+          37.5
+        ],
+        "bbox": [
+          60,
+          63,
+          12,
+          63
+        ]
+      },
+      {
+        "obj_id": "obj_11_14",
+        "value": 11,
+        "char": "★",
+        "cell_count": 84,
+        "center": [
+          61.5,
+          33.5
+        ],
+        "bbox": [
+          61,
+          62,
+          13,
+          54
+        ]
+      },
+      {
+        "obj_id": "obj_8_15",
+        "value": 8,
+        "char": "♥",
+        "cell_count": 4,
+        "center": [
+          61.5,
+          56.5
+        ],
+        "bbox": [
+          61,
+          62,
+          56,
+          57
+        ]
+      },
+      {
+        "obj_id": "obj_8_16",
+        "value": 8,
+        "char": "♥",
+        "cell_count": 4,
+        "center": [
+          61.5,
+          59.5
+        ],
+        "bbox": [
+          61,
+          62,
+          59,
+          60
+        ]
+      },
+      {
+        "obj_id": "obj_8_17",
+        "value": 8,
+        "char": "♥",
+        "cell_count": 4,
+        "center": [
+          61.5,
+          62.5
+        ],
+        "bbox": [
+          61,
+          62,
+          62,
+          63
+        ]
+      }
+    ],
+    "transitions": [],
+    "relations": [
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_5_2"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_9_3"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_9_4"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_0_5"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ADJACENT",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_5_1",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "INSIDE",
+        "object": "obj_9_3"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "INSIDE",
+        "object": "obj_9_4"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_0_5"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_5"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_5_2",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "INSIDE",
+        "object": "obj_9_4"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_0_5"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_5"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_3",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_0_5"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "RIGHT_OF",
+        "object": "obj_0_5"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_4",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "RIGHT_OF",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ADJACENT",
+        "object": "obj_1_6"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ADJACENT",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "LEFT_OF",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "LEFT_OF",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_0_5",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "LEFT_OF",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ADJACENT",
+        "object": "obj_1_7"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "LEFT_OF",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "LEFT_OF",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_1_6",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "LEFT_OF",
+        "object": "obj_12_8"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "LEFT_OF",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_1_7",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ADJACENT",
+        "object": "obj_9_9"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_12_8",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_5_10"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "RIGHT_OF",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_9",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "INSIDE",
+        "object": "obj_9_11"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "INSIDE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "LEFT_OF",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "ADJACENT",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "LEFT_OF",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_5_10",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "INSIDE",
+        "object": "obj_9_12"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "LEFT_OF",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "LEFT_OF",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_11",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "LEFT_OF",
+        "object": "obj_5_13"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "ABOVE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "LEFT_OF",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "ABOVE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "ABOVE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "ABOVE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_9_12",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_5_13",
+        "relation": "INSIDE",
+        "object": "obj_11_14"
+      },
+      {
+        "subject": "obj_5_13",
+        "relation": "INSIDE",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_5_13",
+        "relation": "INSIDE",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_5_13",
+        "relation": "INSIDE",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_11_14",
+        "relation": "LEFT_OF",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_11_14",
+        "relation": "ADJACENT",
+        "object": "obj_8_15"
+      },
+      {
+        "subject": "obj_11_14",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_11_14",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_8_15",
+        "relation": "LEFT_OF",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_8_15",
+        "relation": "ADJACENT",
+        "object": "obj_8_16"
+      },
+      {
+        "subject": "obj_8_15",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_8_16",
+        "relation": "LEFT_OF",
+        "object": "obj_8_17"
+      },
+      {
+        "subject": "obj_8_16",
+        "relation": "ADJACENT",
+        "object": "obj_8_17"
+      }
+    ],
+    "affordances": {
+      "obj_5_1": 0.0,
+      "obj_5_2": 0.0,
+      "obj_9_3": 0.3,
+      "obj_9_4": 0.3,
+      "obj_0_5": 0.3,
+      "obj_1_6": 0.3,
+      "obj_1_7": 0.3,
+      "obj_12_8": 0.3,
+      "obj_9_9": 0.3,
+      "obj_5_10": 0.0,
+      "obj_9_11": 0.3,
+      "obj_9_12": 0.3,
+      "obj_5_13": 0.0,
+      "obj_11_14": 0.0,
+      "obj_8_15": 0.3,
+      "obj_8_16": 0.3,
+      "obj_8_17": 0.3
+    },
+    "goal_surfaces": [
+      {
+        "kind": "energy_bar",
+        "bbox": [
+          63,
+          63,
+          0,
+          63
+        ],
+        "detail": "remaining=52/64"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          34,
+          38
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          35,
+          38
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          36,
+          38
+        ],
+        "detail": "border_value=9"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          8,
+          16,
+          32,
+          40
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          17,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          17,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          17,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          18,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          18,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          18,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          19,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          19,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          19,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          20,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          20,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          20,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          21,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          21,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          21,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          22,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          22,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          22,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          23,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          23,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          23,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          24,
+          44,
+          34,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          24,
+          44,
+          35,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          24,
+          44,
+          36,
+          38
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          29,
+          29,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          29,
+          30,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          29,
+          31,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          29,
+          32,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          29,
+          33,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          29,
+          29,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          29,
+          30,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          29,
+          31,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          29,
+          32,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          29,
+          33,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          29,
+          29,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          29,
+          30,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          29,
+          31,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          29,
+          32,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          29,
+          33,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          14,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          15,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          16,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          17,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          18,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          39,
+          14,
+          19
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          39,
+          15,
+          19
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          39,
+          16,
+          19
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          39,
+          17,
+          19
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          14,
+          20
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          15,
+          20
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          16,
+          20
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          17,
+          20
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          18,
+          20
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          14,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          15,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          16,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          17,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          18,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          14,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          15,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          16,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          17,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          18,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          14,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          15,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          16,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          17,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          18,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          14,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          15,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          16,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          17,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          18,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          24,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          25,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          39,
+          26,
+          28
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          19,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          20,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          21,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          19,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          20,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          21,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          19,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          20,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          21,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          44,
+          34,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          44,
+          35,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          44,
+          36,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          44,
+          37,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          44,
+          38,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          19,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          20,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          21,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          19,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          20,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          21,
+          23
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          19,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          20,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          21,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          22,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          23,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          24,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          25,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          26,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          27,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          28,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          29,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          30,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          31,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          19,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          20,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          21,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          22,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          23,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          24,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          25,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          26,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          27,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          28,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          29,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          30,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          31,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          19,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          20,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          21,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          22,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          23,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          24,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          25,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          26,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          27,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          28,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          29,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          30,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          31,
+          33
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          39,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          40,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          41,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          42,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          43,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          44,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          45,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          46,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          47,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          48,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          49,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          50,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          49,
+          51,
+          53
+        ],
+        "detail": "border_value=3"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          0,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          0,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          1,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          1,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          2,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          2,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          3,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          3,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          4,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          4,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          5,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          5,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          6,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          6,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          7,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          7,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          8,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          8,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          9,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          9,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          9,
+          15,
+          33,
+          39
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          9,
+          15,
+          34,
+          39
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          10,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          10,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          10,
+          15,
+          33,
+          39
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          10,
+          15,
+          34,
+          39
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          11,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          11,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          12,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          12,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          12,
+          15,
+          33,
+          36
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          12,
+          15,
+          34,
+          36
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          13,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          13,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          14,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          14,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          15,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          15,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          16,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          16,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          17,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          17,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          18,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          18,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          19,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          19,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          20,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          20,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          21,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          21,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          22,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          22,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          23,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          23,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          24,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          24,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          25,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          26,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          27,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          28,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          29,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          30,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          31,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          32,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          33,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          34,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          35,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          36,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          37,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          38,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          39,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          40,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          41,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          42,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          43,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          44,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          45,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          46,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          47,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          48,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          48,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          49,
+          51,
+          0,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          49,
+          51,
+          1,
+          3
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          53,
+          62,
+          1,
+          10
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          53,
+          62,
+          2,
+          10
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          54,
+          62,
+          1,
+          10
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          54,
+          62,
+          2,
+          10
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          62,
+          5,
+          10
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          57,
+          62,
+          6,
+          10
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          62,
+          5,
+          10
+        ],
+        "detail": "border_value=5"
+      },
+      {
+        "kind": "reference_box",
+        "bbox": [
+          58,
+          62,
+          6,
+          10
+        ],
+        "detail": "border_value=5"
+      }
+    ],
+    "object_count": 17
+  },
+  "motifs": [
+    {
+      "name": "navigation",
+      "confidence": 0.22,
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "name": "sorting",
+      "confidence": 0.2,
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    },
+    {
+      "name": "reference-matching",
+      "confidence": 0.15,
+      "evidence": [
+        "Scene contains both upper and lower salient structures."
+      ]
+    },
+    {
+      "name": "pattern-matching",
+      "confidence": 0.12,
+      "evidence": [
+        "Repeated object families may map to reference targets."
+      ]
+    },
+    {
+      "name": "track-building",
+      "confidence": 0.12,
+      "evidence": [
+        "Long thin objects suggest rails, trails, or bars."
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1",
+      "summary": "Scene may follow a navigation motif.",
+      "confidence": 0.176,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with navigation."
+      ],
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "hypothesis_id": "H2",
+      "summary": "Scene may follow a sorting motif.",
+      "confidence": 0.16,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with sorting."
+      ],
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    },
+    {
+      "hypothesis_id": "H3",
+      "summary": "Scene may follow a reference-matching motif.",
+      "confidence": 0.12,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with reference-matching."
+      ],
+      "evidence": [
+        "Scene contains both upper and lower salient structures."
+      ]
+    }
+  ],
+  "goal_beliefs": [
+    {
+      "summary": "A reference-like region may need to be matched or reached.",
+      "confidence": 0.45,
+      "evidence": [
+        "Salient objects exist in both top and bottom bands."
+      ]
+    },
+    {
+      "summary": "Progress may require navigating a controllable object through space.",
+      "confidence": 0.35,
+      "evidence": [
+        "Directional actions are available."
+      ]
+    }
+  ],
+  "action_semantics": {
+    "ACTION1": [
+      "Possible upward move",
+      "May test vertical mobility"
+    ],
+    "ACTION2": [
+      "Possible downward move",
+      "May test vertical symmetry"
+    ],
+    "ACTION3": [
+      "Possible leftward move",
+      "May retract or reverse state"
+    ],
+    "ACTION4": [
+      "Possible rightward move",
+      "May extend or advance state"
+    ]
+  },
+  "probe_suggestion": {
+    "action": "ACTION1",
+    "rationale": "ACTION1 has not been tested yet in this episode bootstrap.",
+    "expected_information_gain": 0.75,
+    "expected_outcome": "Clarify the semantics of ACTION1."
+  }
+}

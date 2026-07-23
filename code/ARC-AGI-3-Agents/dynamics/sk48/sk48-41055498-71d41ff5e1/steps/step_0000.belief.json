@@ -1,0 +1,126 @@
+{
+  "episode_id": "sk48-phase0",
+  "game_id": "sk48-41055498",
+  "step_index": 0,
+  "mode": "epistemic",
+  "top_motifs": [
+    {
+      "name": "click-semantics",
+      "confidence": 0.28,
+      "evidence": [
+        "ACTION6 suggests coordinate interaction."
+      ]
+    },
+    {
+      "name": "navigation",
+      "confidence": 0.22,
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "name": "sorting",
+      "confidence": 0.2,
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    },
+    {
+      "name": "coordinate-selection",
+      "confidence": 0.14,
+      "evidence": [
+        "Pointer-like semantics are plausible."
+      ]
+    },
+    {
+      "name": "pattern-matching",
+      "confidence": 0.12,
+      "evidence": [
+        "Repeated object families may map to reference targets."
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1",
+      "summary": "Scene may follow a click-semantics motif.",
+      "confidence": 0.224,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with click-semantics."
+      ],
+      "evidence": [
+        "ACTION6 suggests coordinate interaction."
+      ]
+    },
+    {
+      "hypothesis_id": "H2",
+      "summary": "Scene may follow a navigation motif.",
+      "confidence": 0.176,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with navigation."
+      ],
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "hypothesis_id": "H3",
+      "summary": "Scene may follow a sorting motif.",
+      "confidence": 0.16,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with sorting."
+      ],
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    }
+  ],
+  "goal_beliefs": [
+    {
+      "summary": "Progress may require navigating a controllable object through space.",
+      "confidence": 0.35,
+      "evidence": [
+        "Directional actions are available."
+      ]
+    },
+    {
+      "summary": "Progress may depend on selecting coordinates or targeted regions.",
+      "confidence": 0.4,
+      "evidence": [
+        "ACTION6 is available."
+      ]
+    }
+  ],
+  "action_semantics": {
+    "ACTION1": [
+      "Possible upward move",
+      "May test vertical mobility"
+    ],
+    "ACTION2": [
+      "Possible downward move",
+      "May test vertical symmetry"
+    ],
+    "ACTION3": [
+      "Possible leftward move",
+      "May retract or reverse state"
+    ],
+    "ACTION4": [
+      "Possible rightward move",
+      "May extend or advance state"
+    ],
+    "ACTION6": [
+      "Coordinate action",
+      "May select an object or region"
+    ],
+    "ACTION7": [
+      "Undo or backtrack action"
+    ]
+  },
+  "notes": [
+    "Bootstrap ledger enriched by heuristic Theorist/Skeptic pass.",
+    "Observation contains 43 foreground objects."
+  ]
+}

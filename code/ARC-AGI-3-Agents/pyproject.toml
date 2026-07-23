@@ -8,6 +8,7 @@ dependencies = [
     "anthropic>=0.52.0",
     "arc-agi>=0.9.1",
     "dotenv>=0.9.9",
+    "ipykernel>=7.2.0",
     "langchain[openai]>=0.3.27",
     "langgraph>=0.6.3",
     "langgraph-checkpoint-sqlite>=2.0.11",
@@ -35,6 +36,14 @@ agentops = [
 ]
 local-llm = [
     "llama-cpp-python>=0.3.0",
+]
+qwen = [
+    "transformers>=5.0.0",
+    "accelerate>=1.0.0",
+    "torch>=2.1.0",
+    "peft>=0.17.0",
+    "datasets>=4.0.0",
+    "safetensors>=0.5.0",
 ]
 
 [tool.mypy]

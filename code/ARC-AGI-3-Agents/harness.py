@@ -15,6 +15,7 @@ Replays all actions from scratch (offline mode, ~2000 FPS) and prints:
 import argparse
 import json
 import sys
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -23,6 +24,8 @@ load_dotenv(dotenv_path=".env", override=True)
 
 from arc_agi import Arcade, OperationMode
 from arcengine import GameAction, GameState
+
+from agents.agentic.schemas import ObjectSummary, ObservationSnapshot
 
 
 # ---------------------------------------------------------------------------
@@ -164,6 +167,80 @@ def find_objects(grid: list[list[int]], bg_values={3, 4, 5}) -> str:
     return "\n".join(lines) if lines else "  (none)"
 
 
+def object_summaries(
+    grid: list[list[int]], bg_values: set[int] | None = None
+) -> list[ObjectSummary]:
+    objects: dict[int, list[tuple[int, int]]] = {}
+    for r, row in enumerate(grid):
+        for c, value in enumerate(row):
+            if bg_values is not None and value in bg_values:
+                continue
+            objects.setdefault(value, []).append((r, c))
+
+    summaries: list[ObjectSummary] = []
+    for value, cells in sorted(objects.items()):
+        rows = [r for r, _ in cells]
+        cols = [c for _, c in cells]
+        summaries.append(
+            ObjectSummary(
+                value=value,
+                char=CHAR_MAP.get(value, "?"),
+                cell_count=len(cells),
+                row_min=min(rows),
+                row_max=max(rows),
+                col_min=min(cols),
+                col_max=max(cols),
+            )
+        )
+    return summaries
+
+
+def value_histogram(grid: list[list[int]]) -> dict[str, int]:
+    histogram: dict[str, int] = {}
+    for row in grid:
+        for value in row:
+            key = str(value)
+            histogram[key] = histogram.get(key, 0) + 1
+    return histogram
+
+
+def write_agentic_observation(
+    output_path: str,
+    game_id: str,
+    step_index: int,
+    actions_list: list[object],
+    grid: list[list[int]],
+    state_name: str,
+    levels_completed: int,
+    available_actions: list[str],
+    diff_summary: str,
+    compact_grid: str,
+    rendered_map: str | None = None,
+) -> None:
+    observation = ObservationSnapshot(
+        game_id=game_id,
+        step_index=step_index,
+        state=state_name,
+        levels_completed=levels_completed,
+        grid_rows=len(grid),
+        grid_cols=len(grid[0]) if grid else 0,
+        available_actions=available_actions,
+        diff_summary=diff_summary,
+        action_history=actions_list,
+        value_histogram=value_histogram(grid),
+        objects=object_summaries(grid, bg_values={3, 4, 5}),
+        compressed_grid=compact_grid,
+        map2d=rendered_map,
+        notes=["Exported from harness.py"],
+    )
+    destination = Path(output_path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(
+        observation.model_dump_json(indent=2),
+        encoding="utf-8",
+    )
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -189,6 +266,12 @@ def main():
     parser.add_argument("--map-cols", type=str, default=None, help="Col range for map: '10-55'")
     parser.add_argument("--col-slice", type=str, default=None, help="Vertical column slice: '29-38'")
     parser.add_argument("--objects", action="store_true", help="Find non-background objects")
+    parser.add_argument(
+        "--agentic-out",
+        type=str,
+        default=None,
+        help="Write a structured observation JSON for the final frame.",
+    )
     args = parser.parse_args()
 
     actions_list = json.loads(args.actions)
@@ -208,6 +291,8 @@ def main():
 
     env = arc.make(game_id)
     prev_grid = None
+    last_diff = "INITIAL"
+    rendered_map = None
 
     for i, action_spec in enumerate(actions_list):
         action, data = parse_action(action_spec)
@@ -239,7 +324,10 @@ def main():
 
             if prev_grid is not None:
                 diff_str = compute_diff(prev_grid, grid)
+                last_diff = diff_str
                 print(f"Diff: {diff_str}")
+            else:
+                last_diff = "INITIAL"
 
             if not args.compact or i == len(actions_list) - 1:
                 print(f"\nGrid ({len(grid)}x{len(grid[0]) if grid else 0}):")
@@ -271,12 +359,30 @@ def main():
                 c0, c1 = map(int, args.map_cols.split("-"))
                 col_range = (c0, c1)
             print(f"\n--- 2D Map ---")
-            print(map2d(grid, row_range=row_range, col_range=col_range))
+            rendered_map = map2d(grid, row_range=row_range, col_range=col_range)
+            print(rendered_map)
 
         if args.col_slice:
             c0, c1 = map(int, args.col_slice.split("-"))
             print(f"\n--- Column Slice C{c0}-C{c1} ---")
             print(column_slice(grid, c0, c1))
+
+        if args.agentic_out:
+            write_agentic_observation(
+                output_path=args.agentic_out,
+                game_id=game_id,
+                step_index=len(actions_list) - 1,
+                actions_list=actions_list,
+                grid=grid,
+                state_name=state.name,
+                levels_completed=levels,
+                available_actions=available,
+                diff_summary=last_diff,
+                compact_grid=compress_grid(grid),
+                rendered_map=rendered_map,
+            )
+            print(f"\n--- Structured Observation ---")
+            print(f"Wrote agentic observation to {args.agentic_out}")
 
 
 if __name__ == "__main__":

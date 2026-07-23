@@ -133,89 +133,171 @@ class OpenAIProvider:
 # ---------------------------------------------------------------------------
 
 class LocalProvider:
-    def __init__(self, model_path: str = "models/qwen2.5-7b-instruct-q4_k_m.gguf"):
+    """Local LLM provider using transformers + Qwen."""
+
+    def __init__(self, model_name: str = "Qwen/Qwen3.5-0.8B"):
         try:
-            from llama_cpp import Llama
-            self.llm = Llama(
-                model_path=model_path,
-                n_ctx=4096,
-                n_gpu_layers=-1,
-                verbose=False,
+            import torch
+            from transformers import AutoModelForCausalLM, AutoTokenizer
+
+            logger.info(f"Loading {model_name}...")
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+            device = "mps" if torch.backends.mps.is_available() else "cuda" if torch.cuda.is_available() else "cpu"
+            self.model = AutoModelForCausalLM.from_pretrained(
+                model_name, dtype=torch.float16, device_map=device,
             )
+            self.device = device
             self._available = True
-        except ImportError:
-            logger.warning("llama-cpp-python not installed. LocalProvider unavailable.")
+            logger.info(f"Model loaded on {device}")
+        except Exception as e:
+            logger.warning(f"Failed to load local model: {e}")
             self._available = False
-            self.llm = None
+            self.model = None
+            self.tokenizer = None
 
     def chat(self, messages: list[dict], tools: list[dict]) -> LLMResponse:
+        import torch
+
         if not self._available:
-            return LLMResponse(text="LocalProvider not available (install llama-cpp-python)")
+            return LLMResponse(text="LocalProvider not available")
 
         tool_desc = self._format_tools_for_prompt(tools)
-        system_msg = ""
-        user_msgs = []
+
+        # Inject tool descriptions into system message
+        chat_messages = []
         for m in messages:
             if m["role"] == "system":
-                system_msg = m["content"]
+                chat_messages.append({"role": "system", "content": m["content"] + "\n\n" + tool_desc})
             else:
-                user_msgs.append(m)
+                chat_messages.append(m)
 
-        prompt = self._build_chat_prompt(system_msg, tool_desc, user_msgs)
+        text = self.tokenizer.apply_chat_template(
+            chat_messages, tokenize=False, add_generation_prompt=True,
+        )
+        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, max_length=4096)
+        inputs = {k: v.to(self.device) for k, v in inputs.items()}
 
         try:
-            output = self.llm(
-                prompt,
-                max_tokens=512,
-                temperature=0.1,
-                stop=["</tool_call>", "\n\nHuman:"],
-            )
-            text = output["choices"][0]["text"].strip()
+            with torch.no_grad():
+                output = self.model.generate(
+                    **inputs,
+                    max_new_tokens=256,
+                    temperature=0.7,
+                    do_sample=True,
+                    pad_token_id=self.tokenizer.eos_token_id,
+                )
+            response_text = self.tokenizer.decode(
+                output[0][inputs["input_ids"].shape[1]:],
+                skip_special_tokens=True,
+            ).strip()
         except Exception as e:
-            logger.error(f"Local LLM error: {e}")
-            return LLMResponse(text=f"Local LLM error: {e}")
+            logger.error(f"Local LLM generation error: {e}")
+            return LLMResponse(text=f"Generation error: {e}")
 
-        result = LLMResponse(
-            text=text,
-            input_tokens=output.get("usage", {}).get("prompt_tokens", 0),
-            output_tokens=output.get("usage", {}).get("completion_tokens", 0),
-        )
-
-        tool_call = self._parse_tool_call(text)
+        result = LLMResponse(text=response_text)
+        tool_call = self._parse_tool_call(response_text)
         if tool_call:
             result.tool_calls.append(tool_call)
 
         return result
 
     def _format_tools_for_prompt(self, tools: list[dict]) -> str:
-        lines = ["Available tools (respond with JSON tool call):"]
-        for t in tools:
-            params = t.get("parameters", {}).get("properties", {})
-            param_str = ", ".join(f"{k}: {v.get('type', '?')}" for k, v in params.items())
-            lines.append(f"- {t['name']}({param_str}): {t['description'][:80]}")
-        lines.append('\nRespond with: {"tool": "tool_name", "arguments": {...}}')
-        return "\n".join(lines)
+        return """## How to respond
+You MUST respond with EXACTLY one line in one of these formats:
 
-    def _build_chat_prompt(self, system: str, tool_desc: str, messages: list[dict]) -> str:
-        parts = [f"<|im_start|>system\n{system}\n\n{tool_desc}<|im_end|>"]
-        for m in messages:
-            role = m["role"]
-            content = m["content"] if isinstance(m["content"], str) else json.dumps(m["content"])
-            parts.append(f"<|im_start|>{role}\n{content}<|im_end|>")
-        parts.append("<|im_start|>assistant\n")
-        return "\n".join(parts)
+OBSERVE
+TEST ACTION1
+TEST ACTION2
+TEST ACTION3
+TEST ACTION4
+TEST ACTION5
+TEST ACTION6 x y
+EXECUTE RESET
+EXECUTE ACTION1
+EXECUTE ACTION2
+EXECUTE ACTION3
+EXECUTE ACTION4
+EXECUTE ACTION5
+EXECUTE ACTION6 x y
+EXECUTE ACTION7
+ANALYZE r0 r1 c0 c1
+
+Examples:
+- OBSERVE
+- TEST ACTION6 62 33
+- EXECUTE ACTION6 62 33
+- EXECUTE ACTION1
+- ANALYZE 24 35 55 63
+
+OBSERVE = see current map and objects
+TEST = try an action without committing (for exploration)
+EXECUTE = commit an action for real
+ANALYZE = zoom into a grid region
+
+Reply with ONE line only. No explanation."""
 
     def _parse_tool_call(self, text: str) -> Optional[ToolCall]:
+        import re
+
+        # Take first non-empty line
+        for line in text.strip().split("\n"):
+            line = line.strip()
+            if line:
+                text = line
+                break
+
+        if text.upper().startswith("OBSERVE"):
+            return ToolCall(name="observe", arguments={})
+
+        # Extract all integers from the text
+        nums = [int(x) for x in re.findall(r'\d+', text)]
+
+        if text.upper().startswith("TEST"):
+            # Find ACTION name
+            action_match = re.search(r'ACTION(\d)', text, re.IGNORECASE)
+            if not action_match:
+                return ToolCall(name="test_action", arguments={"action": "ACTION1"})
+            action = f"ACTION{action_match.group(1)}"
+            args: dict = {"action": action}
+            # For ACTION6, grab the next two numbers as x, y
+            if action == "ACTION6":
+                # Remove the "6" from ACTION6 in nums list
+                coord_nums = [n for n in nums if n != int(action_match.group(1))]
+                if len(coord_nums) >= 2:
+                    args["x"] = coord_nums[0]
+                    args["y"] = coord_nums[1]
+            return ToolCall(name="test_action", arguments=args)
+
+        if text.upper().startswith("EXECUTE"):
+            action_match = re.search(r'(RESET|ACTION(\d))', text, re.IGNORECASE)
+            if not action_match:
+                return ToolCall(name="execute", arguments={"action": "ACTION5"})
+            action = action_match.group(1).upper()
+            args = {"action": action}
+            if action == "ACTION6":
+                coord_nums = [n for n in nums if n != 6]
+                if len(coord_nums) >= 2:
+                    args["x"] = coord_nums[0]
+                    args["y"] = coord_nums[1]
+            return ToolCall(name="execute", arguments=args)
+
+        if text.upper().startswith("ANALYZE"):
+            if len(nums) >= 4:
+                return ToolCall(name="analyze_region", arguments={
+                    "row_start": nums[0], "row_end": nums[1],
+                    "col_start": nums[2], "col_end": nums[3],
+                })
+
+        # Fallback: try JSON
         try:
             start = text.index("{")
             end = text.rindex("}") + 1
             data = json.loads(text[start:end])
             if "tool" in data:
                 return ToolCall(name=data["tool"], arguments=data.get("arguments", {}))
-            if "name" in data:
-                return ToolCall(name=data["name"], arguments=data.get("arguments", {}))
         except (ValueError, json.JSONDecodeError):
             pass
+
         return None
 
 
@@ -232,7 +314,7 @@ def create_provider(provider_type: Optional[str] = None) -> LLMProvider:
         model = os.environ.get("OPENAI_MODEL", "gpt-5.4-nano")
         return OpenAIProvider(model=model)
     elif provider_type == "local":
-        path = os.environ.get("LOCAL_MODEL_PATH", "models/qwen2.5-7b-instruct-q4_k_m.gguf")
-        return LocalProvider(model_path=path)
+        model = os.environ.get("LOCAL_MODEL", "Qwen/Qwen3.5-0.8B")
+        return LocalProvider(model_name=model)
     else:
         raise ValueError(f"Unknown LLM provider: {provider_type}")

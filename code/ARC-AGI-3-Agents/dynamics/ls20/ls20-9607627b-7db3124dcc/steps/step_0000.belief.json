@@ -1,0 +1,119 @@
+{
+  "episode_id": "ls20-phase0",
+  "game_id": "ls20-9607627b",
+  "step_index": 0,
+  "mode": "epistemic",
+  "top_motifs": [
+    {
+      "name": "navigation",
+      "confidence": 0.22,
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "name": "sorting",
+      "confidence": 0.2,
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    },
+    {
+      "name": "reference-matching",
+      "confidence": 0.15,
+      "evidence": [
+        "Scene contains both upper and lower salient structures."
+      ]
+    },
+    {
+      "name": "pattern-matching",
+      "confidence": 0.12,
+      "evidence": [
+        "Repeated object families may map to reference targets."
+      ]
+    },
+    {
+      "name": "track-building",
+      "confidence": 0.12,
+      "evidence": [
+        "Long thin objects suggest rails, trails, or bars."
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "hypothesis_id": "H1",
+      "summary": "Scene may follow a navigation motif.",
+      "confidence": 0.176,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with navigation."
+      ],
+      "evidence": [
+        "Four directional actions are available."
+      ]
+    },
+    {
+      "hypothesis_id": "H2",
+      "summary": "Scene may follow a sorting motif.",
+      "confidence": 0.16,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with sorting."
+      ],
+      "evidence": [
+        "Many repeated object sizes suggest arrangement pressure."
+      ]
+    },
+    {
+      "hypothesis_id": "H3",
+      "summary": "Scene may follow a reference-matching motif.",
+      "confidence": 0.12,
+      "status": "provisional",
+      "predicted_observations": [
+        "Further probes should produce evidence consistent with reference-matching."
+      ],
+      "evidence": [
+        "Scene contains both upper and lower salient structures."
+      ]
+    }
+  ],
+  "goal_beliefs": [
+    {
+      "summary": "A reference-like region may need to be matched or reached.",
+      "confidence": 0.45,
+      "evidence": [
+        "Salient objects exist in both top and bottom bands."
+      ]
+    },
+    {
+      "summary": "Progress may require navigating a controllable object through space.",
+      "confidence": 0.35,
+      "evidence": [
+        "Directional actions are available."
+      ]
+    }
+  ],
+  "action_semantics": {
+    "ACTION1": [
+      "Possible upward move",
+      "May test vertical mobility"
+    ],
+    "ACTION2": [
+      "Possible downward move",
+      "May test vertical symmetry"
+    ],
+    "ACTION3": [
+      "Possible leftward move",
+      "May retract or reverse state"
+    ],
+    "ACTION4": [
+      "Possible rightward move",
+      "May extend or advance state"
+    ]
+  },
+  "notes": [
+    "Bootstrap ledger enriched by heuristic Theorist/Skeptic pass.",
+    "Observation contains 17 foreground objects."
+  ]
+}
