@@ -19,7 +19,16 @@ from typing import Optional
 
 from .backtest import BacktestReport, reconstruct_current_state, run_backtest
 from .brain import Brain
-from .core import Action, Status, Timeline, Transition, WorldModel, diff_cells
+from .core import (
+    Action,
+    Status,
+    Timeline,
+    Transition,
+    WorldModel,
+    diff_cells,
+    frames_equal,
+    ignored_cells,
+)
 from .env import Environment
 from .planner import Plan, run_bfs
 from .trace import ReasoningChain, TraceRecord, TraceWriter, sparse_frame
@@ -110,10 +119,12 @@ class SolveLoop:
                     active.pred_state, action)
                 predicted_frame = active.model.render(predicted_state)
                 confidence = active.model.confidence
+                pred_model = active.model
             else:
                 action = _explore(timeline, actions)
                 predicted_state = predicted_status = predicted_frame = None
                 confidence = 0.0
+                pred_model = None
 
             reasoning.predict = (
                 f"{action} -> {predicted_status}" if predicted_status
@@ -137,14 +148,15 @@ class SolveLoop:
             prediction_match: Optional[bool] = None
             surprise = "none"
             if predicted_frame is not None:
-                frame_ok = predicted_frame == result.frame
+                ignore = ignored_cells(pred_model, result.frame)
+                frame_ok = frames_equal(predicted_frame, result.frame, ignore)
                 status_ok = predicted_status == result.status
                 prediction_match = frame_ok and status_ok
                 if not prediction_match:
                     mispredictions += 1
                     surprise = (
                         f"misprediction: predicted {predicted_status}/"
-                        f"{diff_cells(predicted_frame, result.frame)}-cell-off"
+                        f"{diff_cells(predicted_frame, result.frame, ignore)}-cell-off"
                     )
                     active = None  # void the plan; re-deliberate next round
                 else:

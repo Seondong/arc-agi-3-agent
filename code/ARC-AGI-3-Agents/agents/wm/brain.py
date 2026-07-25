@@ -88,7 +88,12 @@ class ClaudeBrain:
         "  is_goal(state) -> bool\n"
         "Infer a compact, general rule system from the recorded history. Do NOT "
         "hardcode level layouts. Your model is only acceptable if render() "
-        "reproduces every recorded frame EXACTLY (it will be backtested)."
+        "reproduces every recorded frame EXACTLY (it will be backtested).\n"
+        "If a small region (e.g. a step/energy counter or HUD bar) changes every "
+        "step without carrying game logic and you cannot yet model it, you MAY "
+        "additionally define `ignore(frame) -> list of (row, col)` returning that "
+        "region's cells to exclude from verification. Prefer modelling it in "
+        "render(); a non-empty ignore set is modelling debt, not a solution."
     )
 
     def __init__(
@@ -174,6 +179,7 @@ class ClaudeBrain:
             is_goal=callables["is_goal"],
             fingerprint=callables.get("fingerprint")
             or WorldModel.__dataclass_fields__["fingerprint"].default,
+            ignore=callables.get("ignore"),
             notes=text.split("```")[0].strip()[:500],
             source_code=code,
             confidence=0.6,
@@ -206,8 +212,9 @@ def _exec_world_model(code: str) -> dict:
             f"Got: {[k for k, v in ns.items() if callable(v)]}"
         )
     out = {name: ns[name] for name in _REQUIRED}
-    if callable(ns.get("fingerprint")):
-        out["fingerprint"] = ns["fingerprint"]
+    for optional in ("fingerprint", "ignore"):
+        if callable(ns.get(optional)):
+            out[optional] = ns[optional]
     return out
 
 

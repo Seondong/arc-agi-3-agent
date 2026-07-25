@@ -129,6 +129,12 @@ class WorldModel:
     source_code: str = ""
     confidence: float = 0.5
     fingerprint: Callable[[State], Hashable] = field(default=lambda s: repr(s))
+    # Optional: given a frame, return the cells (r, c) to EXCLUDE from
+    # verification — e.g. a HUD / step-counter region that changes every step
+    # but carries no game-logic. Prefer modelling those cells in render();
+    # treat a non-empty ignore set as modelling debt (Baseline1's
+    # apply_render_overrides warning). Default None = compare every cell.
+    ignore: Optional[Callable[[Frame], object]] = None
 
 
 # --------------------------------------------------------------------------- #
@@ -140,21 +146,41 @@ def _copy_frame(frame: Frame) -> Frame:
     return [list(row) for row in frame]
 
 
-def frames_equal(a: Frame, b: Frame) -> bool:
-    return a == b
+def frames_equal(a: Frame, b: Frame, ignored=None) -> bool:
+    """True if frames match, optionally skipping an `ignored` set of (r, c) cells."""
+    if not ignored:
+        return a == b
+    if len(a) != len(b):
+        return False
+    for r, (ra, rb) in enumerate(zip(a, b)):
+        if len(ra) != len(rb):
+            return False
+        for c, (va, vb) in enumerate(zip(ra, rb)):
+            if (r, c) in ignored:
+                continue
+            if va != vb:
+                return False
+    return True
 
 
-def diff_cells(a: Frame, b: Frame) -> int:
-    """Count differing cells between two equally-shaped frames.
-
-    Mismatched shapes are treated as maximally different (a strong signal that
-    the renderer is wrong), returning the larger cell count.
-    """
+def diff_cells(a: Frame, b: Frame, ignored=None) -> int:
+    """Count differing cells (excluding `ignored`), or the larger size on shape mismatch."""
     if len(a) != len(b) or any(len(ra) != len(rb) for ra, rb in zip(a, b)):
         return max(sum(len(r) for r in a), sum(len(r) for r in b))
     return sum(
         1
-        for ra, rb in zip(a, b)
-        for va, vb in zip(ra, rb)
-        if va != vb
+        for r, (ra, rb) in enumerate(zip(a, b))
+        for c, (va, vb) in enumerate(zip(ra, rb))
+        if va != vb and not (ignored and (r, c) in ignored)
     )
+
+
+def ignored_cells(model, frame: Frame):
+    """Resolve a model's HUD/ignore mask for a frame; None when it declares none."""
+    if getattr(model, "ignore", None) is None:
+        return None
+    try:
+        cells = model.ignore(frame)
+    except Exception:  # noqa: BLE001 - a broken ignore mask just means "compare all"
+        return None
+    return {tuple(c) for c in cells} or None

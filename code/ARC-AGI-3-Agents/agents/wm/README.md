@@ -73,9 +73,10 @@ runnable in a bare container):
   recorded attempts. Extend `Timeline` to hold attempts for cross-attempt
   refutation. (Biggest gap for real games.)
 - **Render-exact vs HUD noise** — real frames include a step counter/HUD that
-  changes every step, so the model's `render()` must reproduce it (or the
-  backtest needs a region mask). Opus can model the counter; watch for this on
-  the first real run.
+  changes every step. The model should reproduce it in `render()`; if it can't
+  yet, it may declare `ignore(frame) -> [(r, c), …]` to exclude that region from
+  verification (backtest + reality-check both honor it — `tests/test_mask.py`).
+  A non-empty ignore set is modelling debt, not a solution.
 - Experiment designer — `_explore` in `loop.py` is round-robin; replace with the
   max-information-gain / hypothesis-discrimination probe selector.
 - Richer perception — `sparse_frame` is a minimal object encoder; the existing

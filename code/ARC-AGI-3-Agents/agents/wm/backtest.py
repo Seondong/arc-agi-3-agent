@@ -13,7 +13,14 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
-from .core import Frame, Timeline, WorldModel, diff_cells, frames_equal
+from .core import (
+    Frame,
+    Timeline,
+    WorldModel,
+    diff_cells,
+    frames_equal,
+    ignored_cells,
+)
 
 
 @dataclass
@@ -94,7 +101,8 @@ def run_backtest(model: WorldModel, timeline: Timeline) -> BacktestReport:
                 error=f"step/render raised at step {tr.step_index}: {exc!r}",
             )
 
-        frame_bad = not frames_equal(pred_frame, tr.after_frame)
+        ignore = ignored_cells(model, tr.after_frame)
+        frame_bad = not frames_equal(pred_frame, tr.after_frame, ignore)
         status_bad = pred_status != tr.status
         if frame_bad or status_bad:
             return BacktestReport(
@@ -108,7 +116,7 @@ def run_backtest(model: WorldModel, timeline: Timeline) -> BacktestReport:
                     status_mismatch=status_bad,
                     predicted_status=pred_status,
                     actual_status=tr.status,
-                    changed_cells=diff_cells(pred_frame, tr.after_frame),
+                    changed_cells=diff_cells(pred_frame, tr.after_frame, ignore),
                     predicted_frame=pred_frame,
                     actual_frame=tr.after_frame,
                 ),
