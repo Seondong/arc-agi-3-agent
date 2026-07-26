@@ -296,18 +296,6 @@
    "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
   },
   {
-   "type": "repair",
-   "level": 6,
-   "seq": 4,
-   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
-  },
-  {
-   "type": "repair",
-   "level": 6,
-   "seq": 22,
-   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
-  },
-  {
    "type": "probe",
    "level": 6,
    "seq": 26,

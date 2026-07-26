@@ -1,0 +1,276 @@
+"""propose() filled by a headless Claude Code process, with the answer verified.
+
+This closes the seam that has been open the whole time. `SolveLoop` has always
+called `brain.propose(timeline, prev_model, report) -> WorldModel`; until now the
+models were written by a Claude Code session between conversational turns, which
+means no run was ever unattended, no score was comparable to a published one, and
+`repair` training pairs accumulated only as fast as someone typed.
+
+Two properties matter more than the prompt:
+
+**The answer is gated by the same verifier the loop already trusts.** A proposal
+is not accepted because it looks plausible; it is imported, constructed, asked to
+reconstruct the initial frame, and replayed against every recorded timeline. If
+it fails it goes back with the failure attached. That is NOOA's validated-return
+contract with `run_backtest` as the validator, and it is what makes a small model
+usable later: a 7B that writes a wrong model is not a wrong agent, it is an agent
+that gets a counterexample and another turn.
+
+**Every accepted proposal is a training pair.** Input: the pointed bug plus the
+source as it stood. Target: the source that passed. These are the `repair` pairs
+the corpus is short of — three of them at the time this was written, all produced
+by hand.
+
+The subprocess returns SOURCE TEXT and never edits the repository. A brain that
+writes files would be harder to sandbox, harder to retry, and would leave no
+clean record of what it actually proposed.
+"""
+from __future__ import annotations
+
+import re
+import subprocess
+import tempfile
+import uuid
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Optional
+
+from .backtest import run_backtest
+from .core import Timeline, WorldModel
+
+CODE_BLOCK = re.compile(r"```(?:python)?\s*\n(.*?)```", re.S)
+
+CONTRACT = '''You are writing an executable world model for an unfamiliar grid game.
+
+Return ONE fenced python code block and nothing else. It must be a complete,
+self-contained module defining:
+
+    def build(version: int = 1) -> WorldModel
+
+`WorldModel` and `Action`/`Status` are importable as:
+
+    from agents.wm.core import Action, Frame, Status, WorldModel
+
+The model must provide:
+  reconstruct(frame)   -> state      built from ONE frame, the level's first
+  step(state, action)  -> (state, status)   status in "RUNNING",
+                                            "LEVEL_COMPLETED", "GAME_OVER"
+  render(state)        -> frame      the full grid; raise NotImplementedError
+                                     ONLY if you truly cannot reproduce it
+  is_goal(state)       -> bool       return False if you do not know the win
+                                     condition — never invent one
+  fingerprint(state)   -> hashable   used to key the planner's visited set
+  ignore(frame)        -> [(r, c)]   optional: cells excluded from checking.
+                                     Every excluded cell is debt; exclude only
+                                     what you genuinely cannot predict, such as
+                                     a step counter.
+
+Rules:
+- State must be immutable and hashable through `fingerprint`.
+- Do not read any file outside what is given here. Do not import the game.
+- Prefer rules that are forced by the evidence below. An unforced special case
+  will not transfer to the next level.
+- If you cannot explain some cells, exclude them via `ignore` and say so in a
+  comment rather than guessing.
+'''
+
+
+def _grid_text(frame, r0=0, r1=None, c0=0, c1=None, ch=None):
+    if frame is None:
+        return "(no frame)"
+    r1 = len(frame) - 1 if r1 is None else r1
+    c1 = len(frame[0]) - 1 if c1 is None else c1
+    out = ["    " + "".join(str(c % 10) for c in range(c0, c1 + 1))]
+    for r in range(r0, r1 + 1):
+        out.append(f"{r:3d} " + "".join(f"{frame[r][c]:x}" for c in range(c0, c1 + 1)))
+    return "\n".join(out)
+
+
+def bug_report(report) -> str:
+    """The pointed bug, as compactly as it can be stated without losing it."""
+    if report is None or report.ok:
+        return "No counterexample: the current model reproduces everything recorded."
+    m = report.first_mismatch
+    if m is None:
+        return report.summary()
+    lines = [f"COUNTEREXAMPLE — {report.summary()}",
+             f"after action {m.action} at step {m.step_index}"]
+    if m.predicted_frame is not None and m.actual_frame is not None:
+        cells = [(r, c, m.predicted_frame[r][c], m.actual_frame[r][c])
+                 for r in range(len(m.actual_frame))
+                 for c in range(len(m.actual_frame[0]))
+                 if m.predicted_frame[r][c] != m.actual_frame[r][c]]
+        lines.append(f"{len(cells)} cell(s) differ [row, col, predicted, actual]:")
+        lines.append("  " + ", ".join(f"[{r},{c},{p},{a}]" for r, c, p, a in cells[:60]))
+        if len(cells) > 60:
+            lines.append(f"  ... and {len(cells) - 60} more")
+        rows = [c[0] for c in cells]
+        cols = [c[1] for c in cells]
+        r0, r1 = max(0, min(rows) - 3), min(len(m.actual_frame) - 1, max(rows) + 3)
+        c0, c1 = max(0, min(cols) - 3), min(len(m.actual_frame[0]) - 1, max(cols) + 3)
+        lines.append("\npredicted (hex values):")
+        lines.append(_grid_text(m.predicted_frame, r0, r1, c0, c1))
+        lines.append("\nactual:")
+        lines.append(_grid_text(m.actual_frame, r0, r1, c0, c1))
+    return "\n".join(lines)
+
+
+def crop_box(frame, pad=1):
+    """The interesting rectangle: everything that is not the most common value."""
+    from collections import Counter
+    bg = Counter(v for row in frame for v in row).most_common(1)[0][0]
+    rs = [r for r in range(len(frame)) if any(v != bg for v in frame[r])]
+    cs = [c for c in range(len(frame[0]))
+          if any(frame[r][c] != bg for r in range(len(frame)))]
+    if not rs or not cs:
+        return 0, len(frame) - 1, 0, len(frame[0]) - 1
+    return (max(0, min(rs) - pad), min(len(frame) - 1, max(rs) + pad),
+            max(0, min(cs) - pad), min(len(frame[0]) - 1, max(cs) + pad))
+
+
+def evidence_text(timelines: list[Timeline], max_steps=30, max_cells=120) -> str:
+    """What has been seen: the opening frame, and every cell each action changed.
+
+    The first version of this gave only change COUNTS and bounding boxes. The
+    brain read it, said so, and refused to invent dynamics it could not see —
+    which was the correct answer to a bad question. A world model cannot be
+    written from "100 cells changed somewhere"; it needs which cells, from what,
+    to what.
+    """
+    out = []
+    for i, tl in enumerate(timelines):
+        init = tl.initial_frame
+        r0, r1, c0, c1 = crop_box(init)
+        out.append(f"--- recorded run {i + 1}: {len(tl)} step(s)")
+        out.append(f"opening frame, rows {r0}-{r1} cols {c0}-{c1}, "
+                   f"one hex digit per cell (full grid is "
+                   f"{len(init)}x{len(init[0])}):")
+        out.append(_grid_text(init, r0, r1, c0, c1))
+        prev = init
+        for tr in tl.transitions[:max_steps]:
+            if tr.after_frame is None:
+                out.append(f"  {tr.action} -> {tr.status} (engine returned no frame)")
+                continue
+            d = [(r, c, prev[r][c], tr.after_frame[r][c])
+                 for r in range(len(prev)) for c in range(len(prev[0]))
+                 if prev[r][c] != tr.after_frame[r][c]]
+            if not d:
+                out.append(f"  {tr.action} -> {tr.status}; nothing changed at all")
+            else:
+                shown = ", ".join(f"[{r},{c},{a},{b}]" for r, c, a, b in d[:max_cells])
+                more = (f" ...and {len(d) - max_cells} more"
+                        if len(d) > max_cells else "")
+                out.append(f"  {tr.action} -> {tr.status}; {len(d)} cell(s) changed "
+                           f"[row,col,from,to]: {shown}{more}")
+            prev = tr.after_frame
+    return "\n".join(out)
+
+
+@dataclass
+class Proposal:
+    source: str
+    accepted: bool
+    report: str
+    attempt: int
+    error: Optional[str] = None
+
+
+@dataclass
+class ClaudeCodeBrain:
+    """`propose()` backed by `claude -p`, with the result verified before use."""
+
+    game: str
+    workdir: Path = field(default_factory=lambda: Path(tempfile.mkdtemp(prefix="wmbrain-")))
+    max_attempts: int = 3
+    timeout_s: int = 900
+    model: Optional[str] = None
+    log: list = field(default_factory=list)
+
+    # -- the call ------------------------------------------------------------
+    def _ask(self, prompt: str) -> str:
+        cmd = ["claude", "-p", prompt, "--output-format", "text"]
+        if self.model:
+            cmd += ["--model", self.model]
+        r = subprocess.run(cmd, capture_output=True, text=True,
+                           timeout=self.timeout_s, cwd=str(self.workdir))
+        if r.returncode != 0:
+            raise RuntimeError(f"claude -p failed ({r.returncode}): "
+                               f"{(r.stderr or r.stdout)[:400]}")
+        return r.stdout
+
+    def build_prompt(self, timelines, prev_source, report, extra=None) -> str:
+        parts = [CONTRACT,
+                 f"\nGAME: {self.game}. Actions are named ACTION1..ACTION7; only the "
+                 f"ones appearing in the evidence below are available.",
+                 "\nEVIDENCE — every interaction recorded so far:",
+                 evidence_text(timelines),
+                 "\n" + bug_report(report)]
+        if prev_source:
+            parts.append("\nTHE MODEL AS IT STANDS (fix it; keep what the evidence "
+                         "forces, drop what it does not):\n```python\n"
+                         + prev_source + "\n```")
+        else:
+            parts.append("\nThere is no model yet. Write the first one.")
+        if extra:
+            parts.append("\n" + extra)
+        parts.append("\nReturn the complete module in one fenced python block.")
+        return "\n".join(parts)
+
+    # -- verification --------------------------------------------------------
+    def _load(self, source: str):
+        import importlib.util
+        path = self.workdir / f"cand_{uuid.uuid4().hex[:8]}.py"
+        path.write_text(source)
+        spec = importlib.util.spec_from_file_location(path.stem, path)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        if not hasattr(mod, "build"):
+            raise AttributeError("module defines no build(version) function")
+        return mod.build(1), path
+
+    def verify(self, source: str, timelines: list[Timeline]):
+        """Import, construct, reconstruct, and replay. Returns (model, report)."""
+        model, _ = self._load(source)
+        if not timelines:
+            return model, "no recorded evidence yet; nothing to verify against"
+        total = matched = 0
+        for tl in timelines:
+            rep = run_backtest(model, tl)
+            total += rep.total
+            matched += rep.matched
+            if not rep.ok:
+                raise ValueError(f"replay failed: {rep.summary()}")
+        return model, f"replayed {matched}/{total} recorded steps exactly"
+
+    # -- the seam ------------------------------------------------------------
+    def propose(self, timelines, prev_source, report, extra=None):
+        """Ask, verify, and on failure ask again with the failure attached."""
+        prompt = self.build_prompt(timelines, prev_source, report, extra)
+        last_err = None
+        for attempt in range(1, self.max_attempts + 1):
+            text = self._ask(prompt if last_err is None else
+                             prompt + f"\n\nYOUR PREVIOUS ANSWER WAS REJECTED:\n"
+                                      f"{last_err}\nFix exactly that and return the "
+                                      f"whole module again.")
+            blocks = CODE_BLOCK.findall(text)
+            if not blocks:
+                last_err = "no fenced python block in the reply"
+                self.log.append(Proposal("", False, "", attempt, last_err))
+                continue
+            source = max(blocks, key=len)
+            try:
+                model, note = self.verify(source, timelines)
+            except Exception as exc:                      # noqa: BLE001
+                import traceback
+                tb = traceback.format_exc(limit=6)
+                # The candidate is kept on disk: a rejected proposal is the more
+                # valuable half of a repair pair and must not evaporate.
+                bad = self.workdir / f"rejected_{attempt}.py"
+                bad.write_text(source)
+                last_err = f"{type(exc).__name__}: {exc}\n{tb[-900:]}"
+                self.log.append(Proposal(source, False, "", attempt, last_err))
+                continue
+            self.log.append(Proposal(source, True, note, attempt))
+            return model, source, note
+        raise RuntimeError(f"no acceptable model after {self.max_attempts} "
+                           f"attempt(s); last failure: {last_err}")

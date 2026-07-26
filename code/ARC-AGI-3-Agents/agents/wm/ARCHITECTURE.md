@@ -169,10 +169,50 @@ those, teaching that the fix for a pointed bug is to do nothing.
 
 ## Who writes the model
 
-`brain.propose(timeline, prev_model, last_report) -> WorldModel` exists in
-`agents/wm/brain.py` and is called by `SolveLoop` in `loop.py`. **The current
-scripts do not call it.** The models are written by Claude Code editing files
-between conversational turns.
+**Closed.** `agents/wm/brain_claude.py` fills `propose()` with a headless
+`claude -p` process, and `scripts/wm/autosolve.py` runs the whole loop with
+nobody typing. Two properties do the work:
+
+- **The answer is verified, not trusted.** A proposal is imported, constructed,
+  asked to reconstruct the opening frame, and replayed against every recorded
+  timeline. Failure returns it with the error attached and costs a retry, not an
+  environment action. This is NOOA's validated-return contract with
+  `run_backtest` as the validator, and it is what will make a 7B usable: a small
+  model that writes a wrong world model is not a failed agent, it is an agent
+  holding a counterexample.
+- **Every proposal is a training pair.** Accepted source and rejections both go
+  to the journal. `repair` pairs used to arrive one per session; now one per
+  refutation.
+
+Demonstrated end to end on m0r0 L0: given four recorded steps and nothing else,
+the brain wrote a model that replayed 4/4, generalised to seven steps it had
+never seen, and missed at step 8 by two cells — the step counter, which it had
+over-consumed. Handed that pointed bug, one attempt later it replayed 12/12.
+
+A first attempt failed in a way worth keeping: the evidence text gave only change
+COUNTS and bounding boxes, and the brain refused to invent dynamics it could not
+see, saying so explicitly. That was the right answer to a badly posed question,
+and the fix was ours — the evidence now carries the opening grid and every
+changed cell as `[row, col, from, to]`.
+
+`autosolve.py` also wires the NO PLAN path into exploration: a search that finds
+no goal triggers `explore_level`, and the leads it finds are appended to the
+evidence for a re-proposal. Without that an unattended run strands at exactly our
+measured weakness. On m0r0 L2 it ran the full chain unassisted — evidence,
+certify, no plan, 22 explored interactions, 6 leads, re-propose, accepted at
+16/16 — and still found no plan, which is the honest state of that level.
+
+**What remains open.** Isolation is still discipline, not engineering:
+`environment_files/` is on disk and "never read it" is a rule in `CLAUDE.md`,
+where the published harness removes the possibility with a container and a hidden
+game id. A brain proposal is also not written back into `agents/wm/models/`, so a
+game solved by autosolve has its model only in the journal.
+
+### The older seam
+
+`brain.propose(...)` also exists in `agents/wm/brain.py` and is called by
+`SolveLoop` in `loop.py`; those predate the per-game pipeline and are unused by
+the current scripts.
 
 So the difference from the published systems is not "human versus LLM" — an LLM
 writes the model in both. It is **in-loop versus conversational**: there, a
@@ -183,8 +223,4 @@ runtime recovery; here, the next step happens when the user types. Consequences:
 - our RHAE is not comparable to a published one: it was produced across sessions, reading prior journals, with the operator choosing which level to attack
 - isolation is discipline, not engineering. `environment_files/` is on disk and "never read it" is a rule in `CLAUDE.md`. The paper removes the possibility with a container, a hidden game id, no web, and a client that refuses a second connection — because agents had exploited exactly those channels.
 
-Closing this is the natural next step, and it is what makes everything above a
-dataset rather than a demo: wire `SolveLoop` to the new pipeline with `propose()`
-filled by an API model or a headless `claude -p`, add the action cap and
-no-progress detection, and the work done by hand becomes recorded `propose()`
-trajectories.
+

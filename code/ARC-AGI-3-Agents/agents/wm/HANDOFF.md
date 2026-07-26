@@ -184,6 +184,23 @@ design, not a bug — an uncertified model produced a confident plan on L2 that
 killed the player. If it stops, investigate the pointed bug and fix the model.
 It appends to the journal; pass `--reset` only if you really mean to erase one.
 
+### Running unattended
+
+```bash
+uv run python scripts/wm/autosolve.py --game ft09 --levels 3 --minutes 90
+```
+
+`propose()` is a headless `claude -p` whose answer is accepted only if it replays
+every recorded step exactly. Bounded by `--budget-x` (actions per level, 5x the
+human baseline), `--max-brain` (Claude Code sessions per level), `--minutes`, and
+`--levels`. Resumable: solutions are saved as levels clear, so a re-run continues
+from the first unsolved one. A NO PLAN triggers exploration and a re-proposal
+rather than stopping.
+
+Note: a brain proposal is not written back into `agents/wm/models/`, so a game
+solved this way has its model in the journal only. Registering it is a manual
+step for now.
+
 ### Modules added from the ARC-AGI-3 papers (full write-up in ARCHITECTURE.md)
 
 ```bash
