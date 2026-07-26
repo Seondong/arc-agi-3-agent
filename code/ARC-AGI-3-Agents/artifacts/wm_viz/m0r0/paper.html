@@ -25,7 +25,9 @@
       the environment.</div>
     <p class="lede">This is the second game the loop has been pointed at. The interesting number
       is not how fast it was solved but how little of the first game transferred: of the rules
-      carried over from <a href="../tu93/paper.html">tu93</a>, exactly one survived contact.</p>
+      carried over from <a href="../tu93/paper.html">tu93</a>, exactly one survived contact. Two
+      levels are cleared; the third is open, and this page says which parts are known and which
+      are guesses.</p>
   </div>
 </header>
 
@@ -93,29 +95,44 @@
 </div>
 
 <div class="col">
-  <h2 id="l1">L1 adds two rules and blocks on a third</h2>
+  <h2 id="l1">L1, and a law that had to be taken back</h2>
   <p>The next level changes the agents to 4×4 stepping 4. The model had the first level's size
-  hardcoded and saw <em>nothing at all</em> — a clean reminder that a quantity measured once is a
-  quantity measured on one level. Size is now read off the frame.</p>
-  <p>Then a genuinely new law. At step 12 of a 20-action plan the left agent stepped down into
-  plain corridor — every cell checked, all value 5 — while the right one was blocked, and the
-  next frame had <b>both agents back at their starting squares</b>. A move only some agents can
-  make sends everyone back. Encoding that took the sequence from breaking at step 12 to
-  reproducing all twenty steps exactly.</p>
+  hardcoded and saw <em>nothing at all</em> — a quantity measured once is a quantity measured on
+  one level. Size is now read off the frame.</p>
+  <p>Then a reset appeared. At step 12 of a 20-action plan the left agent stepped down into plain
+  corridor — every cell checked, all value 5 — while the right one was blocked, and the next
+  frame had <b>both agents back at their starting squares</b>. The obvious reading, and the one
+  written into the model, was that <em>breaking the mirror is punished</em>. It made the twenty
+  steps reproduce exactly.</p>
+  <p>It also made L1 unsolvable: 34 reachable states, none with the pair meeting, planner returns
+  nothing. A model that cannot plan a level the game expects you to finish is a model with a
+  wrong rule in it, and that is the only reason the rule got a second look.</p>
+  <p>The first attempt to check it <b>failed in an instructive way</b>: the search ran inside the
+  model with the law already on, so it only ever visited states the law permitted and could not
+  produce a counterexample. That is tu93's L4 lesson again — a probe set that cannot discriminate
+  certifies whatever it is handed. The fix is to enumerate with the law switched <em>off</em>,
+  which is what the model's <code>legacy</code> switches are for.</p>
+  <figure>
+    <div class="fig"><table id="lawtab"></table></div>
+    <figcaption><b>Table 2. Ten asymmetric-block moves, run for real.</b> Seven did not reset at
+      all. The three that did are exactly the three where the blocked agent's destination
+      contained the hazard. Breaking the mirror is free; walking into value 8 sends everyone back
+      to the start. With that, L1 planned and cleared in 23 actions.</figcaption>
+  </figure>
+
+  <h2 id="l2">L2: the action that did nothing turns out to do everything</h2>
+  <p>L2 is not solvable by movement at all, and the model says so before any action is spent:
+  101 reachable states, no agent can cover a mark, the pair never coincides, the closest they get
+  is eight cells apart.</p>
+  <p>So something other than <code>ACTION1–4</code> must be involved — and the only candidate was
+  the one already written off. <code>ACTION6</code> does nothing on L0 and nothing on L1, at every
+  coordinate tried. On L2, clicking any of the three 2×2 marks of value 9 turns that mark into 11
+  <b>and turns all thirty-two agent cells from value 10 into value 1</b>. Clicking an agent does
+  nothing. The marks are switches, and throwing one transforms both agents into something else.</p>
   <div class="open">
-    <b>Open, and the model says so.</b> With that law switched on, only 34 states are reachable
-    within depth 9 and none has the pair meeting, so the planner returns <em>no plan</em> for L1.
-    The level is presumably solvable, so the law as stated is too strong or attributed to the
-    wrong cause. <code>ACTION5</code> and <code>ACTION6</code> were both probed and do nothing
-    here — <code>ACTION6</code> at seven coordinates including both agents, corridor, hazard and
-    the centre strip.
-    <br><br>
-    The attempt to confirm the law with a second instance <b>failed, and the failure is the
-    useful part</b>: the search was run inside the model with the law already on, so it only ever
-    visits states the law permits and cannot produce a counterexample. Enumerate with the law
-    <em>off</em>, then check the candidate asymmetric moves against the real engine. That is the
-    next experiment — and it is the same mistake tu93's L4 taught, where a probe set that could
-    not discriminate certified whatever it was handed.
+    <b>Open.</b> What value-1 agents can do — pass the hazard, merge, move differently — has not
+    been probed. Until it is, the model does not pretend to plan L2, and the loop refuses. That
+    refusal is the feature: the alternative is a confident plan built on an invented rule.
   </div>
 
   <h2 id="ledger">The ledger so far</h2>
@@ -190,12 +207,28 @@ fetch("./data/index.json").then(r=>r.json()).then(X=>{
       `<td class="n" style="color:var(--accent)">0</td>`+
       `<td class="n">${Lv.solution_len}</td><td class="n">${c.real_deaths??"—"}</td>`+
       `<td class="n">${Lv.search_stats.sims}</td><td class="ok">solved</td></tr>`;}).join("")+
-    `<tr><td>L1</td><td style="font-size:12.5px">agents are 4×4 stepping 4; a move only some
-      agents can make sends everyone back to the start</td>`+
-    `<td class="n">29</td><td class="n" style="color:var(--accent)">0</td><td class="n">—</td>`+
-    `<td class="n">0</td><td class="n">148</td>`+
-    `<td class="no">unsolved — the planner refuses</td></tr>`;
+    `<tr><td>L2</td><td style="font-size:12.5px">value-9 marks are ACTION6 switches: throwing
+      one turns both agents from value 10 into value 1</td>`+
+    `<td class="n">13</td><td class="n" style="color:var(--accent)">0</td><td class="n">—</td>`+
+    `<td class="n">0</td><td class="n">404</td>`+
+    `<td class="no">open — not modelled, so the planner refuses</td></tr>`;
 });
+
+document.getElementById("lawtab").innerHTML=
+  "<tr><th>before</th><th>action</th><th>blocked agent ran into</th><th>engine</th></tr>"+
+  [["(26,18) (26,42)","ACTION1","territory","moved, no reset"],
+   ["(22,18) (26,42)","ACTION3","territory","moved, no reset"],
+   ["(22,18) (26,42)","ACTION4","territory","moved, no reset"],
+   ["(22,18) (26,46)","ACTION3","territory","moved, no reset"],
+   ["(22,18) (26,46)","ACTION4","territory","moved, no reset"],
+   ["(22,18) (26,38)","ACTION3","territory","moved, no reset"],
+   ["(22,18) (26,38)","ACTION4","territory","moved, no reset"],
+   ["(26,22) (26,38)","ACTION4","<b>hazard 8</b>","<b>RESET to start</b>"],
+   ["(34,18) (34,42)","ACTION2","<b>hazard 8</b>","<b>RESET to start</b>"],
+   ["(30,22) (30,38)","ACTION4","<b>hazard 8</b>","<b>RESET to start</b>"]]
+  .map(([a,b,c,d])=>`<tr><td style="font-family:var(--mono);font-size:12px">${a}</td>`+
+    `<td><code>${b}</code></td><td>${c}</td>`+
+    `<td class="${d.includes("RESET")?"no":"ok"}">${d}</td></tr>`).join("");
 
 document.getElementById("cmp").innerHTML=
   "<tr><th>rule</th><th>tu93</th><th>m0r0</th></tr>"+
@@ -206,6 +239,8 @@ document.getElementById("cmp").innerHTML=
    ["horizontal motion","one direction for everyone","<b>opposite for the two</b>"],
    ["blocked independently","yes","yes — <b>the one rule that carried over</b>"],
    ["goal","a 3×3 goal tile to stand on","<b>no goal tile at all</b>: the two agents must meet"],
+   ["reset / death","guards and patrollers kill you","walking into hazard 8 sends <b>everyone</b> back to the start"],
+   ["coordinate action","not available","inert on L0 and L1, and the whole mechanic on L2"],
    ["step budget","row 63, consumed right to left","rows 0 and 63, mirrored, rate not understood"]]
   .map(([a,b,c])=>`<tr><td>${a}</td><td style="color:var(--dim)">${b}</td><td>${c}</td></tr>`)
   .join("");
