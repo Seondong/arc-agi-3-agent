@@ -101,8 +101,14 @@ def run_backtest(model: WorldModel, timeline: Timeline) -> BacktestReport:
                 error=f"step/render raised at step {tr.step_index}: {exc!r}",
             )
 
-        ignore = ignored_cells(model, tr.after_frame)
-        frame_bad = not frames_equal(pred_frame, tr.after_frame, ignore)
+        # A death often comes back with no frame at all. There is then no ground
+        # truth to compare against, so such a step can only certify the status —
+        # scoring the render against a stale frame would invent a failure.
+        if tr.after_frame is None:
+            ignore, frame_bad = None, False
+        else:
+            ignore = ignored_cells(model, tr.after_frame)
+            frame_bad = not frames_equal(pred_frame, tr.after_frame, ignore)
         status_bad = pred_status != tr.status
         if frame_bad or status_bad:
             return BacktestReport(

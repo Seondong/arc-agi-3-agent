@@ -18,8 +18,17 @@ learned when (the narrative lives in artifacts/wm_journal/*.jsonl).
                              a player actually changes square, bouncing off walls
                              (the notch flips on arrival, showing where it goes
                              next); sharing a square with a player kills it.
-  L4  several player blocks  one action drives every player block; each is
-                             blocked independently by walls.
+  L6  pursuer (13)           sits still until a player crosses the straight line
+                             it faces; its notch then turns 11 ("locked on") and
+                             it walks that line to the square where it saw the
+                             player, and from there follows the player's own trail
+                             one square per player move — never a shortcut. Touch
+                             kills.
+  L4  a second player-looking block  a 3x3 block of 9 with a facing notch that
+                             is NOT controlled: it never responds to any action,
+                             even when its way is clear and the real player moves
+                             the same way. Which look-alike is real cannot be read
+                             off a single frame — it is discovered by acting.
 """
 from __future__ import annotations
 
@@ -30,6 +39,7 @@ from .core import Action, Frame, Status, WorldModel
 WALL, DOOR, FLOOR, PLAYER, GOAL, NOTCH, BORDER = 5, 2, 0, 9, 14, 4, 6
 GUARD, GUARD_NOTCH, GUARD_FED = 8, 15, 11   # guard body, facing notch, "fed" notch
 PATROL = 12                                  # moving patroller (L3+), notch 15 too
+PURSUER, PURSUER_LOCKED = 13, 11             # trail-following hunter (L6+)
 STEP = 6                                     # pixels moved per action
 
 _DELTA = {"ACTION1": (-STEP, 0), "ACTION2": (STEP, 0),
@@ -39,16 +49,26 @@ _NOTCH_OFF = {"U": (0, 1), "D": (2, 1), "L": (1, 0), "R": (1, 2)}
 _ACT = {"U": "ACTION1", "D": "ACTION2", "L": "ACTION3", "R": "ACTION4"}
 _FLIP = {"U": "D", "D": "U", "L": "R", "R": "L"}
 
+# Top-left corners of 9-blocks that look exactly like the player but never move.
+# Discovered by probing, not by reading the frame: on L4 the block at (44,51) sat
+# out ACTION1 while the real player took the same step upward with a clear path
+# (scripts/probe_l4_second_block.py). Treated as part of the static maze.
+INERT_LOOKALIKES = frozenset({(44, 51)})
+
 
 @dataclass(frozen=True)
 class Tu93State:
     """Everything that varies within a level. The maze itself is static context."""
-    # One entry (row, col, facing) per player-controlled block. L0-L3 have one,
-    # L4 has two; all of them obey the same action.
+    # One entry (row, col, facing) per player-controlled block. Every level so far
+    # has exactly one; L4's second 9-block is inert and lives in the background.
     players: tuple = ()
     moved: bool = False               # any action taken yet (HUD flag)
     guards: tuple = ()                # (row, col, facing) — stationary, lethal head-on
     patrols: tuple = ()               # (row, col, facing) — moving, lethal on contact
+    # (row, col, facing, locked, route): a pursuer walks `route` one square per
+    # player move. Before it locks on, route is empty and it never moves. `route`
+    # holds exactly the squares it is behind the player by, so it stays short.
+    pursuers: tuple = ()
     killer: tuple | None = None       # guard that caught a player (renders notch 11)
 
     @property
@@ -56,8 +76,28 @@ class Tu93State:
         return bool(self.players)
 
 
-def tu93_world_model(version: int = 1) -> WorldModel:
+# Historical variants, so a refuted model can be RE-RUN instead of remembered.
+# Each name switches off exactly one rule this file later learned, which is how
+# the visualizations regenerate their refutations from the live engine:
+#   drive_all_players  every 3x3 block of 9 is a player          (pre-v10)
+#   no_pursuer         value 13 is scenery, not an entity        (pre-v11)
+#   type_render        co-located enemies drawn in a fixed type
+#                      order (guard last) instead of by axis      (pre-v12)
+#   no_crossing        a player crossing a patroller leaves it
+#                      alive                                      (pre-v12)
+LEGACY_SWITCHES = ("drive_all_players", "no_pursuer", "type_render", "no_crossing")
+
+
+def tu93_world_model(version: int = 1, inert=INERT_LOOKALIKES,
+                     legacy=()) -> WorldModel:
     ctx: dict = {}
+    legacy = frozenset(legacy)
+    unknown = legacy - set(LEGACY_SWITCHES)
+    if unknown:
+        raise ValueError(f"unknown legacy switch(es): {sorted(unknown)}")
+    if "drive_all_players" in legacy:
+        inert = ()
+    inert = frozenset(tuple(p) for p in inert)
 
     # -- reconstruction ------------------------------------------------------
     def _blocks(frame, body, notch_vals=(GUARD_NOTCH, GUARD_FED)):
@@ -90,11 +130,20 @@ def tu93_world_model(version: int = 1) -> WorldModel:
         rows, cols = len(frame), len(frame[0])
         bg = [list(row) for row in frame]
 
-        players = _blocks(frame, PLAYER, notch_vals=(NOTCH,))
+        # A look-alike that probing showed to be inert is left in `bg`: it never
+        # moves, so it is scenery, and render() then reproduces it for free.
+        players = [b for b in _blocks(frame, PLAYER, notch_vals=(NOTCH,))
+                   if (b[0], b[1]) not in inert]
         guards = _blocks(frame, GUARD)
         patrols = _blocks(frame, PATROL)
-        for group in (players, guards, patrols):          # erase movers from the maze
-            for (r, c, _) in group:
+        # A pursuer already showing notch 11 would be mid-chase and its route
+        # could not be recovered from one frame; reconstruct only ever runs on a
+        # level's first frame, where every pursuer is still asleep.
+        pursuers = ([] if "no_pursuer" in legacy
+                    else [(r, c, f, False, ()) for (r, c, f) in _blocks(frame, PURSUER)])
+        for group in (players, guards, patrols, pursuers):  # erase movers from the maze
+            for entry in group:
+                r, c = entry[0], entry[1]
                 for i in range(3):
                     for j in range(3):
                         bg[r + i][c + j] = FLOOR
@@ -106,7 +155,8 @@ def tu93_world_model(version: int = 1) -> WorldModel:
 
         ctx.update(bg=bg, goal=goal, rows=rows, cols=cols)
         return Tu93State(players=tuple(players), moved=False,
-                         guards=tuple(guards), patrols=tuple(patrols))
+                         guards=tuple(guards), patrols=tuple(patrols),
+                         pursuers=tuple(pursuers))
 
     # -- geometry ------------------------------------------------------------
     def _wall_in(rrange, crange) -> bool:
@@ -126,6 +176,17 @@ def tu93_world_model(version: int = 1) -> WorldModel:
         gap_c = range(c + dc // 2, c + dc // 2 + 3) if dc else range(c, c + 3)
         return (_wall_in(gap_r, gap_c)
                 or _wall_in(range(r + dr, r + dr + 3), range(c + dc, c + dc + 3)))
+
+    def _sightline(r, c, f):
+        """The squares a block at (r,c) can see along `f`, nearest first."""
+        dr, dc = _DELTA[_ACT[f]]
+        seen, (cr, cc) = [], (r, c)
+        while not _blocked_step(cr, cc, f):
+            cr, cc = cr + dr, cc + dc
+            seen.append((cr, cc))
+            if len(seen) > 16:            # a 64px grid cannot be longer than this
+                break
+        return seen
 
     # -- dynamics ------------------------------------------------------------
     def step(state: Tu93State, action: Action):
@@ -175,34 +236,121 @@ def tu93_world_model(version: int = 1) -> WorldModel:
                 qf = _FLIP[qf]
             new_patrols.append((nqr, nqc, qf))
 
-        # 4. contact with a patroller destroys the player it touches
-        hit = {(qr, qc) for (qr, qc, _) in new_patrols}
-        if any((r, c) in hit for (r, c, _) in new_players):
-            return (Tu93State((), True, tuple(survivors), tuple(new_patrols)),
-                    Status.GAME_OVER)
+        # 3b. a player that steps into the square a patroller is leaving destroys
+        #     it — the moving counterpart of stepping onto a guard from behind.
+        #     Ending on the SAME square as a patroller is still death (below);
+        #     this is the crossing case, where the two swap past each other.
+        #     (Observed L8 k=17: the player dropped into (16,45) as the patroller
+        #     there moved off to (16,39), and that patroller never reappeared.)
+        if "no_crossing" not in legacy:
+            newp = {(r, c) for (r, c, _) in new_players}
+            kept = []
+            for old, new in zip(state.patrols, new_patrols):
+                if (old[0], old[1]) in newp and (old[0], old[1]) != (new[0], new[1]):
+                    continue
+                kept.append(new)
+            new_patrols = kept
 
-        nxt = Tu93State(tuple(new_players), True, tuple(survivors), tuple(new_patrols))
+        # 4. pursuers: asleep until a player crosses the line they face, then they
+        #    walk that line to the sighting square and follow the player's trail
+        new_pursuers = []
+        for (ur, uc, uf, locked, route) in state.pursuers:
+            if not locked:
+                ray = _sightline(ur, uc, uf)
+                spotted = next((sq for sq in ray
+                                if any((r, c) == sq for (r, c, _) in new_players)),
+                               None)
+                if spotted is None:
+                    new_pursuers.append((ur, uc, uf, False, ()))
+                    continue
+                # It locks on this turn but does not move until the next one.
+                route = tuple(ray[:ray.index(spotted) + 1])
+                new_pursuers.append((ur, uc, uf, True, route))
+                continue
+            if not any_moved or not route:
+                new_pursuers.append((ur, uc, uf, True, route))
+                continue
+            (nur, nuc), rest = route[0], route[1:]
+            # The player's new square joins the end of the trail it is walking.
+            rest = rest + tuple((r, c) for (r, c, _) in new_players[:1])
+            ahead = rest[0] if rest else (nur, nuc)
+            nuf = uf
+            for f, (fdr, fdc) in ((f, _DELTA[_ACT[f]]) for f in _FLIP):
+                if (nur + fdr, nuc + fdc) == ahead:
+                    nuf = f
+            new_pursuers.append((nur, nuc, nuf, True, rest))
+
+        # 5. contact with a patroller or a pursuer destroys the player it touches
+        hit = {(qr, qc) for (qr, qc, _) in new_patrols}
+        hit |= {(ur, uc) for (ur, uc, _, _, _) in new_pursuers}
+        if any((r, c) in hit for (r, c, _) in new_players):
+            return (Tu93State((), True, tuple(survivors), tuple(new_patrols),
+                              tuple(new_pursuers)), Status.GAME_OVER)
+
+        nxt = Tu93State(tuple(new_players), True, tuple(survivors), tuple(new_patrols),
+                        tuple(new_pursuers))
         if ctx["goal"] is not None and any((r, c) == ctx["goal"]
                                            for (r, c, _) in new_players):
             return nxt, Status.LEVEL_COMPLETED
         return nxt, Status.RUNNING
 
     # -- rendering -----------------------------------------------------------
+    def _axis(f):
+        return "H" if f in ("L", "R") else "V"
+
+    def _enemy_draw_list(state):
+        """Enemies in draw order, bottom first.
+
+        Two entities can share a square, and then exactly one of them is drawn
+        whole — body and notch, never a mix. Which one is not a fixed type
+        order: on L5 the guard at (42,30), which faces L, is drawn over a
+        patroller crossing it horizontally, while the guard at (42,24), which
+        faces U, is drawn *under* the same patroller. Across all nine overlaps
+        observed on L5 and L8 the discriminator is the axis: a guard wins when
+        its facing lies along the axis the other thing is travelling, and loses
+        otherwise; a patroller always wins against a pursuer.
+
+        UNDER-DETERMINED. This fits every overlap observed so far, and the one
+        competing hypothesis (a fixed z-order by initial row-major position) is
+        refuted by the (42,30) case. But no observed frame separates it from
+        other axis-free explanations, because the discriminating case — a
+        patroller crossing a guard perpendicular to that guard's facing — does
+        not arise in any level's solution path. Treat as the least-trusted rule
+        in this model; it affects rendering only, never dynamics or planning.
+        """
+        if "type_render" in legacy:      # the pre-v12 order: guards drawn last
+            return ([(0, 0, i, "guard", e) for i, e in enumerate(state.guards)]
+                    + [(1, 1, i, "patrol", e) for i, e in enumerate(state.patrols)]
+                    + [(2, 2, i, "pursuer", e) for i, e in enumerate(state.pursuers)])
+        movers = [(e[0], e[1], e[2]) for e in state.patrols]
+        movers += [(e[0], e[1], e[2]) for e in state.pursuers]
+        out = []
+        for i, (gr, gc, gf) in enumerate(state.guards):
+            same_axis = any((mr, mc) == (gr, gc) and _axis(mf) == _axis(gf)
+                            for (mr, mc, mf) in movers)
+            out.append((2 if same_axis else 0, 0, i, "guard", (gr, gc, gf)))
+        for i, e in enumerate(state.patrols):
+            out.append((1, 1, i, "patrol", e))
+        for i, e in enumerate(state.pursuers):
+            out.append((0.5, 2, i, "pursuer", e))
+        out.sort(key=lambda t: (t[0], t[1], t[2]))
+        return out
+
     def render(state: Tu93State) -> Frame:
         grid = [list(row) for row in ctx["bg"]]
-        for (gr, gc, gf) in state.guards:
-            for r in range(gr, gr + 3):
-                for c in range(gc, gc + 3):
-                    grid[r][c] = GUARD
-            nr, nc = _NOTCH_OFF[gf]
-            grid[gr + nr][gc + nc] = (GUARD_FED if (gr, gc) == state.killer
-                                      else GUARD_NOTCH)
-        for (qr, qc, qf) in state.patrols:
-            for r in range(qr, qr + 3):
-                for c in range(qc, qc + 3):
-                    grid[r][c] = PATROL
-            nr, nc = _NOTCH_OFF[qf]
-            grid[qr + nr][qc + nc] = GUARD_NOTCH
+        for (_z, _t, _i, kind, e) in _enemy_draw_list(state):
+            r0, c0, f = e[0], e[1], e[2]
+            body = {"guard": GUARD, "patrol": PATROL, "pursuer": PURSUER}[kind]
+            for r in range(r0, r0 + 3):
+                for c in range(c0, c0 + 3):
+                    grid[r][c] = body
+            nr, nc = _NOTCH_OFF[f]
+            if kind == "guard" and (r0, c0) == state.killer:
+                grid[r0 + nr][c0 + nc] = GUARD_FED
+            elif kind == "pursuer" and e[3]:
+                grid[r0 + nr][c0 + nc] = PURSUER_LOCKED
+            else:
+                grid[r0 + nr][c0 + nc] = GUARD_NOTCH
         # The goal tile is drawn OVER a patroller standing on it (observed L4):
         # a patroller crossing the goal square is hidden, not the other way round.
         g = ctx.get("goal")
@@ -236,6 +384,6 @@ def tu93_world_model(version: int = 1) -> WorldModel:
               "+ possibly several player blocks under one control",
         source_code="see agents/wm/tu93_model.py",
         confidence=0.9,
-        fingerprint=lambda s: (s.players, s.guards, s.patrols),
+        fingerprint=lambda s: (s.players, s.guards, s.patrols, s.pursuers),
         ignore=ignore,
     )

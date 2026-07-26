@@ -21,6 +21,8 @@ from agents.wm.tu93_model import tu93_world_model
 
 SOLUTIONS_PATH = Path("artifacts/wm_journal/solutions.json")
 MOVES = ["ACTION1","ACTION2","ACTION3","ACTION4"]
+MODEL_VERSION_N = 11
+MODEL_VERSION = f"v{MODEL_VERSION_N}"
 steps=[0]
 
 def load_solutions():
@@ -60,9 +62,10 @@ def entities(grid):
 
 def main():
     level=int(sys.argv[1])
-    probe=(sys.argv[2].split(",") if len(sys.argv)>2 and sys.argv[2] else [])
+    probe=(sys.argv[2].split(",") if len(sys.argv)>2 and not sys.argv[2].startswith("--") and sys.argv[2] else [])
     sols=load_solutions()
-    J=Journal("tu93",level,reset=True)
+    # Append by default: the journal is an audit trail, not a scratchpad.
+    J=Journal("tu93",level,reset="--reset" in sys.argv)
     arc=Arcade(operation_mode=OperationMode.OFFLINE)
     gid=next(e.game_id for e in arc.get_environments() if e.game_id.startswith("tu93"))
     prefix=prefix_for(level,sols)
@@ -74,7 +77,7 @@ def main():
     J.observe(note=f"L{level} initial frame; levels_completed={lv}; entities={ents}", entities=ents)
     print(f"L{level} init: {ents}")
 
-    model=tu93_world_model(version=8)
+    model=tu93_world_model(version=MODEL_VERSION_N)
     s0=model.reconstruct(init)
     print(f"  model sees: guards={s0.guards} patrols={s0.patrols}")
 
@@ -84,8 +87,9 @@ def main():
         before=steps[0]
         a=GameAction.from_name(n); raw=env.step(a,data=a.action_data.model_dump(),reasoning={}); steps[0]+=1
         if raw is None or not raw.frame or raw.state.name=="GAME_OVER":
+            # death returns no frame -> record None; only the status is checkable
             tl.record(Transition(step_index=i+1,action=Action(n),before_frame=prev,
-                                 after_frame=prev,status=Status.GAME_OVER))
+                                 after_frame=None,status=Status.GAME_OVER))
             J.probe(actions=[n],hypothesis="does the carried model predict this move?",
                     observed="GAME_OVER",died=True,env_steps=steps[0]-before); break
         cur=g(raw)
@@ -99,13 +103,13 @@ def main():
     rep=run_backtest(model,tl)
     print(f"  backtest: {rep.summary()}")
     if rep.ok:
-        J.author(version="v8",rules=["carried model incl. guards + patrollers"],
+        J.author(version=MODEL_VERSION,rules=["carried model incl. guards + patrollers"],
                  code="see agents/wm/tu93_model.py",
                  changed="none",because=f"backtest {rep.matched}/{rep.total} exact on L{level} probes",
                  backtest={"matched":rep.matched,"total":rep.total,"ok":True})
     else:
         m=rep.first_mismatch
-        J.refute(version="v8",bug=m.summary(),step_index=m.step_index,action=m.action,
+        J.refute(version=MODEL_VERSION,bug=m.summary(),step_index=m.step_index,action=m.action,
                  cells_off=m.changed_cells)
         J.note(text=f"L{level}: carried model refuted — a new mechanic is present. Investigate before planning.")
         print("  MODEL REFUTED — stopping before planning (uncertified models must not plan).")
@@ -123,7 +127,7 @@ def main():
     plan=run_bfs(model,s,[Action(a) for a in MOVES],max_depth=120)
     model.step=inner
     names=[a.name for a in (plan.actions or [])]
-    J.plan(version="v8",actions=names,
+    J.plan(version=MODEL_VERSION,actions=names,
            stats={"sims":sims[0],"nodes":plan.nodes_expanded,"deaths":deaths[0],
                   "found":plan.found,"plan_len":len(names)})
     print(f"  in-model plan: found={plan.found} len={len(names)} sims={sims[0]} "

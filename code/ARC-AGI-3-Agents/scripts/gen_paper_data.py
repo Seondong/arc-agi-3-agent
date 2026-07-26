@@ -10,6 +10,7 @@ from agents.wm.journal import load, summary
 
 VIZ = Path("artifacts/wm_viz")
 SOLS = json.loads(Path("artifacts/wm_journal/solutions.json").read_text())
+NLEVELS = max(int(k) for k in SOLS) + 1
 
 def g(raw): return [a.tolist() for a in raw.frame][-1] if raw.frame else None
 
@@ -20,7 +21,7 @@ def level_frames():
     env=arc.make(gid)
     raw=env.step(GameAction.RESET,data=GameAction.RESET.action_data.model_dump(),reasoning={})
     frames={}
-    for lvl in range(5):
+    for lvl in range(NLEVELS):
         grid=g(raw)
         if grid is None: break
         rs=[r for r in range(64) if any(grid[r][c] not in (5,6) for c in range(64))]
@@ -41,9 +42,15 @@ def main():
       1:"guard (8): stationary, lethal head-on, removable from behind",
       2:"three guards; the killing guard lunges and shows a 'fed' notch",
       3:"patroller (12): moves when the player moves, bounces off walls",
-      4:"two player blocks under one action; goal renders over a patroller",
+      4:"a second block that looks exactly like the player but is never controlled; "
+        "patrollers overlap freely and hide under the goal tile",
+      5:"nothing new — guards and patrollers composed; solved by the carried model",
+      6:"pursuer (13): sleeps until you cross the line it faces, then walks your own "
+        "trail one square per move, forever two squares behind",
+      7:"nothing new — pursuer in a corridor maze",
+      8:"nothing new — guards, patrollers and a pursuer at once",
     }
-    for lvl in range(5):
+    for lvl in range(NLEVELS):
         j=load("tu93",lvl)
         s=summary(j) if j else {}
         sol=SOLS.get(str(lvl))

@@ -1,8 +1,13 @@
 # wm_viz — world-model solve, instrumented
 
-Visualizations of the `agents/wm` world-model pipeline solving **tu93 L0–L2**,
-with the world model authored by Claude Code (Max subscription) standing in for
-`ClaudeBrain`'s `propose()` — no API calls.
+Visualizations of the `agents/wm` world-model pipeline solving **tu93 end to end
+— all 9 levels, 185 actions, final state `WIN`** — with the world model authored
+by Claude Code (Max subscription) standing in for `ClaudeBrain`'s `propose()` —
+no API calls.
+
+Start at **`paper.html`** — it is the landing page and links to everything below.
+`level.html` covers every level uniformly; the per-level pages that predate it
+(L0–L2) are kept because they show workings the uniform page does not.
 
 Serve locally:
 
@@ -86,6 +91,29 @@ predate the journal and still embed prose; treat them as legacy.
 Dynamics come from stepping the engine and reading returned frames.
 `environment_files/` is never read. (Also recorded in memory as `feedback_no_env_files`.)
 
+### 9. Count entities, not cells — and check that a probe can discriminate
+Two failures on L4, both invisible to a green backtest. **Cells lie about
+entities**: two blocks on one square render as one, and a block under the goal
+tile renders as none, so a falling cell count looked exactly like destruction and
+became an open research question that had no answer. **A probe set that cannot
+separate two rules certifies both**: the rule "every 9-block is a player" survived
+three probes because the inert block was walled in on the only direction they
+used. `l4_evolve.html` is the corrected record of both. Before trusting a rule,
+ask which observation would have refuted it — and whether one was ever run.
+
+### 10. Instrument every case, not the interesting ones
+The pages grew one per session and covered whatever was interesting that day: L0
+had three pages, L2 had the only in-model search log, and L3/L5/L7/L8 had none.
+A record with holes reads as a record. Worse, the holes hid real bugs: no level
+had ever been replayed frame-by-frame along its *own* solution, and when that
+sweep was finally run (`scripts/backtest_all.py`) two levels failed it — a guard
+drawn on the wrong side of a patroller, and a patroller the player destroys by
+crossing it. Both had passed their two-step certification, and both plans still
+worked, so nothing complained. `level.html` now produces the same four views for
+every level, and `model_evolve.html` re-runs every retired version against every
+level. Where a record genuinely does not exist — L0–L2 predate the journal — the
+gap is shown as a gap, not back-filled from memory.
+
 ---
 
 ## Pages
@@ -99,25 +127,64 @@ Dynamics come from stepping the engine and reading returned frames.
 | `l1_search.html` | L1 **brute-force search over the real engine**: 41 attempts, 2 real deaths | `scripts/gen_l1_search.py` |
 | `l1_evolve.html` | L1 the world-model way: inherit v3 → 5 real probes (1 death) → v4 → solve | `scripts/gen_l1_evolve.py` |
 | `l2_evolve.html` | L2: inherited v4 refuted 3× by one death frame → v7 certified → solve | `scripts/gen_l2_evolve.py` |
+| **`level.html?l=N`** | **every level, uniformly** — solution replay against the model's prediction, the FULL in-model search, cost ledger and journal, for L0–L8 | `scripts/gen_level_pages.py` |
+| **`model_evolve.html`** | **how the model evolved** — every retired version reconstructed and re-run against all nine levels, plus the live source of each rule | `scripts/gen_model_evolve.py` |
+| `l4_evolve.html` | L4: the cell-count artefact that became a phantom research question, the refuted model re-run, and the probe that could tell the theories apart | `scripts/gen_l4_evolve.py` |
+| `l6_pursuer.html` | L6: a one-cell refutation, the pursuer's trail, and a shortest-path chaser simulated on the same frames to show which rule it is **not** | `scripts/gen_l6_pursuer.py` |
 | `inmodel_search.html` | **every simulated interaction** of the in-model BFS + fidelity/outcome table | `scripts/gen_inmodel_search.py` |
+| `paper.html` | the write-up that ties them together; data from the journals + solutions | `scripts/gen_paper_data.py` |
 
 Regenerate any page's data with `uv run python scripts/<generator>.py` from
-`code/ARC-AGI-3-Agents/`.
+`code/ARC-AGI-3-Agents/`, then check the pages themselves:
+
+```bash
+uv run python scripts/check_viz_pages.py
+```
+
+That checker exists because a real rendering bug shipped and nothing complained:
+`paper.html` carried `id="ledger"` on both the section heading and the table under
+it, so `getElementById("ledger")` returned the **heading**, the rows were injected
+into an `<h2>`, and the browser silently dropped every `<tr>` — the ledger rendered
+as a wall of oversized text. The JSON was valid, the JS parsed, the page returned
+200. It now checks duplicate/shadowed ids, missing targets, table rows injected
+into non-tables, `getContext` on non-canvases, unresolvable links and fetches, and
+script syntax.
 
 ---
 
-## Results so far
+## Results
 
-| level | world model | backtest | solve | real deaths paid |
+**tu93 solved: 9 levels, 185 actions, final state `WIN`.** Re-run it with
+`uv run python scripts/verify_tu93.py` rather than taking the table on trust.
+
+| level | world model | new mechanic | solve | real deaths paid |
 |---|---|---|---|---|
-| L0 | v3 (maze + HUD ignore) | 17/18 (only the terminal frame differs) | 18 actions | 0 |
-| L1 | v4 (+ guard rule) | 7/7 exact | 10 actions | 1 (during probing) |
-| L2 | v7 (+ N guards, lunge move, fed notch) | 4/4 exact | 19 actions | 1 (during probing) |
+| L0 | v3 (maze + HUD ignore) | maze, player, goal | 18 actions | 0 |
+| L1 | v4 (+ guard rule) | guard: stationary, lethal head-on | 10 actions | 1 (probing) |
+| L2 | v7 (+ N guards, lunge move, fed notch) | three guards | 19 actions | 1 (probing) |
+| L3 | v8 (+ patroller) | patroller: moves when you move, bounces | 17 actions | 0 |
+| L4 | v10 (+ inert look-alike) | a block that looks like the player and is not | 29 actions | 1 (probing) |
+| L5 | v12 | none — guards + patrollers composed | 28 actions | 0 |
+| L6 | v11 (+ pursuer) | pursuer: follows your own trail | 14 actions | 1 (probing) |
+| L7 | v11 | none | 21 actions | 0 |
+| L8 | v12 | none — all three enemy types at once | 29 actions | 0 |
 
-One model (`agents/wm/tu93_model.py`) covers all three levels: `guards: tuple = ()`
-means L0 (none), L1 (one), L2 (three) all run through the same code.
+One model (`agents/wm/tu93_model.py`) covers every level; empty tuples mean an
+entity type is simply absent. **L5, L7 and L8 each cost two probe actions, zero
+refutations and zero deaths** — that is the return on everything paid earlier, and
+it is the number to watch when porting the method to another game.
 
-**Known limits.** Certification windows are short (L2 = 4 transitions), so "certified"
-means *consistent with what was observed*, not *proven correct*. The 19-action L2 plan
-is shortest **under the model**, not verified optimal. Deaths render exactly, but the
-terminal frame of a cleared level (next level's maze) is not modelled.
+Every level's own solution now replays through the model **cell-exact at every
+step** — 176 steps, `uv run python scripts/backtest_all.py`.
+
+**Known limits.** Probe certification windows are short (several levels = 2
+transitions), so passing one means *consistent with what was observed*, not
+*proven correct* — L4 is the cautionary case: three probes certified a rule none
+of them could discriminate, and L5/L8 passed theirs with a render bug and a
+missing destruction rule intact. The overlap draw-order rule is explicitly
+under-determined: it fits all nine observed overlaps and refutes the obvious
+competitor, but the experiment that would separate it from other explanations
+does not occur in any solution path. Plan lengths are shortest **under the model**, not verified optimal.
+The HUD row is excluded from verification rather than modelled. Deaths return no
+frame, so they certify a status only. And the terminal frame of a cleared level
+(the next level's maze) is not modelled.

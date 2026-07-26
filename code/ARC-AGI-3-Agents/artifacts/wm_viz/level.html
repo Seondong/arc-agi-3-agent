@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tu93 · level by level</title>
+<style>
+  :root{
+    --bg:#fbfbf9; --ink:#1a1a1a; --dim:#6b7280; --rule:#e5e3dd; --panel:#f4f3ef;
+    --accent:#1f6f78; --bad:#b3261e; --good:#2e7d32; --warn:#a16207;
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#12141a; --ink:#e8e6e3; --dim:#9aa3ad; --rule:#2a2f38; --panel:#191d24;
+    --accent:#4fd1c5; --bad:#f87171; --good:#4ade80; --warn:#fbbf24;}}
+  :root[data-theme="dark"]{--bg:#12141a;--ink:#e8e6e3;--dim:#9aa3ad;--rule:#2a2f38;
+    --panel:#191d24;--accent:#4fd1c5;--bad:#f87171;--good:#4ade80;--warn:#fbbf24;}
+  :root[data-theme="light"]{--bg:#fbfbf9;--ink:#1a1a1a;--dim:#6b7280;--rule:#e5e3dd;
+    --panel:#f4f3ef;--accent:#1f6f78;--bad:#b3261e;--good:#2e7d32;--warn:#a16207;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:Georgia,'Iowan Old Style','Palatino Linotype',serif;
+    font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .col{max-width:720px;margin:0 auto;padding:0 24px}
+  .wide{max-width:1080px;margin:0 auto;padding:0 24px}
+  header.hero{padding:52px 0 26px;border-bottom:1px solid var(--rule);margin-bottom:28px}
+  h1{font-size:32px;line-height:1.2;margin:0 0 12px;letter-spacing:-.015em;font-weight:600}
+  .byline{color:var(--dim);font-size:15px}
+  h2{font-size:22px;margin:40px 0 10px;letter-spacing:-.01em;font-weight:600}
+  p{margin:0 0 16px}
+  a{color:var(--accent)}
+  code{font-family:var(--mono);font-size:.86em;background:var(--panel);padding:1px 5px;border-radius:4px}
+  pre{font-family:var(--mono);font-size:12.5px;line-height:1.55;background:var(--panel);
+    border:1px solid var(--rule);border-radius:8px;padding:14px 16px;overflow:auto}
+  .aside{border-left:3px solid var(--accent);background:var(--panel);padding:12px 16px;
+    border-radius:0 8px 8px 0;font-size:15.5px;margin:20px 0}
+  .aside.warn{border-color:var(--warn)}
+  figure{margin:28px 0}
+  figcaption{font-size:14px;color:var(--dim);margin-top:10px;line-height:1.5}
+  figcaption b{color:var(--ink)}
+  table{width:100%;border-collapse:collapse;font-size:14.5px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+  th,td{border-bottom:1px solid var(--rule);padding:7px 9px;text-align:left}
+  th{color:var(--dim);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em}
+  td.n{font-variant-numeric:tabular-nums}
+  .ok{color:var(--good);font-weight:600} .no{color:var(--bad);font-weight:600}
+  .fig{background:var(--panel);border:1px solid var(--rule);border-radius:12px;padding:16px}
+  .ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px}
+  button{font:inherit;font-weight:600;background:var(--bg);color:var(--ink);
+    border:1px solid var(--rule);border-radius:7px;padding:6px 11px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  input[type=range]{flex:1;min-width:110px;accent-color:var(--accent)}
+  canvas{image-rendering:pixelated;border-radius:6px;border:1px solid var(--rule);background:#0d1117;display:block}
+  .row{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .cap{font-size:12px;color:var(--dim);text-align:center;margin-bottom:5px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+  .status{margin-top:11px;padding:8px 11px;border-radius:7px;font-size:13.5px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);border:1px solid var(--rule)}
+  .status.death{border-color:var(--bad);color:var(--bad)}
+  .status.good{border-color:var(--good);color:var(--good)}
+  .status.warn{border-color:var(--warn);color:var(--warn)}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px}
+  .chip{background:var(--panel);border:1px solid var(--rule);border-radius:999px;
+    padding:5px 13px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink)}
+  .chip:hover{border-color:var(--accent)}
+  .chip.on{border-color:var(--accent);color:var(--accent);background:var(--bg)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--dim);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:9px}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  .jrn{font-family:var(--mono);font-size:12px;line-height:1.6;max-height:340px;overflow:auto;
+    background:var(--bg);border:1px solid var(--rule);border-radius:8px;padding:11px}
+  .jrn .k{display:inline-block;min-width:64px;font-weight:700}
+  .k-observe{color:var(--accent)} .k-probe{color:var(--warn)} .k-refute{color:var(--bad)}
+  .k-author{color:var(--good)} .k-plan{color:var(--accent)} .k-execute{color:var(--ink)} .k-note{color:var(--dim)}
+  .theme{position:fixed;top:14px;right:16px;z-index:9}
+  .back{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px}
+  footer{border-top:1px solid var(--rule);margin-top:56px;padding:24px 0 64px;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+<button class="theme" id="theme">◐</button>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="./paper.html">← the write-up</a></div>
+    <h1 id="title">tu93 · level by level</h1>
+    <div class="byline" id="sub">Every level, the same four views: what the model
+      predicted against what happened, the whole in-model search that produced the plan,
+      the cost ledger, and the journal.</div>
+  </div>
+</header>
+
+<main>
+<div class="wide">
+  <div class="chips" id="chips"></div>
+</div>
+
+<div class="col">
+  <div class="aside" id="mech"></div>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="ctl">
+        <span style="font-weight:700">Solution replay · model vs reality</span>
+        <button id="rfirst">⏮</button><button id="rprev">◀</button>
+        <button id="rplay">▶ play</button><button id="rnext">▶</button>
+        <button id="rbug">! next mispredicted step</button>
+        <input type="range" id="rslider" min="0" value="0">
+        <span id="rlabel" style="font-variant-numeric:tabular-nums;min-width:100px"></span>
+      </div>
+      <div class="row"><div><canvas id="rcv"></canvas></div></div>
+      <div class="legend">
+        <span><span class="sw" style="background:#39D3C9"></span>player</span>
+        <span><span class="sw" style="background:#FF851B"></span>guard</span>
+        <span><span class="sw" style="background:#FF69B4"></span>patroller</span>
+        <span><span class="sw" style="background:#85144b"></span>pursuer</span>
+        <span><span class="sw" style="background:#f87171"></span>cell the model got wrong</span>
+      </div>
+      <div class="status" id="rstat"></div>
+    </div>
+    <figcaption><b>Figure 1. The saved solution, executed for real.</b> The frame is what the
+      engine returned; boxes mark where the model says each entity is; red cells are where its
+      rendered prediction disagreed. The frame after the level clears shows the <em>next</em>
+      level's maze, which this model does not claim to predict — it is flagged, not scored.</figcaption>
+  </figure>
+
+  <figure>
+    <div class="fig">
+      <div class="ctl">
+        <span style="font-weight:700">In-model search · every simulated interaction</span>
+        <button id="sfirst">⏮</button><button id="sprev">◀</button>
+        <button id="splay">▶ play</button><button id="snext">▶</button>
+        <button id="sdeath">☠ next imagined death</button>
+        <button id="send">⏭ end</button>
+        <input type="range" id="sslider" min="0" value="0">
+        <span id="slabel" style="font-variant-numeric:tabular-nums;min-width:120px"></span>
+      </div>
+      <div class="row"><div><canvas id="scv"></canvas></div></div>
+      <div class="legend">
+        <span><span class="sw" style="background:#60a5fa"></span>new state reached</span>
+        <span><span class="sw" style="background:#9ca3af"></span>already seen</span>
+        <span><span class="sw" style="background:#6b7280"></span>blocked by a wall</span>
+        <span><span class="sw" style="background:#f87171"></span>death, in imagination</span>
+        <span><span class="sw" style="background:#4ade80"></span>goal</span>
+      </div>
+      <div class="status" id="sstat"></div>
+    </div>
+    <figcaption><b>Figure 2. The search that cost nothing.</b> This is the planning that
+      replaces real trial and error: every simulated move the BFS made inside the certified
+      model, with the model's verdict. None of it touched the environment. The plan it returns
+      is checked against <code>planner.run_bfs</code> so this log cannot drift from the real
+      planner.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <h2>The ledger</h2>
+  <figure>
+    <div class="fig"><table id="ledger"></table></div>
+    <figcaption><b>Table 1. What this level cost, in separate buckets.</b> Probing buys rules,
+      planning is free because it happens inside the model, solving executes a verified plan.
+      Deaths are counted where they were actually paid.</figcaption>
+  </figure>
+
+  <h2>The journal</h2>
+  <div id="jwrap"></div>
+</div>
+
+<div class="col">
+  <h2>All levels at a glance</h2>
+  <figure>
+    <div class="fig"><table id="all"></table></div>
+    <figcaption><b>Table 2. The whole game.</b> Click a row's level to open it above.</figcaption>
+  </figure>
+  <p id="deep"></p>
+  <h2>Reproducing</h2>
+  <pre>cd code/ARC-AGI-3-Agents
+uv run python scripts/backtest_all.py         # every level, every step, cell-exact
+uv run python scripts/verify_tu93.py          # replay all solutions: 185 actions -> WIN
+uv run python scripts/gen_level_pages.py      # rebuild this page's data</pre>
+</div>
+</main>
+
+<footer><div class="col">Black box throughout: dynamics come from stepping the engine and reading
+frames back. <code>environment_files/</code> was never opened.</div></footer>
+
+<script>
+const PAL=["#0d1117","#0074D9","#FF4136","#2ECC40","#FFDC00","#9AA6B2","#F012BE",
+  "#FF851B","#7FDBFF","#B0344B","#B10DC9","#01FF70","#FF69B4","#85144b","#39D3C9","#DDDDDD"];
+const OC={death:"#f87171",frontier:"#60a5fa",revisit:"#9ca3af",blocked:"#6b7280",goal:"#4ade80"};
+const ECOL={players:"#39D3C9",guards:"#FF851B",patrols:"#FF69B4",pursuers:"#85144b"};
+const ACTS=["ACTION1 ↑","ACTION2 ↓","ACTION3 ←","ACTION4 →"];
+const DEEP={4:["./l4_evolve.html","counting cells is not counting things"],
+            6:["./l6_pursuer.html","the thing that follows you"]};
+let IDX=null,D=null,lvl=0,r=0,s=0,rt=null,st=null;
+const root=document.documentElement;
+document.getElementById("theme").onclick=()=>{
+  const cur=root.getAttribute("data-theme")||
+    (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  root.setAttribute("data-theme",cur==="dark"?"light":"dark");};
+
+function cell(n){return n>60?6:n>45?8:10;}
+function base(id,G,cs){
+  const cv=document.getElementById(id),R=G.length,C=G[0].length;
+  cv.width=C*cs;cv.height=R*cs;
+  const x=cv.getContext("2d");
+  for(let i=0;i<R;i++)for(let j=0;j<C;j++){x.fillStyle=PAL[G[i][j]]||"#f0f";
+    x.fillRect(j*cs,i*cs,cs,cs);}
+  return x;
+}
+function box(x,cs,at,col){
+  const i=at[0]-D.origin[0],j=at[1]-D.origin[1];
+  x.strokeStyle=col;x.lineWidth=2;x.strokeRect(j*cs-1,i*cs-1,cs*3+2,cs*3+2);
+}
+
+function drawReplay(){
+  const f=D.replay[r],cs=cell(D.replay[0].grid[0].length);
+  if(!f.grid){
+    document.getElementById("rstat").className="status death";
+    document.getElementById("rstat").textContent=
+      "GAME OVER — the engine returns no frame here, so only the status can be checked.";
+    return;}
+  const x=base("rcv",f.grid,cs);
+  for(const k in f.ents)for(const e of f.ents[k])box(x,cs,e,ECOL[k]);
+  x.fillStyle="rgba(248,113,113,.55)";
+  for(const d of f.pred_diff)x.fillRect(d[1]*cs,d[0]*cs,cs,cs);
+  document.getElementById("rslider").value=r;
+  document.getElementById("rlabel").textContent=`step ${f.k} / ${D.replay.length-1}`;
+  const st2=document.getElementById("rstat");
+  const n=Object.entries(f.ents).map(([k,v])=>v.length?`${v.length} ${k}`:null)
+    .filter(Boolean).join(" · ");
+  if(f.terminal){st2.className="status good";
+    st2.innerHTML=`<b>${f.action}</b> — <b>LEVEL CLEARED.</b> This frame is the next level's `+
+      `maze; the model does not model it, so its ${f.cells_off} differing cells are excluded `+
+      `rather than counted as a miss.`;}
+  else if(f.cells_off){st2.className="status death";
+    st2.innerHTML=`<b>${f.action}</b> — <b>${f.cells_off} cell(s) mispredicted</b> (marked red). `+
+      `A single wrong cell is enough to refuse certification.`;}
+  else{st2.className="status";
+    st2.innerHTML=`<b>${f.action||"opening frame"}</b> — prediction exact. ${n}`;}
+}
+function drawSearch(){
+  if(!D.search.length){
+    document.getElementById("sstat").textContent="no search was needed for this level";return;}
+  const cs=cell(D.replay[0].grid[0].length);
+  const x=base("scv",D.replay[0].grid,cs);
+  for(let i=0;i<=s;i++){
+    const e=D.search[i],p=e.o==="death"?e.f:e.t;
+    if(!p)continue;
+    x.globalAlpha=(i===s)?0.95:(e.o==="death"?.55:.22);
+    x.fillStyle=OC[e.o]||"#888";
+    x.fillRect((p[1]-D.origin[1])*cs,(p[0]-D.origin[0])*cs,cs*3,cs*3);
+  }
+  x.globalAlpha=1;
+  const e=D.search[s];
+  document.getElementById("sslider").value=s;
+  document.getElementById("slabel").textContent=`sim ${e.n} / ${D.search_stats.sims}`;
+  const st2=document.getElementById("sstat");
+  st2.className="status"+(e.o==="death"?" death":e.o==="goal"?" good":"");
+  st2.innerHTML=`depth ${e.d} · <b>${ACTS[e.a]}</b> from (${e.f?e.f.join(","):"—"}) → `+
+    `<b>${e.o}</b>`+
+    (e.o==="death"?" — the model predicts the player dies here, so the branch is pruned "+
+      "and no real action is spent finding that out":"")+
+    (e.o==="goal"?" — plan found":"");
+}
+function rgo(i){r=Math.max(0,Math.min(D.replay.length-1,i));drawReplay();}
+function sgo(i){s=Math.max(0,Math.min(D.search.length-1,i));drawSearch();}
+
+function renderJournal(){
+  const w=document.getElementById("jwrap");
+  if(!D.journal.length){
+    w.innerHTML=`<div class="aside warn"><b>No journal for this level.</b> L0–L2 were solved `+
+      `before the journal existed, so their narrative lives only in the earlier pages `+
+      `(<a href="./evolve.html">L0</a>, <a href="./l1_evolve.html">L1</a>, `+
+      `<a href="./l2_evolve.html">L2</a>) and in the model's own comments. Rather than `+
+      `back-fill entries from memory — which is exactly the failure the journal was built `+
+      `to prevent — the gap is left visible.</div>`;
+    return;}
+  w.innerHTML=`<div class="fig"><div class="jrn">`+D.journal.map(e=>{
+    let body="";
+    if(e.kind==="observe")body=e.note;
+    else if(e.kind==="probe")body=`[${(e.actions||[]).join(" ")}] · <i>${e.hypothesis||""}</i> → ${e.observed}`+
+      (e.died?` <b style="color:var(--bad)">DIED</b>`:"");
+    else if(e.kind==="refute")body=`<b>${e.version}</b> ${e.bug}`;
+    else if(e.kind==="author")body=`<b>${e.version}</b> ${e.changed}<br>&nbsp;&nbsp;because: ${e.because}`+
+      (e.rules||[]).map(r2=>`<br>&nbsp;&nbsp;· ${r2}`).join("");
+    else if(e.kind==="plan")body=`${(e.actions||[]).length} actions · ${e.stats.sims} sims · `+
+      `${e.stats.deaths} imagined deaths`;
+    else if(e.kind==="execute")body=`${e.actions.length} actions → <b>${e.result}</b>`;
+    else body=e.text||"";
+    return `<div><span class="k k-${e.kind}">${e.kind}</span> ${body}</div>`;
+  }).join("")+`</div></div>`;
+}
+
+function paintLevel(){
+  D=null;
+  fetch(`./levels/level_${lvl}.json`).then(x=>x.json()).then(d=>{
+    D=d;r=0;s=0;
+    document.querySelectorAll("#chips .chip").forEach(c=>
+      c.classList.toggle("on",+c.dataset.l===lvl));
+    document.getElementById("title").textContent=`tu93 · level ${lvl}`;
+    const f=D.fidelity;
+    document.getElementById("sub").innerHTML=
+      `model <code>${D.version}</code> · solved in <b>${D.solution_len}</b> actions · `+
+      `prediction exact on <b>${f.exact}/${f.steps-f.terminal_excluded}</b> steps `+
+      `· in-model search <b>${D.search_stats.sims}</b> simulations, `+
+      `<b>${D.search_stats.deaths}</b> imagined deaths, <b>0</b> real actions`;
+    document.getElementById("mech").innerHTML=
+      `<b>New mechanic on this level:</b> ${D.mechanic}`;
+    document.getElementById("rslider").max=D.replay.length-1;
+    document.getElementById("sslider").max=Math.max(0,D.search.length-1);
+    drawReplay();drawSearch();
+    const L=D.ledger||{};
+    document.getElementById("ledger").innerHTML=
+      "<tr><th>bucket</th><th>cost</th><th>what it bought</th></tr>"+
+      [["probe (real actions)",L.probe_env_steps??"—","interactions spent learning the rules"],
+       ["planning",`<span style="color:var(--accent)">0</span>`,
+        `${D.search_stats.sims} simulations inside the model`],
+       ["solve (real actions)",D.solution_len,"executing a certified plan"],
+       ["real deaths",L.real_deaths??"—","paid once, so the planner never pays again"],
+       ["imagined deaths",D.search_stats.deaths,"pruned branches, free"],
+       ["refutations",L.refutations??"—","counterexamples that rewrote the model"]]
+      .map(([a,b,c])=>`<tr><td>${a}</td><td class="n">${b}</td>`+
+        `<td style="font-size:13px;color:var(--dim)">${c}</td></tr>`).join("");
+    renderJournal();
+    const dp=DEEP[lvl];
+    document.getElementById("deep").innerHTML=dp
+      ? `This level has a deep dive: <a href="${dp[0]}"><b>${dp[1]}</b></a>.`
+      : `Deep dives: <a href="./l4_evolve.html">L4</a> · <a href="./l6_pursuer.html">L6</a> · `+
+        `<a href="./model_evolve.html">how the model itself evolved</a>.`;
+    history.replaceState(null,"",`?l=${lvl}`);
+  });
+}
+
+fetch("./levels/index.json").then(x=>x.json()).then(d=>{
+  IDX=d;
+  document.getElementById("chips").innerHTML=d.levels.map(L=>
+    `<span class="chip" data-l="${L.level}" onclick="lvl=${L.level};paintLevel()">L${L.level}</span>`)
+    .join("")+`<a class="chip" href="./model_evolve.html">model evolution →</a>`;
+  document.getElementById("all").innerHTML=
+    "<tr><th>level</th><th>model</th><th>new mechanic</th><th>probe</th><th>solve</th>"+
+    "<th>real deaths</th><th>sims</th><th>imagined deaths</th><th>prediction</th></tr>"+
+    d.levels.map(L=>{const c=L.ledger||{},f=L.fidelity;
+      return `<tr><td><a href="?l=${L.level}" onclick="lvl=${L.level};paintLevel();return false">`+
+      `L${L.level}</a></td><td><code>${L.version}</code></td>`+
+      `<td style="font-size:12.5px">${L.mechanic}</td>`+
+      `<td class="n">${c.probe_env_steps??"—"}</td><td class="n">${L.solution_len}</td>`+
+      `<td class="n">${c.real_deaths??"—"}</td><td class="n">${L.search_stats.sims}</td>`+
+      `<td class="n">${L.search_stats.deaths}</td>`+
+      `<td class="${f.exact===f.steps-f.terminal_excluded?'ok':'no'}">`+
+      `${f.exact}/${f.steps-f.terminal_excluded} exact</td></tr>`;}).join("")+
+    `<tr><td colspan="4"><b>whole game</b></td><td class="n"><b>${d.total_actions}</b></td>`+
+    `<td class="n"><b>${d.total_real_deaths}</b></td><td class="n"><b>${d.total_sims}</b></td>`+
+    `<td class="n"><b>${d.total_imagined_deaths}</b></td><td class="ok">WIN</td></tr>`+
+      `<tr><td colspan="9" style="font-size:12px;color:var(--dim);border-bottom:none">`+
+      `⚠ ${d.totals_caveat}</td></tr>`;
+  const q=new URLSearchParams(location.search).get("l");
+  lvl=q!==null&&d.levels.some(L=>L.level===+q)?+q:0;
+  paintLevel();
+});
+
+document.getElementById("rfirst").onclick=()=>rgo(0);
+document.getElementById("rprev").onclick=()=>rgo(r-1);
+document.getElementById("rnext").onclick=()=>rgo(r+1);
+document.getElementById("rslider").oninput=e=>rgo(+e.target.value);
+document.getElementById("rbug").onclick=()=>{
+  for(let i=r+1;i<D.replay.length;i++)if(D.replay[i].cells_off&&!D.replay[i].terminal)return rgo(i);
+  for(let i=0;i<D.replay.length;i++)if(D.replay[i].cells_off&&!D.replay[i].terminal)return rgo(i);
+  document.getElementById("rstat").className="status good";
+  document.getElementById("rstat").innerHTML=
+    "<b>No mispredicted step on this level</b> — the model reproduces every frame of its own "+
+    "solution, cell for cell.";};
+document.getElementById("rplay").onclick=e=>{
+  if(rt){clearInterval(rt);rt=null;e.target.textContent="▶ play";return;}
+  e.target.textContent="⏸ pause";
+  rt=setInterval(()=>{r>=D.replay.length-1?rgo(0):rgo(r+1);},520);};
+document.getElementById("sfirst").onclick=()=>sgo(0);
+document.getElementById("sprev").onclick=()=>sgo(s-1);
+document.getElementById("snext").onclick=()=>sgo(s+1);
+document.getElementById("send").onclick=()=>sgo(D.search.length-1);
+document.getElementById("sslider").oninput=e=>sgo(+e.target.value);
+document.getElementById("sdeath").onclick=()=>{
+  for(let i=s+1;i<D.search.length;i++)if(D.search[i].o==="death")return sgo(i);
+  for(let i=0;i<D.search.length;i++)if(D.search[i].o==="death")return sgo(i);};
+document.getElementById("splay").onclick=e=>{
+  if(st){clearInterval(st);st=null;e.target.textContent="▶ play";return;}
+  e.target.textContent="⏸ pause";
+  st=setInterval(()=>{s>=D.search.length-1?sgo(0):sgo(s+1);},60);};
+</script>
+</body>
+</html>

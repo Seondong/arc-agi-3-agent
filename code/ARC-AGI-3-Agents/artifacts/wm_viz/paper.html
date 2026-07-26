@@ -111,9 +111,11 @@
       <div class="row"><div><canvas id="lvlcv"></canvas></div></div>
       <div class="status" id="lvlstat"></div>
     </div>
-    <figcaption><b>Figure 1. The curriculum.</b> The opening frame of each level. Click through:
-      L0 is an empty maze; L1 adds a guard; L2 makes it three; L3 adds something that moves;
-      L4 gives the player two bodies. The agent must work out each new object's rule from scratch.</figcaption>
+    <figcaption><b>Figure 1. The curriculum.</b> The opening frame of each of the nine levels. Click
+      through: L0 is an empty maze; L1 adds a guard; L2 makes it three; L3 adds something that moves;
+      L4 adds a block that looks exactly like the player and is not; L6 adds something that hunts.
+      L5, L7 and L8 add no new object — they compose the old ones, which is where a world model stops
+      paying for discovery and starts collecting.</figcaption>
   </figure>
 
   <h2 id="loop">The loop</h2>
@@ -198,10 +200,11 @@ execute                      → real actions, on a certified theory</pre>
   <h2 id="ledger">The ledger</h2>
   <p>Costs are kept in separate buckets, because a single total hides where the cost went.</p>
   <figure>
-    <div class="fig"><table id="ledger"></table></div>
+    <div class="fig"><table id="ledgertab"></table></div>
     <figcaption><b>Table 2. Per level.</b> Probe actions buy the rules; planning is free because it happens
       inside the model; solve actions execute a verified plan. Deaths are counted where they were actually
-      paid. L4 is unsolved and is shown as such.</figcaption>
+      paid. Note the shape of the last four rows: L5, L7 and L8 cost two probe actions each and no deaths,
+      because by then the model already knew everything they were made of.</figcaption>
   </figure>
 
   <h2 id="journal">What the record looks like</h2>
@@ -215,36 +218,105 @@ execute                      → real actions, on a certified theory</pre>
       <div class="chips" id="jchips"></div>
       <div class="jrn" id="jrn"></div>
     </div>
-    <figcaption><b>Figure 3. The journal for L3 and L4, verbatim.</b> Note the last L4 entries: the carried
-      model is refuted, the run stops before planning, and the open question is written down with its
-      evidence rather than smoothed over.</figcaption>
+    <figcaption><b>Figure 3. The journal, verbatim.</b> Pick a level. The L4 entries are the interesting
+      ones: a refutation, a run that stops before planning, an open question written down with its
+      evidence — and then, further down, a correction saying that question had been posed on a
+      misreading.</figcaption>
   </figure>
 
-  <h2 id="open">Where it stops</h2>
-  <p>L4 is not solved. Two of its mechanics were learned — several player blocks driven by one action, and
-  the goal tile rendering over a patroller that stands on it — and one was not. When two patrollers advance
-  onto the same square, the count of patroller cells falls from 32 to 24 and stays there: exactly one of them
-  is permanently destroyed. Which one, and whether the meeting square being the goal matters, is unresolved.
-  Until it is, the model is uncertified on L4 and the loop refuses to plan.</p>
+  <h2 id="wrongquestion">A whole session spent on a question that did not exist</h2>
+  <p>L4 blocked the loop for a session on this reasoning: four patrollers, so 32 cells of value 12; after one
+  move, 16; from the second move on, 24, and never 32 again. The obvious reading is that a patroller was
+  destroyed when two of them stepped onto the same square, and the open question became <em>which one, and
+  does it matter that the square was the goal.</em></p>
+  <p>Every part of that is wrong, and a 24-step census of the actual blocks shows why. Counting cells is not
+  counting things. Two patrollers on one square render as a <em>single</em> 3×3 block, and one standing on the
+  goal is hidden underneath it — at one point in the census three of the four are stacked on the goal square
+  and exactly one block of 12 is visible. All four are alive at the end. Nothing was ever destroyed, and no
+  annihilation rule was needed.</p>
+  <p>The real bug behind the 81-cell refutation was somewhere else entirely: the second player-shaped block.
+  The model drove it like a player, so on <code>ACTION1</code> it lifted it out of its pocket through a clear
+  doorway — and, believing a player had moved, advanced every patroller a step too. One wrong entity, four
+  wrong entities downstream.</p>
+  <p>What settled it was a probe designed to be decisive: walk the real player, using only down/left/right so
+  the disputed rule never fires, to a square where <em>it</em> can legally move up, then press up. The player
+  rose. The look-alike sat still. It is not a player at all — it is scenery wearing a player's notch, and no
+  single frame distinguishes the two. You find out by acting.</p>
+  <p><a href="./l4_evolve.html"><b>→ The full L4 figure page</b></a>: the 24-step census with both counts
+  side by side, the refuted model re-run, and the discriminating probe.</p>
+
+  <h2 id="pursuer">The thing that follows you</h2>
+  <p>L6 introduces value 13, and it announced itself by <b>one cell</b>: the moment the player stepped into
+  the column the block faced, its notch changed from 15 to 11 — the same value a guard wears after it has
+  eaten. One cell of divergence, and the backtest refused to certify. That is the point of demanding exact
+  frames rather than a similarity score.</p>
+  <p>Locked on, it walks the line it faces down to the exact square where it saw you, and from there it
+  reproduces <em>your own path</em>, one square per move you actually make. Two candidate rules fit that —
+  following the trail, or taking the shortest path to you. Driving the player around a four-square loop
+  separated them: a shortest-path chaser would have cut the corner and killed the player; this one kept
+  walking the trail. It stays exactly two squares behind, so it can never catch anyone who does not step
+  back onto their own trail. Finding that out cost one life.</p>
+  <p><a href="./l6_pursuer.html"><b>→ The full L6 figure page</b></a>: the one-cell refutation zoomed in, the
+  trail playback, and the shortest-path chaser simulated on the same frames so you can watch the two rules
+  come apart.</p>
+
+  <h2 id="sweep">The sweep that found two more bugs</h2>
+  <p>Up to this point every level had been certified the same way: a two-step probe, a green
+  backtest, then plan. After the game was finished, one obvious check had still never been run —
+  replay each level along <em>its own solution</em> and demand an exact frame at every step. Two
+  levels failed it.</p>
+  <p>On L5 a guard and a patroller stand on the same square and the model drew the wrong one on
+  top. On L8 the player drops into a square a patroller is leaving; the engine destroys that
+  patroller — the moving counterpart of the L1 rule that stepping onto a guard from behind removes
+  it — and the model kept it alive for the remaining twelve frames. Neither broke the solutions,
+  which is exactly why neither was noticed: the plans still worked.</p>
+  <p>The overlap rule that came out of it is the least-trusted thing in the model, and is labelled
+  that way in the code. A guard is drawn over a mover when its facing lies along the axis that
+  mover travels, and under it otherwise; that fits all nine overlaps observed, and refutes the
+  obvious competitor (a fixed z-order by starting position). But the experiment that would
+  separate it from other explanations — a patroller crossing a guard perpendicular to its facing —
+  never occurs in any of the nine solution paths, so it stays flagged rather than believed.</p>
+  <p><a href="./model_evolve.html"><b>→ How the model evolved</b></a>: every retired version
+  re-run against every level, so what each one gets wrong is measured rather than remembered.</p>
+
+  <h2 id="levels">Every level, the same way</h2>
+  <p>The pages above grew one at a time and covered whatever was interesting that day. That left
+  L3, L5, L7 and L8 with no page at all, and the in-model search logged for exactly one level. So
+  every level now has the same four views — solution replay against the model's prediction, the
+  full in-model search that produced the plan, the cost ledger, and the journal.</p>
+  <figure>
+    <div class="fig"><table id="alllevels"></table></div>
+    <figcaption><b>Table 3. The whole game, uniformly instrumented.</b> Click a level to open it.
+      Prediction is measured along each level's own solution; the frame after a level clears shows
+      the next level's maze and is excluded rather than scored.</figcaption>
+  </figure>
+
+  <h2 id="open">Where it ends</h2>
+  <p><code>tu93</code> is solved end to end: nine levels, 185 actions, final state <code>WIN</code>,
+  replayable with <code>scripts/verify_tu93.py</code>. The last four levels were the payoff — L5, L7
+  and L8 each cost two probe actions and no deaths, because a model that already contains guards,
+  patrollers and pursuers has nothing left to buy. And after the sweep above, the model reproduces
+  <b>every frame of every level's solution, cell for cell</b> — 176 steps, checked by
+  <code>scripts/backtest_all.py</code>.</p>
   <div class="aside warn">
     <b>Limitations.</b> "Certified" here means <em>consistent with everything observed so far</em>, not proven
-    correct: the L2 certification window is four transitions. Plan lengths are shortest under the model, not
-    verified optimal. Search costs are free in this study because the offline engine replays at thousands of
-    frames per second; online, probe actions would count against the score. And the world model was written
-    by a human-in-the-loop process, not autonomously — the loop's <code>propose()</code> seam is filled by
-    hand.
+    correct: several levels are certified on a two-transition window, which is exactly why L4's real bug hid
+    behind three probes that could not distinguish it. Plan lengths are shortest under the model, not verified
+    optimal. Search costs are free in this study because the offline engine replays at thousands of frames per
+    second; online, probe actions would count against the score. The HUD row is excluded from verification
+    rather than modelled. And the world model was written by a human-in-the-loop process, not autonomously —
+    the loop's <code>propose()</code> seam is filled by hand.
   </div>
 
   <h2 id="repro">Reproducing</h2>
   <pre>cd code/ARC-AGI-3-Agents
-uv run python scripts/solve_level.py 3          # probe → certify → plan → execute
+uv run python scripts/verify_tu93.py            # replay every saved solution: 185 actions -> WIN
+uv run python scripts/solve_level.py 6 "ACTION4,ACTION4"   # probe → certify → plan → execute
+uv run python scripts/probe_movers.py "ACTION3,ACTION4" --level 4   # per-step census of every mover
 uv run python scripts/gen_paper_data.py         # rebuild this page's data
 python3 -m http.server 8733 -d artifacts/wm_viz</pre>
-  <p>Supporting figures: <a href="./evolve.html">model evolution (L0)</a> ·
-    <a href="./l1_search.html">brute-force search (L1)</a> ·
-    <a href="./l1_evolve.html">world-model route (L1)</a> ·
-    <a href="./l2_evolve.html">three refutations (L2)</a> ·
-    <a href="./inmodel_search.html">in-model search log</a>.</p>
+  <h3>Every page</h3>
+  <table id="pages"></table>
 </div>
 </main>
 
@@ -342,7 +414,9 @@ fetch("./paper.json").then(r=>r.json()).then(async d=>{
   // toc
   document.getElementById("toc").innerHTML=[["setup","Setup"],["loop","The loop"],["guard","A rule costs a death"],
     ["fidelity","Wrong models"],["patrol","The moving thing"],["ledger","Ledger"],["journal","The record"],
-    ["open","Where it stops"],["repro","Reproduce"]].map(([id,t])=>`<a href="#${id}">${t}</a>`).join("");
+    ["wrongquestion","A question that did not exist"],["pursuer","The thing that follows you"],
+    ["sweep","The sweep that found two more"],["levels","Every level"],
+    ["open","Where it ends"],["repro","Reproduce"]].map(([id,t])=>`<a href="#${id}">${t}</a>`).join("");
   // fig1 chips
   document.getElementById("lvlchips").innerHTML=D.levels.map((L,i)=>
     `<div class="chip" onclick="lvl=${i};drawLevel()">L${L.level}</div>`).join("");
@@ -362,13 +436,58 @@ fetch("./paper.json").then(r=>r.json()).then(async d=>{
       <td class="n">${v.stats.sims}</td><td class="n">${v.stats.deaths}</td><td class="n">${v.plan_len}</td>
       <td class="${v.execution.cleared?'ok':'no'}">${v.execution.cleared?'cleared':'killed the player at step '+v.execution.at}</td></tr>`).join("");
   // table 2
-  document.getElementById("ledger").innerHTML=
+  document.getElementById("ledgertab").innerHTML=
     "<tr><th>level</th><th>new mechanic</th><th>probe</th><th>planning</th><th>solve</th><th>real deaths</th><th>result</th></tr>"+
     D.levels.map(L=>{const c=L.cost||{};
       return `<tr><td>L${L.level}</td><td style="font-size:13px">${L.new_mechanic}</td>
       <td class="n">${c.probe_env_steps??"—"}</td><td class="n" style="color:var(--accent)">0</td>
       <td class="n">${L.solve_actions??"—"}</td><td class="n">${c.real_deaths??"—"}</td>
       <td class="${L.solved?'ok':'no'}">${L.solved?'solved':'unsolved'}</td></tr>`;}).join("");
+  // table 3 — every level, from the uniform per-level index
+  fetch("./levels/index.json").then(r=>r.json()).then(X=>{
+    document.getElementById("alllevels").innerHTML=
+      "<tr><th>level</th><th>model</th><th>new mechanic</th><th>probe</th><th>solve</th>"+
+      "<th>deaths</th><th>sims</th><th>imagined deaths</th><th>prediction</th></tr>"+
+      X.levels.map(L=>{const c=L.ledger||{},f=L.fidelity;
+        return `<tr><td><a href="./level.html?l=${L.level}"><b>L${L.level}</b></a></td>`+
+        `<td><code>${L.version}</code></td><td style="font-size:12.5px">${L.mechanic}</td>`+
+        `<td class="n">${c.probe_env_steps??"—"}</td><td class="n">${L.solution_len}</td>`+
+        `<td class="n">${c.real_deaths??"—"}</td><td class="n">${L.search_stats.sims}</td>`+
+        `<td class="n">${L.search_stats.deaths}</td>`+
+        `<td class="${f.exact===f.steps-f.terminal_excluded?'ok':'no'}">`+
+        `${f.exact}/${f.steps-f.terminal_excluded} exact</td></tr>`;}).join("")+
+      `<tr><td colspan="4"><b>whole game</b></td><td class="n"><b>${X.total_actions}</b></td>`+
+      `<td class="n"><b>${X.total_real_deaths}</b></td>`+
+      `<td class="n"><b>${X.total_sims}</b></td>`+
+      `<td class="n"><b>${X.total_imagined_deaths}</b></td><td class="ok"><b>WIN</b></td></tr>`+
+      `<tr><td colspan="9" style="font-size:12px;color:var(--dim);border-bottom:none">`+
+      `⚠ ${X.totals_caveat}</td></tr>`;
+  });
+
+  // the complete page index
+  document.getElementById("pages").innerHTML=
+    "<tr><th>page</th><th>what it shows</th><th>generator</th></tr>"+
+    [["./level.html","<b>Every level, uniformly</b> — solution replay vs prediction, the full "+
+      "in-model search, ledger and journal, for L0–L8","gen_level_pages.py"],
+     ["./model_evolve.html","<b>How the model evolved</b> — every retired version re-run against "+
+      "every level, plus the live source of each rule","gen_model_evolve.py"],
+     ["./l4_evolve.html","<b>L4</b> — the cell-count artefact, the refuted model re-run, the "+
+      "discriminating probe","gen_l4_evolve.py"],
+     ["./l6_pursuer.html","<b>L6</b> — one-cell refutation, the pursuer's trail, and the "+
+      "shortest-path chaser it is not","gen_l6_pursuer.py"],
+     ["./inmodel_search.html","L2 in-model search with the model-fidelity study",
+      "gen_inmodel_search.py"],
+     ["./l2_evolve.html","L2 — one death frame refuting three successive models","gen_l2_evolve.py"],
+     ["./l1_evolve.html","L1 the world-model way: inherit, probe, author, solve","gen_l1_evolve.py"],
+     ["./l1_search.html","L1 by brute force over the real engine: 41 attempts, 2 real deaths",
+      "gen_l1_search.py"],
+     ["./l1.html","L1 solution playback","gen_l1_viz.py"],
+     ["./evolve.html","L0 model rebuilt per observation, v0→v3","gen_evolve_data.py"],
+     ["./episode.html","L0 autonomous episode: explore → author → solve","gen_episode_data.py"],
+     ["./index.html","L0 solve: prediction vs reality","gen_viz_data.py"]]
+    .map(([h,d,g])=>`<tr><td><a href="${h}">${h.replace("./","")}</a></td><td>${d}</td>`+
+      `<td><code>${g}</code></td></tr>`).join("");
+
   // journal chips
   document.getElementById("jchips").innerHTML=D.levels.filter(L=>L.journal_entries>0)
     .map(L=>`<div class="chip" data-l="${L.level}" onclick="jlvl=${L.level};renderJournal()">L${L.level} journal</div>`).join("");

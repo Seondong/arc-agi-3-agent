@@ -57,7 +57,9 @@ class Transition:
     step_index: int
     action: Action
     before_frame: Frame
-    after_frame: Frame
+    # None when the engine returned no frame (it does that on death): there is
+    # then nothing to verify a render against, only the status.
+    after_frame: Optional[Frame]
     status: str
     changed_cells: int = 0
 
