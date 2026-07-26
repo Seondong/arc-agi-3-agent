@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L6 — the thing that follows you</title>
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+  header.hero{padding:64px 0 30px;border-bottom:1px solid var(--rule);margin-bottom:36px}
+  h1{font-size:34px;line-height:1.2;margin:0 0 14px;letter-spacing:-.015em;font-weight:600}
+  .lede{font-size:18.5px;margin-top:20px}
+  h2{font-size:24px;margin:48px 0 12px;letter-spacing:-.01em;font-weight:600}
+  .aside.bad{border-color:var(--bad)}
+  figure{margin:32px 0}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--dim);
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin-top:9px}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+  .back{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px}
+  footer{border-top:1px solid var(--rule);margin-top:60px;padding:24px 0 64px;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+<button class="theme" id="theme">◐</button>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="../index.html">← method</a> · <a href="./paper.html">← the write-up</a></div>
+    <h1>The thing that follows you</h1>
+    <div class="byline">tu93 L6 — a mechanic that announced itself with one cell, and the
+      counterfactual that pinned its rule down.</div>
+    <p class="lede">L6 introduces value 13. It is stationary, so it looks like a guard; it kills on
+      contact, so it looks like a patroller. It is neither. Everything below is regenerated from real
+      engine runs by <code>scripts/gen_l6_pursuer.py</code>.</p>
+  </div>
+</header>
+
+<main>
+<div class="col">
+  <h2>One cell refused certification</h2>
+  <p>The model carried in from L5 reproduced L6 exactly — until the player stepped into the column
+  the 13-block faces. Then a single cell disagreed: the block's notch had changed from 15 to
+  <b>11</b>, the value a guard wears after it has eaten. Not a rendering detail; an internal state
+  change, made visible.</p>
+  <p>A similarity score would have shrugged at one cell in four thousand. Demanding an exact frame
+  turns it into a pointed bug with a step, an action, and a coordinate.</p>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="row">
+        <div><div class="cap">predicted — 13 is scenery</div><canvas id="op"></canvas></div>
+        <div><div class="cap">reality — the notch has changed</div><canvas id="oa"></canvas></div>
+        <div><div class="cap">the cell</div><canvas id="oz"></canvas></div>
+      </div>
+      <div class="status death" id="ostat"></div>
+    </div>
+    <figcaption><b>Figure 1. The whole mechanic, one cell wide.</b> Right-hand panel is a zoom on
+      the disagreement. The model that produced the left panel is the L5 model re-run with the
+      pursuer removed, so this is the original refutation regenerated.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <h2>What locking on does</h2>
+  <p>Once its notch turns 11 it starts moving — one square per move the player <em>actually</em>
+  makes. Press into a wall and it does not advance, exactly like a patroller. But it does not
+  patrol: it walks the line it faces down to the precise square where it saw the player, and from
+  there it reproduces the player's own path, square by square.</p>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="ctl">
+        <span style="font-weight:700">Figure 2 · the trail</span>
+        <button id="tfirst">⏮</button><button id="tprev">◀</button>
+        <button id="tplay">▶ play</button><button id="tnext">▶</button>
+        <input type="range" id="tslider" min="0" value="0">
+        <span id="tlabel" style="font-variant-numeric:tabular-nums;min-width:96px"></span>
+      </div>
+      <div class="row"><div><canvas id="tcv"></canvas></div></div>
+      <div class="legend">
+        <span><span class="sw" style="background:#39D3C9"></span>player</span>
+        <span><span class="sw" style="background:#FF69B4"></span>pursuer</span>
+        <span><span class="sw" style="background:#FFDC00"></span>the trail it is walking</span>
+      </div>
+      <div class="status" id="tstat"></div>
+    </div>
+    <figcaption><b>Figure 2. Nine real steps.</b> The yellow breadcrumbs are where the player has
+      been. Note step 4: the action is blocked, the player does not change square, and the pursuer
+      does not advance either. It stays exactly two squares back for the rest of the run — the
+      distance it was at when it locked on.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <h2>The rule it is not</h2>
+  <p>Following a trail and taking the shortest path to the player look identical while the player
+  runs in a straight line. They come apart on a loop. So the player was driven round a four-square
+  circuit, and a real shortest-path chaser — BFS over the maze, recomputed every step — was
+  simulated alongside the actual thing.</p>
+  <p>They agree for four steps. On the fifth the chaser cuts the corner. On the sixth it is standing
+  on the player.</p>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="ctl">
+        <span style="font-weight:700">Figure 3 · trail vs chase</span>
+        <button id="lfirst">⏮</button><button id="lprev">◀</button>
+        <button id="lplay">▶ play</button><button id="lnext">▶</button>
+        <input type="range" id="lslider" min="0" value="0">
+        <span id="llabel" style="font-variant-numeric:tabular-nums;min-width:96px"></span>
+      </div>
+      <div class="row"><div><canvas id="lcv"></canvas></div></div>
+      <div class="legend">
+        <span><span class="sw" style="background:#39D3C9"></span>player</span>
+        <span><span class="sw" style="background:#FF69B4"></span>the real pursuer</span>
+        <span><span class="sw" style="background:#f87171"></span>a shortest-path chaser, simulated</span>
+      </div>
+      <div class="status" id="lstat"></div>
+    </div>
+    <figcaption><b>Figure 3. The counterfactual, drawn on the same frames.</b> The dashed red box is
+      not in the game — it is the chaser L6 could have been, stepped through the same maze. Had the
+      rule been "head for the player", the probe would have ended in a death at (30,12). It ended
+      with the pursuer at (36,18), still walking the trail.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <h2>What it cost, and what it buys</h2>
+  <p>Two coin flips were taken knowingly. The loop probe would have killed the player if the answer
+  had been "chaser" — that is the price of a discriminating experiment. And an earlier probe died
+  outright by stepping back onto the trail, which is the one way this thing can catch anyone.</p>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="row" id="drow"></div>
+      <div class="status death" id="dstat"></div>
+    </div>
+    <figcaption><b>Figure 4. The death that bought the rule.</b> Player at (30,30), pursuer two
+      squares back on the trail at (24,24). Stepping left returns to (30,24) — the exact square the
+      pursuer is about to occupy. The engine returns no frame for the final step, which is why the
+      backtest certifies the status of a death and does not score a render against a stale frame.
+      </figcaption>
+  </figure>
+
+  <figure>
+    <div class="fig"><table id="tab"></table></div>
+    <figcaption><b>Table 1. The rule, and the observation that forced each clause.</b></figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <div class="aside">
+    <b>Why the trail rule matters for planning.</b> A shortest-path chaser has to be outrun; a
+    trail-follower only has to be not-walked-back-into. The certified model encodes the difference,
+    so in-model BFS prunes exactly the moves that would step back onto the trail — and L6 was
+    cleared in 14 actions with no further deaths.
+  </div>
+
+  <h2>Reproducing</h2>
+  <pre>cd code/ARC-AGI-3-Agents
+uv run python scripts/gen_l6_pursuer.py                               # rebuild this page's data
+uv run python scripts/probe_movers.py "ACTION4,ACTION4,ACTION4" --level 6   # census, live
+uv run python scripts/backtest_level.py "ACTION4,ACTION4" --level 6   # the one-cell bug, live</pre>
+  <p>See also: <a href="./paper.html">the write-up</a> ·
+    <a href="./l4_evolve.html">L4, counting cells is not counting things</a> ·
+    <a href="./inmodel_search.html">every simulated interaction of an in-model plan</a>.</p>
+</div>
+</main>
+
+<footer><div class="col">Black box throughout: dynamics come from stepping the engine and reading
+frames back. <code>environment_files/</code> was never opened.</div></footer>
+
+<script>
+const PAL=["#0d1117","#0074D9","#FF4136","#2ECC40","#FFDC00","#9AA6B2","#F012BE",
+  "#FF851B","#7FDBFF","#B0344B","#B10DC9","#01FF70","#FF69B4","#85144b","#39D3C9","#DDDDDD"];
+let D=null,t=0,l=0,tt=null,lt=null;
+const root=document.documentElement;
+document.getElementById("theme").onclick=()=>{
+  const cur=root.getAttribute("data-theme")||
+    (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  root.setAttribute("data-theme",cur==="dark"?"light":"dark");};
+
+function box(x,cell,at,col,dash,tag){
+  const r=at[0]-D.origin[0],c=at[1]-D.origin[1];
+  x.save();x.strokeStyle=col;x.lineWidth=2;if(dash)x.setLineDash([3,3]);
+  x.strokeRect(c*cell-1,r*cell-1,cell*3+2,cell*3+2);x.restore();
+  if(tag){x.fillStyle=col;x.font="bold 10px ui-monospace,monospace";
+    x.fillText(tag,c*cell+1,r*cell-3);}
+}
+function paint(id,G,cell,diff){
+  const cv=document.getElementById(id),R=G.length,C=G[0].length;
+  cv.width=C*cell;cv.height=R*cell;
+  const x=cv.getContext("2d");
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){x.fillStyle=PAL[G[r][c]]||"#f0f";
+    x.fillRect(c*cell,r*cell,cell,cell);}
+  if(diff){x.strokeStyle="#f87171";x.lineWidth=1.5;
+    for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(diff[r][c])
+      x.strokeRect(c*cell+.75,r*cell+.75,cell-1.5,cell-1.5);}
+  return x;
+}
+function trailUpTo(frames,i){
+  const out=[];
+  for(let j=0;j<=i;j++){const p=frames[j].player;if(p)out.push([p[0],p[1]]);}
+  return out;
+}
+function drawTraj(){
+  const F=D.trajectory,f=F[t];
+  if(!f.grid){document.getElementById("tstat").className="status death";
+    document.getElementById("tstat").textContent="GAME OVER — no frame returned";return;}
+  const x=paint("tcv",f.grid,8);
+  for(const p of trailUpTo(F,t)){
+    const r=p[0]-D.origin[0],c=p[1]-D.origin[1];
+    x.fillStyle="rgba(255,220,0,.30)";x.fillRect(c*8,r*8,24,24);}
+  if(f.player)box(x,8,f.player,"#39D3C9",false,"player");
+  if(f.pursuer)for(const p of f.pursuer)box(x,8,p,"#FF69B4",false,p[3]?"locked":"asleep");
+  document.getElementById("tslider").value=t;
+  document.getElementById("tlabel").textContent=`step ${f.k} / ${F.length-1}`;
+  const moved=t>0&&F[t-1].player&&f.player&&
+    (F[t-1].player[0]!==f.player[0]||F[t-1].player[1]!==f.player[1]);
+  const st=document.getElementById("tstat");
+  const locked=f.pursuer&&f.pursuer[0][3];
+  st.className="status"+(locked?" warn":"");
+  st.innerHTML=`<b>${f.action||"opening frame"}</b> — player `+
+    `(${f.player[0]},${f.player[1]}) · pursuer (${f.pursuer[0][0]},${f.pursuer[0][1]}) `+
+    `notch <b>${locked?"11 — locked on":"15 — asleep"}</b>`+
+    (t===0?"":` · the player ${moved?"changed square":"<b>did not move</b>"}, so the pursuer `+
+      `${moved?"advanced":"<b>did not advance</b>"}`);
+}
+function drawLoop(){
+  const F=D.loop,f=F[l];
+  const x=paint("lcv",f.grid,8);
+  for(const p of trailUpTo(F,l)){
+    const r=p[0]-D.origin[0],c=p[1]-D.origin[1];
+    x.fillStyle="rgba(255,220,0,.30)";x.fillRect(c*8,r*8,24,24);}
+  if(f.player)box(x,8,f.player,"#39D3C9",false,"player");
+  if(f.pursuer)for(const p of f.pursuer)box(x,8,p,"#FF69B4",false,"real");
+  if(f.chaser)box(x,8,f.chaser,"#f87171",true,"chaser");
+  document.getElementById("lslider").value=l;
+  document.getElementById("llabel").textContent=`step ${f.k} / ${F.length-1}`;
+  const st=document.getElementById("lstat");
+  const same=f.chaser&&f.pursuer&&f.chaser[0]===f.pursuer[0][0]&&f.chaser[1]===f.pursuer[0][1];
+  st.className="status"+(f.chaser_kills?" death":(f.chaser&&!same?" warn":""));
+  st.innerHTML=`<b>${f.action||"opening frame"}</b> — player (${f.player[0]},${f.player[1]}) · `+
+    `real pursuer (${f.pursuer[0][0]},${f.pursuer[0][1]})`+
+    (f.chaser?` · a chaser would be at (${f.chaser[0]},${f.chaser[1]}) — `+
+      (f.chaser_kills?`<b>standing on the player: the probe would have ended in a death</b>`
+        :(same?"same square, the two rules still agree":"<b>they have diverged</b>"))
+      :" · not locked on yet");
+}
+function tgo(i){t=Math.max(0,Math.min(D.trajectory.length-1,i));drawTraj();}
+function lgo(i){l=Math.max(0,Math.min(D.loop.length-1,i));drawLoop();}
+
+fetch("./data/l6_pursuer.json").then(r=>r.json()).then(d=>{
+  D=d;
+  // figure 1
+  const O=D.onecell,p=O.predicted,a=O.actual;
+  const diff=p.map((row,r)=>row.map((v,c)=>v!==a[r][c]?1:0));
+  paint("op",p,7);paint("oa",a,7);
+  let zr=0,zc=0;
+  diff.forEach((row,r)=>row.forEach((v,c)=>{if(v){zr=r;zc=c;}}));
+  const sub=[],S=5;
+  for(let r=Math.max(0,zr-S);r<=Math.min(a.length-1,zr+S);r++)
+    sub.push(a[r].slice(Math.max(0,zc-S),Math.min(a[0].length,zc+S+1)));
+  const zdiff=sub.map((row,r)=>row.map((v,c)=>
+    (r+Math.max(0,zr-S)===zr&&c+Math.max(0,zc-S)===zc)?1:0));
+  paint("oz",sub,22,zdiff);
+  document.getElementById("ostat").innerHTML=
+    `<b>before L6</b> — ${O.v10_summary}<br><b>with the pursuer modelled</b> — ${O.v11_summary}`+
+    `<br>${O.cells_off} cell differs, at row ${zr+D.origin[0]}, column ${zc+D.origin[1]}: `+
+    `notch 15 → 11.`;
+
+  // figures 2 & 3
+  document.getElementById("tslider").max=D.trajectory.length-1;
+  document.getElementById("lslider").max=D.loop.length-1;
+  drawTraj();drawLoop();
+
+  // figure 4 — the death
+  const F=D.death,row=document.getElementById("drow");
+  row.innerHTML="";
+  F.forEach(f=>{
+    const d=document.createElement("div");
+    const cap=document.createElement("div");cap.className="cap";
+    cap.textContent=f.dead?`${f.action} — GAME OVER`:(f.action||"start");
+    d.appendChild(cap);
+    if(f.grid){const cv=document.createElement("canvas");cv.id="d"+f.k;d.appendChild(cv);}
+    else{const b=document.createElement("div");
+      b.style.cssText="width:150px;height:110px;border:2px dashed var(--bad);border-radius:6px;"+
+        "display:flex;align-items:center;justify-content:center;color:var(--bad);font-size:26px";
+      b.textContent="☠";d.appendChild(b);}
+    row.appendChild(d);
+  });
+  F.forEach(f=>{if(!f.grid)return;
+    const x=paint("d"+f.k,f.grid,4);
+    if(f.player)box(x,4,f.player,"#39D3C9");
+    if(f.pursuer)for(const p of f.pursuer)box(x,4,p,"#FF69B4");});
+  document.getElementById("dstat").textContent=
+    "Four real actions, one real death — the cost of learning that the pursuer occupies the square "+
+    "you came from two moves ago.";
+
+  // table
+  document.getElementById("tab").innerHTML=
+    "<tr><th>clause of the rule</th><th>observation that forced it</th></tr>"+
+    [["asleep until a player crosses the straight line it faces",
+      "it sat still for two moves while the player walked past below, then reacted the instant "+
+      "the player entered its column"],
+     ["locking on shows as notch 15 → 11",
+      "the 1-cell refutation in Figure 1 — the same value a guard wears after it has eaten"],
+     ["it first walks that line to the square where it saw the player",
+      "from (18,24) it went (24,24) → (30,24), the sighting square, before following anything"],
+     ["then it follows the player's own path, square for square",
+      "seven consecutive steps reproducing the player's positions with a fixed lag (Figure 2)"],
+     ["one step per move the player <i>actually</i> makes",
+      "step 4 of Figure 2: the action was blocked, and the pursuer did not advance"],
+     ["never a shortcut",
+      "the loop counterfactual in Figure 3 — a shortest-path chaser would have killed the player"],
+     ["contact kills",
+      "the death in Figure 4"]]
+    .map(([a,b])=>`<tr><td>${a}</td><td style="font-size:13px;color:var(--dim)">${b}</td></tr>`)
+    .join("")+
+    `<tr><td><b>L6 solved</b></td><td class="ok">${D.solution_len} actions, `+
+    `0 deaths in execution</td></tr>`;
+});
+
+document.getElementById("tfirst").onclick=()=>tgo(0);
+document.getElementById("tprev").onclick=()=>tgo(t-1);
+document.getElementById("tnext").onclick=()=>tgo(t+1);
+document.getElementById("tslider").oninput=e=>tgo(+e.target.value);
+document.getElementById("tplay").onclick=e=>{
+  if(tt){clearInterval(tt);tt=null;e.target.textContent="▶ play";return;}
+  e.target.textContent="⏸ pause";
+  tt=setInterval(()=>{t>=D.trajectory.length-1?tgo(0):tgo(t+1);},640);};
+document.getElementById("lfirst").onclick=()=>lgo(0);
+document.getElementById("lprev").onclick=()=>lgo(l-1);
+document.getElementById("lnext").onclick=()=>lgo(l+1);
+document.getElementById("lslider").oninput=e=>lgo(+e.target.value);
+document.getElementById("lplay").onclick=e=>{
+  if(lt){clearInterval(lt);lt=null;e.target.textContent="▶ play";return;}
+  e.target.textContent="⏸ pause";
+  lt=setInterval(()=>{l>=D.loop.length-1?lgo(0):lgo(l+1);},760);};
+</script>
+</body>
+</html>

@@ -1,4 +1,6 @@
 """Probe tu93 dynamics: per-step player/notch/HUD/goal, to author a world model."""
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parents[1]))
 from dotenv import load_dotenv
 load_dotenv(dotenv_path=".env.example"); load_dotenv(dotenv_path=".env", override=True)
 from arc_agi import Arcade, OperationMode

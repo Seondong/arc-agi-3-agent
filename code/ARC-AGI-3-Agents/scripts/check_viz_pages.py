@@ -70,9 +70,14 @@ def check(path: Path):
     for ref in re.findall(r'fetch\("\./([^"`]+)"\)', text):
         if not (root / ref).exists():
             problems.append(f"fetch(\"./{ref}\") does not exist")
-    for ref in re.findall(r'href="\./([^"#?]+)', text):
-        if not (root / ref).exists():
-            problems.append(f"href=\"./{ref}\" does not exist")
+    for ref in re.findall(r'href="(\.\.?/[^"#?]+)', text):
+        if "${" in ref or "`" in ref:
+            continue                      # built at runtime, not a static link
+        if not (root / ref).resolve().exists():
+            problems.append(f"href=\"{ref}\" does not exist")
+    for ref in re.findall(r'<link[^>]+href="(\.\.?/[^"#?]+)"', text):
+        if not (root / ref).resolve().exists():
+            problems.append(f"stylesheet {ref} does not exist")
 
     for i, block in enumerate(re.findall(r"<script>(.*?)</script>", text, re.S)):
         with tempfile.NamedTemporaryFile("w", suffix=".js", delete=False) as fh:
@@ -92,7 +97,7 @@ def check(path: Path):
 
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else "artifacts/wm_viz")
-    pages = sorted(root.glob("*.html"))
+    pages = sorted(root.rglob("*.html"))
     if not pages:
         print(f"no pages under {root}")
         return 1
@@ -100,7 +105,7 @@ def main():
     for p in pages:
         problems = check(p)
         bad += len(problems)
-        print(f"{'FAIL' if problems else 'ok  '} {p.name}"
+        print(f"{'FAIL' if problems else 'ok  '} {p.relative_to(root)}"
               + ("" if problems else "  (ids, targets, tables, canvases, links, scripts)"))
         for m in problems:
             print(f"       - {m}")

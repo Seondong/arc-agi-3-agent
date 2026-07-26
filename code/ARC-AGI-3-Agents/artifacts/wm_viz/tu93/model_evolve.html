@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tu93 · how the model evolved</title>
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+  header.hero{padding:56px 0 28px;border-bottom:1px solid var(--rule);margin-bottom:32px}
+  h1{font-size:33px;line-height:1.2;margin:0 0 12px;letter-spacing:-.015em;font-weight:600}
+  .lede{font-size:18.5px;margin-top:18px}
+  h2{font-size:23px;margin:44px 0 10px;letter-spacing:-.01em;font-weight:600}
+  pre{font-family:var(--mono);font-size:12px;line-height:1.5;background:var(--bg);
+    border:1px solid var(--rule);border-radius:8px;padding:12px 14px;overflow:auto;margin:0}
+    border-radius:0 8px 8px 0;font-size:15.5px;margin:20px 0}
+  figure{margin:28px 0}
+  table{width:100%;border-collapse:collapse;font-size:14px;
+  th{color:var(--dim);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  td.n{font-variant-numeric:tabular-nums;text-align:center}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px;
+    padding:5px 13px;font-weight:600;cursor:pointer;text-decoration:none;color:var(--ink)}
+  .chip:hover{border-color:var(--accent)}
+  .tl{border-left:2px solid var(--rule);margin:0;padding:0 0 0 18px}
+  .tl .ev{position:relative;padding:0 0 18px}
+  .tl .ev:before{content:"";position:absolute;left:-24px;top:7px;width:9px;height:9px;
+    border-radius:50%;background:var(--rule)}
+  .tl .ev.refute:before{background:var(--bad)} .tl .ev.author:before{background:var(--good)}
+  .tl .lv{font-family:-apple-system,sans-serif;font-size:11.5px;color:var(--dim);
+    text-transform:uppercase;letter-spacing:.05em}
+  .tl .hd{font-weight:700;font-size:15.5px}
+  .tl .bd{font-size:14.5px;color:var(--ink)}
+  .tl .why{font-size:13.5px;color:var(--dim)}
+  .back{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px}
+  footer{border-top:1px solid var(--rule);margin-top:56px;padding:24px 0 64px;color:var(--dim);font-size:14px}
+</style>
+</head>
+<body>
+<button class="theme" id="theme">◐</button>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="../index.html">← method</a> · <a href="./paper.html">← the write-up</a> ·
+      <a href="./level.html">level by level</a></div>
+    <h1>How the model evolved</h1>
+    <div class="byline">The Python that predicts <code>tu93</code>, version by version — and
+      each old version re-run against every level to show exactly what it gets wrong.</div>
+    <p class="lede">A version history is easy to narrate and easy to flatter. So none of the
+      table below is narrated: every earlier model is <em>reconstructed</em> from switches in the
+      current file and replayed against all nine levels, and the cells report where it actually
+      breaks.</p>
+  </div>
+</header>
+
+<main>
+<div class="wide">
+  <figure>
+    <div class="fig"><table id="matrix"></table></div>
+    <figcaption><b>Table 1. Model version × level.</b> Each cell replays that level's own
+      solution under that model and reports the first step it mispredicts. Read down a column to
+      see when a level became predictable; read across a row to see what a version could not yet
+      do. The two red cells in the <code>v11</code> row are the important ones: those levels were
+      called certified at the time, on two-step probes that never put two entities on one
+      square.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <div class="aside warn" id="gap"></div>
+
+  <h2>The timeline</h2>
+  <p>Straight from the append-only journals: every counterexample and every rewrite it forced,
+  in the order they happened. Nothing here was written for this page.</p>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="chips" id="tlchips"></div>
+      <div class="tl" id="tl"></div>
+    </div>
+    <figcaption><b>Figure 1. Refutations and rewrites.</b> Red dots are pointed bugs — a step, an
+      action, and a count of wrong cells. Green dots are model versions, each one carrying the
+      observation that forced it.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <h2>The code the rules live in</h2>
+  <p>The dynamics are one function. Each numbered block below is one rule, in the order
+  <code>step()</code> applies them: the player moves, then guards react, then patrollers, then
+  the crossing rule, then pursuers, then contact is resolved.</p>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="chips" id="bchips"></div>
+      <pre id="code"></pre>
+    </div>
+    <figcaption><b>Figure 2. <code>agents/wm/tu93_model.py</code>, live.</b> Read from the file
+      itself, so it cannot drift from what actually runs.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <div class="aside">
+    <b>Why old versions are runnable.</b> Each retired rule is kept behind a named switch
+    (<code>legacy={"no_pursuer", …}</code>) rather than deleted. That is what lets a refutation be
+    regenerated on demand instead of remembered — the failing frames on this page were produced
+    by running the broken model against the live engine minutes ago, not screenshotted when it
+    was current.
+  </div>
+
+  <h2>Reproducing</h2>
+  <pre>cd code/ARC-AGI-3-Agents
+uv run python scripts/gen_model_evolve.py     # rebuild this page's data
+uv run python scripts/backtest_all.py         # the regression that found the v11 bugs</pre>
+  <p>See also: <a href="./paper.html">the write-up</a> · <a href="./level.html">level by
+    level</a> · <a href="./l4_evolve.html">L4</a> · <a href="./l6_pursuer.html">L6</a>.</p>
+</div>
+</main>
+
+<footer><div class="col">Black box throughout: dynamics come from stepping the engine and reading
+frames back. <code>environment_files/</code> was never opened.</div></footer>
+
+<script>
+let D=null,blk=0,tlv="all";
+const root=document.documentElement;
+document.getElementById("theme").onclick=()=>{
+  const cur=root.getAttribute("data-theme")||
+    (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  root.setAttribute("data-theme",cur==="dark"?"light":"dark");};
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+
+function drawTimeline(){
+  const evs=D.timeline.filter(e=>tlv==="all"||e.level===+tlv);
+  document.getElementById("tl").innerHTML=evs.map(e=>{
+    if(e.kind==="refute")
+      return `<div class="ev refute"><div class="lv">L${e.level} · refuted ${e.version}</div>`+
+        `<div class="hd">${esc(e.bug)}</div></div>`;
+    return `<div class="ev author"><div class="lv">L${e.level} · authored ${e.version}</div>`+
+      `<div class="hd">${esc(e.changed)}</div>`+
+      (e.rules||[]).map(r=>`<div class="bd">· ${esc(r)}</div>`).join("")+
+      `<div class="why">because: ${esc(e.because)}</div></div>`;
+  }).join("")||`<div class="ev"><div class="bd">No journal entries for this level.</div></div>`;
+  document.querySelectorAll("#tlchips .chip").forEach(c=>
+    c.classList.toggle("on",c.dataset.v===String(tlv)));
+}
+function drawBlocks(){
+  document.getElementById("code").textContent=D.blocks[blk].code;
+  document.querySelectorAll("#bchips .chip").forEach((c,i)=>c.classList.toggle("on",i===blk));
+}
+
+fetch("./data/model_evolve.json").then(r=>r.json()).then(d=>{
+  D=d;
+  const levels=D.matrix[0].rows.map(r=>r.level);
+  document.getElementById("matrix").innerHTML=
+    "<tr><th>model</th><th style='min-width:210px'>what it knows</th>"+
+    levels.map(l=>`<th class="n">L${l}</th>`).join("")+"</tr>"+
+    D.matrix.map(v=>`<tr><td><code>${v.version}</code></td>`+
+      `<td style="font-size:12.5px;color:var(--dim)">${esc(v.note)}</td>`+
+      v.rows.map(r=>{
+        if(!r.first_bug)return `<td class="n ok" title="${r.exact}/${r.checked} steps exact">✓</td>`;
+        const b=r.first_bug;
+        return `<td class="n no" title="first bug at step ${b.step} after ${b.action}`+
+          `${b.cells!=null?" — "+b.cells+" cells":""}">✗<br>`+
+          `<span style="font-size:11px;font-weight:400">s${b.step}</span></td>`;
+      }).join("")+"</tr>").join("");
+
+  document.getElementById("gap").innerHTML=
+    `<b>A gap the record does not hide.</b> Levels `+
+    D.journal_gap.map(l=>`L${l}`).join(", ")+` have no journal entries at all — they were `+
+    `solved before the journal existed, and their story survives only in the earlier pages and `+
+    `in the model's comments. Back-filling them now would be reconstructing a narrative from `+
+    `memory, which is the exact failure the journal was built to prevent, so they are left `+
+    `visibly empty.`;
+
+  const lv=[...new Set(D.timeline.map(e=>e.level))].sort((a,b)=>a-b);
+  document.getElementById("tlchips").innerHTML=
+    `<span class="chip" data-v="all" onclick="tlv='all';drawTimeline()">all levels</span>`+
+    lv.map(l=>`<span class="chip" data-v="${l}" onclick="tlv=${l};drawTimeline()">L${l}</span>`).join("");
+  drawTimeline();
+
+  document.getElementById("bchips").innerHTML=D.blocks.map((b,i)=>
+    `<span class="chip" onclick="blk=${i};drawBlocks()">${esc(b.title)}</span>`).join("");
+  drawBlocks();
+});
+</script>
+</body>
+</html>

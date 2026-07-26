@@ -19,6 +19,9 @@ Every entry carries `provenance`:
 
 Append-only: entries are never rewritten, so a journal is a real audit trail of
 what was believed when.
+
+Journals are namespaced by game — `artifacts/wm_journal/<game>/L<n>.jsonl` — so a
+second game cannot overwrite the record of the first.
 """
 from __future__ import annotations
 
@@ -35,8 +38,9 @@ class Journal:
 
     def __init__(self, game: str, level: int, *, directory: str = DEFAULT_DIR,
                  provenance: str = "live", reset: bool = False):
+        game = game.split("-", 1)[0]          # tu93-2b534c15 -> tu93
         self.game, self.level, self.provenance = game, level, provenance
-        self.path = Path(directory) / f"{game}_L{level}.jsonl"
+        self.path = Path(directory) / game / f"L{level}.jsonl"
         self.path.parent.mkdir(parents=True, exist_ok=True)
         if reset and self.path.exists():
             self.path.unlink()
@@ -115,7 +119,7 @@ class Journal:
 
 def load(game: str, level: int, *, directory: str = DEFAULT_DIR) -> list[dict]:
     """Read a journal without opening it for writing."""
-    p = Path(directory) / f"{game}_L{level}.jsonl"
+    p = Path(directory) / game.split("-", 1)[0] / f"L{level}.jsonl"
     if not p.exists():
         return []
     with p.open(encoding="utf-8") as fh:

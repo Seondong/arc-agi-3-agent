@@ -5,9 +5,23 @@ Visualizations of the `agents/wm` world-model pipeline solving **tu93 end to end
 by Claude Code (Max subscription) standing in for `ClaudeBrain`'s `propose()` —
 no API calls.
 
-Start at **`paper.html`** — it is the landing page and links to everything below.
-`level.html` covers every level uniformly; the per-level pages that predate it
-(L0–L2) are kept because they show workings the uniform page does not.
+Start at **`index.html`** — the methodology page and the root of the site. Each
+game lives under its own directory:
+
+```
+index.html            the method, and the list of games
+shared/style.css      the shared look
+games.json            root index data (every game with a model OR a journal)
+<game>/paper.html     that game's write-up  (the game's landing page)
+<game>/level.html     every level of it, uniformly instrumented
+<game>/model_evolve.html   that game's model versions, re-measured
+<game>/data/*.json    that game's page data
+```
+
+Nothing about the pipeline is game-specific: `scripts/wm/*.py` all take
+`--game`, and the only per-game code is `agents/wm/models/<game>.py` plus
+whatever deep-dive generators that game's surprises earned in
+`scripts/wm/games/<game>/`.
 
 Serve locally:
 

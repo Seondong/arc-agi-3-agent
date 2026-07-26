@@ -1,12 +1,40 @@
-# HANDOFF — tu93 world-model solve
+# HANDOFF — world-model solve, per game
 
 Read this first when resuming. It is the durable state of the work; the
-conversation that produced it is gone. Last updated when tu93 was finished.
+conversation that produced it is gone. Last updated when the pipeline was
+namespaced by game and ls20 was opened.
+
+## Layout — everything is per game
+
+```
+agents/wm/
+  harness.py            game-agnostic: env session, solutions, paths
+  models/__init__.py    game id -> model factory  (add a game here)
+  models/tu93.py        one game's executable theory + its page metadata
+scripts/wm/             game-parameterized: every script takes --game
+  observe_level.py  probe_diff.py  probe_movers.py
+  backtest_level.py backtest_all.py verify_game.py solve_level.py gen_site.py
+scripts/wm/games/<g>/   that game's own deep-dive generators
+artifacts/wm_journal/<g>/L<n>.jsonl , solutions.json
+artifacts/wm_viz/index.html          the methodology page (root landing)
+artifacts/wm_viz/<g>/                that game's pages, data under <g>/data/
+artifacts/wm_viz/shared/style.css    the shared look
+```
+
+Nothing is game-specific outside `models/<g>.py` and `scripts/wm/games/<g>/`.
+That is the claim being tested by opening a second game.
+
+## Games
+
+| game | status |
+|---|---|
+| tu93 | **solved, L0–L8, 185 actions, WIN**; model v12 reproduces every frame |
+| ls20 | **opened**. First probes journaled, no model yet — see below |
 
 ## Where things stand
 
 **tu93 is solved end to end — 9 levels, 185 actions, final state `WIN`.**
-Re-run `uv run python scripts/verify_tu93.py` to see it, don't take it on trust.
+Re-run `uv run python scripts/wm/verify_game.py --game tu93` to see it, don't take it on trust.
 
 | level | new mechanic | solve actions | real deaths paid |
 |---|---|---|---|
@@ -28,15 +56,30 @@ Solutions live in `artifacts/wm_journal/solutions.json` (the source of truth —
 every script reads it to replay to a level). Model: `agents/wm/tu93_model.py`,
 one model covering all levels, currently **v11**.
 
-## THE NEXT TASK
+## THE NEXT TASK — ls20
 
-tu93 has nothing left to solve. Pick one:
+Opened, probed, not modelled. What the first probes established (journal:
+`artifacts/wm_journal/ls20/L0.jsonl`):
 
-1. **Port the loop to a second game** (`ls20`, `ft09`, `sk48`, …). The scripts are
-   all tu93-specific in their model import only — `observe_level.py`,
-   `probe_movers.py`, `backtest_level.py`, `solve_level.py`, `verify_tu93.py`
-   otherwise generalise. The real question this answers: how much of the *method*
-   transfers when none of the *rules* do.
+- Actions 1-4 only. **ACTION2 moves nothing** from the start position and still
+  costs a turn.
+- The controlled thing is a **composite**: 10 cells of value 12 (5x2) sitting on
+  15 cells of value 9 (5x3); both translate together.
+- **Step size is 5 px**, not tu93's 6.
+- **Value 9 is not a player marker here** — the same value draws glyphs inside
+  two display boxes (rows 8-16 cols 32-40, rows 53-62 cols 1-11). Find the player
+  by what moves, never by value.
+- Rows 61-62 carry a value-11 bar across cols 13-54, consumed one column per
+  action from the left. Same role as tu93's row 63, drawn the other way round.
+- Background is values 3 and 4; there is no maze and no border wall.
+
+Next: probe what the two display boxes are for (they are the obvious candidates
+for the win condition — this game is listed as "agent reasoning"), then write
+`agents/wm/models/ls20.py` and register it. Do not carry tu93 rules across: every
+single quantity above differs.
+
+Other directions:
+
 2. **Close the propose() seam.** The model is hand-authored by Claude Code; the
    framework's `propose()` is meant to be filled by a model that writes the rule
    from the counterexample. Every refutation in the journals is a training pair:
@@ -53,23 +96,23 @@ tu93 has nothing left to solve. Pick one:
 cd code/ARC-AGI-3-Agents
 
 # look at a level (replays saved solutions to get there)
-uv run python scripts/observe_level.py 6
+uv run python scripts/wm/observe_level.py --game tu93 --level 6
 
 # per-step census of every moving block: position, facing, notch value
-uv run python scripts/probe_movers.py "ACTION4,ACTION4,ACTION3" --level 6
+uv run python scripts/wm/probe_movers.py --game tu93 --level 6 "ACTION4,ACTION4"
 
 # certify the model against a real sequence, with a predicted/actual diff on failure
-uv run python scripts/backtest_level.py "ACTION4,ACTION4" --level 6
+uv run python scripts/wm/backtest_level.py --game tu93 --level 6 "ACTION4,ACTION4"
 
 # probe → certify → plan in-model → execute → save solution, journaling live
-uv run python scripts/solve_level.py 6 "ACTION4,ACTION4"
+uv run python scripts/wm/solve_level.py --game tu93 --level 6 "ACTION4,ACTION4"
 
 # rebuild every page's data from the journals + real engine runs, then serve
-uv run python scripts/gen_paper_data.py     # the write-up (landing page)
-uv run python scripts/gen_level_pages.py    # ALL levels: replay + full in-model search
-uv run python scripts/gen_model_evolve.py   # every retired model version, re-measured
-uv run python scripts/gen_l4_evolve.py      # L4: cell count vs entity count
-uv run python scripts/gen_l6_pursuer.py     # L6: pursuer trail vs simulated chaser
+uv run python scripts/wm/games/tu93/gen_paper.py     # the write-up (landing page)
+uv run python scripts/wm/gen_site.py --game tu93    # ALL levels: replay + full in-model search
+# (folded into gen_site.py)   # every retired model version, re-measured
+uv run python scripts/wm/games/tu93/gen_l4_evolve.py      # L4: cell count vs entity count
+uv run python scripts/wm/games/tu93/gen_l6_pursuer.py     # L6: pursuer trail vs simulated chaser
 python3 -m http.server 8733 -d artifacts/wm_viz   # → /paper.html
 ```
 
@@ -81,16 +124,17 @@ It appends to the journal; pass `--reset` only if you really mean to erase one.
 ### Regression set (run after every model change)
 
 ```bash
-uv run python scripts/backtest_all.py      # THE one that matters: every level, every
-                                           # step of its own solution, cell-exact
-uv run python scripts/verify_tu93.py       # all 9 levels -> WIN
+uv run python scripts/wm/backtest_all.py --game tu93   # THE one that matters:
+                             # every level, every step of its own solution, cell-exact
+uv run python scripts/wm/verify_game.py --game tu93   # all 9 levels -> WIN
 uv run python scripts/check_viz_pages.py   # the viz pages: ids, targets, links, scripts
 uv run python -m pytest agents/wm/tests -q
 ```
 `backtest_all.py` exists because short probes are not certification: L5 and L8
 both passed a two-step probe while mispredicting their own solution paths.
-(`scripts/solve_l2_wm.py` still uses the pre-refactor `state.pr/pc` API and will
-raise `AttributeError`; ignore it — L2 is covered by `verify_tu93.py`.)
+(`scripts/wm/games/tu93/legacy/` holds the L0–L2 era generators; several use the
+pre-refactor `state.pr/pc` API and will raise `AttributeError`. They are kept for
+the pages they still feed, not as working tools.)
 
 ## Learned rules (all black box)
 
@@ -179,3 +223,22 @@ Full statement in `artifacts/wm_viz/README.md` (§ Logging principles). Short fo
 - `artifacts/wm_viz/*.html` — supporting figures; `README.md` maps each to its generator
 - `agents/wm/tu93_model.py` — the world model
 - `agents/wm/journal.py` — the recorder
+
+## Opening a new game — the checklist
+
+```bash
+G=ls20
+uv run python scripts/wm/observe_level.py --game $G --level 0     # what is on screen
+uv run python scripts/wm/probe_diff.py    --game $G --level 0 --each   # what each action does
+uv run python scripts/wm/probe_movers.py  --game $G --level 0 "..."    # per-step entity census
+# write agents/wm/models/$G.py, register it in agents/wm/models/__init__.py
+uv run python scripts/wm/backtest_level.py --game $G --level 0 "..."   # certify or get a bug
+uv run python scripts/wm/solve_level.py    --game $G --level 0 "..."   # plan + execute + save
+uv run python scripts/wm/gen_site.py       --game $G                   # build its pages
+```
+
+`probe_diff.py --each` is the right first tool: it resets between actions and
+reports what changed, so "nothing happened" and "an object moved" are
+distinguishable before anything is known. Carrying the previous game's constants
+across is the mistake it exists to prevent — ls20's step is 5 px where tu93's is
+6, and ls20 draws glyphs in value 9, the value that was the player in tu93.
