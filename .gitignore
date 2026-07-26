@@ -32,9 +32,11 @@ recordings_*/
 data/
 # Run artifacts are huge (~1.8G) and regenerable — except the world-model
 # journals and write-up, which are the durable record of the work.
-artifacts/*
-!artifacts/wm_viz/
-!artifacts/wm_journal/
+# (a pattern with a slash in the middle is anchored to the repo root, so these
+#  need **/ to match artifacts/ at any depth)
+**/artifacts/*
+!**/artifacts/wm_viz/
+!**/artifacts/wm_journal/
 
 # Logs
 *.log
