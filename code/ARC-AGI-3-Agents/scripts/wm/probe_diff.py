@@ -14,7 +14,7 @@ which is the only way the comparison means anything.
 from collections import Counter
 
 import _cli
-from agents.wm.harness import Session
+from agents.wm.harness import engine_steps, Session
 from agents.wm.journal import Journal
 
 MOVES = ["ACTION1", "ACTION2", "ACTION3", "ACTION4", "ACTION5", "ACTION7"]
@@ -75,7 +75,7 @@ def main():
             print(f"  {name}: {describe(d)}")
             if J:
                 J.probe(actions=[name], hypothesis="what does this action change?",
-                        observed=describe(d), died=False, env_steps=1, entities=d, at=at)
+                        observed=describe(d), died=False, env_steps=1, entities=d, at=at, engine_steps=engine_steps())
         return
 
     s = Session.open(a.game, a.level)
@@ -93,9 +93,14 @@ def main():
         print(f"  step {i} {n}: {describe(d)}")
         if J:
             J.probe(actions=[n], hypothesis="what does this action change?",
-                    observed=describe(d), died=False, env_steps=1, entities=d, at=at)
+                    observed=describe(d), died=False, env_steps=1, entities=d, at=at, engine_steps=engine_steps())
         prev = s.grid
+
+
+def _footer():
+    print(f"  ({engine_steps()} engine steps, replays included)")
 
 
 if __name__ == "__main__":
     main()
+    _footer()

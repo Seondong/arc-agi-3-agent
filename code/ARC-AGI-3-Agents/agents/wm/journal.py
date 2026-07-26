@@ -86,7 +86,7 @@ class Journal:
                            at=list(at or []))
 
     def probe(self, *, actions: list[str], hypothesis: str, observed: str,
-              died: bool = False, env_steps: int = 0,
+              died: bool = False, env_steps: int = 0, engine_steps: int = 0,
               entities: Optional[dict] = None, frame: Optional[list] = None,
               at: Optional[list] = None) -> dict:
         """A real interaction run to test something. `hypothesis` is what we
@@ -97,6 +97,7 @@ class Journal:
         the probe was looking at can be reproduced exactly."""
         return self._write("probe", actions=actions, hypothesis=hypothesis,
                            observed=observed, died=died, env_steps=env_steps,
+                           engine_steps=engine_steps or env_steps,
                            entities=entities or {}, frame=frame, at=list(at or []))
 
     def refute(self, *, version: str, bug: str, step_index: int, action: str,
@@ -140,10 +141,12 @@ class Journal:
                            search_log=search_log)
 
     def execute(self, *, actions: list[str], result: str, cleared: bool,
-                died_at: Optional[int] = None, env_steps: int = 0) -> dict:
+                died_at: Optional[int] = None, env_steps: int = 0,
+                engine_steps: int = 0) -> dict:
         """Running a plan for real."""
         return self._write("execute", actions=actions, result=result,
-                           cleared=cleared, died_at=died_at, env_steps=env_steps)
+                           cleared=cleared, died_at=died_at, env_steps=env_steps,
+                           engine_steps=engine_steps or env_steps)
 
     def note(self, *, text: str) -> dict:
         """Free-form remark worth keeping (a limitation, a suspicion, a TODO)."""
@@ -171,12 +174,17 @@ def summary(entries: list[dict]) -> dict:
     """Cost ledger straight from the journal — no hand-counting."""
     probe_steps = sum(e.get("env_steps", 0) for e in entries if e["kind"] == "probe")
     exec_steps = sum(e.get("env_steps", 0) for e in entries if e["kind"] == "execute")
+    engine = sum(e.get("engine_steps", e.get("env_steps", 0)) for e in entries
+                 if e["kind"] in ("probe", "execute"))
     deaths = sum(1 for e in entries if e["kind"] == "probe" and e.get("died"))
     deaths += sum(1 for e in entries if e["kind"] == "execute" and e.get("died_at"))
     plans = [e for e in entries if e["kind"] == "plan"]
     return {
         "probe_env_steps": probe_steps,
         "execute_env_steps": exec_steps,
+        # What the engine really ran, replays to reach the level included. Always
+        # >= the two above; the gap is the setup cost that a naive ledger hides.
+        "engine_steps": engine,
         "real_deaths": deaths,
         "refutations": sum(1 for e in entries if e["kind"] == "refute"),
         "model_versions": [e["version"] for e in entries if e["kind"] == "author"],

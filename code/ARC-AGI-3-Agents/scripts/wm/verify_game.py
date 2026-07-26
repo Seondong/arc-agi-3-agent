@@ -6,7 +6,7 @@ so "this game is solved" is something a reader can re-run instead of trust.
 Usage: verify_game.py --game tu93
 """
 import _cli
-from agents.wm.harness import Session, load_solutions
+from agents.wm.harness import Session, engine_steps, load_solutions
 
 
 def main():
@@ -31,7 +31,7 @@ def main():
               f"{'CLEARED' if ok else 'NOT CLEARED'} "
               f"(levels_completed={s.raw.levels_completed}, state={s.raw.state.name})")
     print(f"\ntotal {total} actions across {len(sols)} levels; "
-          f"final state = {s.raw.state.name}")
+          f"final state = {s.raw.state.name}; {engine_steps()} engine steps")
     return 0
 
 

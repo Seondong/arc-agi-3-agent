@@ -26,7 +26,8 @@ from pathlib import Path
 
 import _cli
 from agents.wm.core import Action
-from agents.wm.harness import (JOURNAL_ROOT, Session, load_solutions, prefix_for)
+from agents.wm.harness import (JOURNAL_ROOT, Session, engine_steps,
+                               load_solutions, prefix_for)
 from agents.wm.journal import load as load_journal
 from agents.wm.models import has_model, model_for, short_id
 
@@ -291,6 +292,7 @@ def main():
             got, missed = by_type.get(t, 0), gap_type.get(t, 0)
             flag = "" if not missed else f"   <-- {missed} NOT extractable"
             print(f"    {t:<9} {got:>5}{flag}")
+        print(f"    engine steps used to rebuild the frames: {engine_steps()}")
         if gaps:
             print(f"  gaps written to {gap_path}")
             seen = set()

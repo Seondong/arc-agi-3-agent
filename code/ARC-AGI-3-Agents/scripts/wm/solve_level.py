@@ -8,7 +8,7 @@ model produced a confident plan on tu93 L2 that killed the player.
 import _cli
 from agents.wm.backtest import run_backtest
 from agents.wm.core import Action, Status, Timeline, Transition
-from agents.wm.harness import Session, save_solution
+from agents.wm.harness import engine_steps, Session, save_solution
 from agents.wm.journal import Journal, summary
 from agents.wm.models import model_for
 from agents.wm.planner import run_bfs
@@ -156,12 +156,14 @@ def main():
     J.execute(actions=names, result=("DIED" if died else
                                      ("CLEARED" if cleared else "no clear")),
               cleared=cleared, died_at=(len(names) if died else None),
-              env_steps=s2.steps - before)
+              env_steps=s2.steps - before, engine_steps=s2.steps)
     print(f"  execution: {'DIED' if died else ('L%d CLEARED' % a.level if cleared else 'no clear')}")
     if cleared:
         save_solution(a.game, a.level, names)
         print(f"  saved solution for L{a.level} ({len(names)} actions)")
     print("summary:", summary(J.entries()))
+    print(f"  cost: {s.steps + s2.steps} engine steps this run "
+          f"({len(names)} of them the solution itself)")
     return 0 if cleared else 1
 
 

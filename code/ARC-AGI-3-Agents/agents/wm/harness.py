@@ -18,6 +18,11 @@ from pathlib import Path
 
 from .models import short_id
 
+# Every engine step this process has taken, including the replays that re-reach a
+# level. A probe that costs one action but needs a 38-action replay to set up has
+# really cost 39, and a cost ledger that hides that is not a cost ledger.
+ENGINE_STEPS = [0]
+
 JOURNAL_ROOT = Path("artifacts/wm_journal")
 VIZ_ROOT = Path("artifacts/wm_viz")
 
@@ -135,6 +140,7 @@ class Session:
                                  data=GameAction.RESET.action_data.model_dump(),
                                  reasoning={})
         self.steps += 1
+        ENGINE_STEPS[0] += 1
         for name in prefix_for(self.game, level):
             self.act(name)
         self.actions = []           # the prefix is implied by the level, not recorded
@@ -156,6 +162,7 @@ class Session:
             data.update(x=x, y=y)
         self.raw = self.env.step(a, data=data, reasoning={})
         self.steps += 1
+        ENGINE_STEPS[0] += 1
         self.actions.append(name if x is None else f"{name}@{x}:{y}")
         return self.raw
 
@@ -166,6 +173,32 @@ class Session:
     @property
     def dead(self) -> bool:
         return died(self.raw)
+
+
+def engine_steps() -> int:
+    """Every engine step this process has taken, replays included."""
+    return ENGINE_STEPS[0]
+
+
+class Meter:
+    """Counts the engine steps an operation really costs, setup included.
+
+    A probe that spends one action but needs a 38-step replay to reach its level
+    has cost 39. Reporting the 1 and hiding the 38 is how a cost ledger starts
+    lying, and the deeper the level the worse the gap gets.
+    """
+
+    def __enter__(self):
+        self._start = ENGINE_STEPS[0]
+        return self
+
+    def __exit__(self, *exc):
+        self.steps = ENGINE_STEPS[0] - self._start
+        return False
+
+    @property
+    def so_far(self) -> int:
+        return ENGINE_STEPS[0] - self._start
 
 
 def bounds(grid, walls=(5, 6)):

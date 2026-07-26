@@ -11,7 +11,7 @@ Unknown values are censused too, so a new mechanic shows up as an entity with a
 position and a facing the first time it appears.
 """
 import _cli
-from agents.wm.harness import Session
+from agents.wm.harness import engine_steps, Session
 from agents.wm.journal import Journal
 
 NOTCHES = (15, 11)
@@ -92,8 +92,13 @@ def main():
             J.probe(actions=[n],
                     hypothesis="how does every moving entity respond to this action?",
                     observed=fmt(cs), died=False, env_steps=1,
-                    entities={str(v): b for v, b in cs["ents"].items()}, at=at)
+                    entities={str(v): b for v, b in cs["ents"].items()}, at=at, engine_steps=engine_steps())
+
+
+def _footer():
+    print(f"  ({engine_steps()} engine steps, replays included)")
 
 
 if __name__ == "__main__":
     main()
+    _footer()

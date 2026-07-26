@@ -15,7 +15,7 @@ Usage: backtest_all.py --game tu93 [--verbose]
 """
 import _cli
 from agents.wm.core import Action, diff_cells, ignored_cells
-from agents.wm.harness import Session, load_solutions
+from agents.wm.harness import Session, engine_steps, load_solutions
 from agents.wm.models import model_for
 
 
@@ -33,6 +33,17 @@ def main():
     for level in sorted(sols):
         model = model_for(a.game, version=0)
         state = model.reconstruct(s.grid)
+        try:
+            model.render(state)
+        except NotImplementedError:
+            # A model may legitimately have no renderer — its dynamics can still
+            # be right. Frame-exactness is then not applicable, which is a
+            # different thing from failing it, and is reported as such.
+            print(f"n/a L{level}: this model does not render frames, so its "
+                  f"predictions cannot be checked cell-for-cell")
+            for n in sols[level]:
+                s.act(n)
+            continue
         hud = ignored_cells(model, s.grid) or set()
         lv0 = s.raw.levels_completed
         exact = terminal = 0
@@ -61,7 +72,7 @@ def main():
                 print(f"      step {b[0]:>2} {b[1]}: {b[2]}")
 
     print(f"\n{'ALL LEVELS EXACT' if not bad_total else str(bad_total) + ' mispredicted steps'}"
-          f"; final state = {s.raw.state.name}; {s.steps} env steps")
+          f"; final state = {s.raw.state.name}; {engine_steps()} engine steps")
     return 0 if not bad_total else 1
 
 

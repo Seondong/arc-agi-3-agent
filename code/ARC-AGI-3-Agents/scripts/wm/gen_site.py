@@ -33,11 +33,19 @@ from agents.wm.planner import run_bfs
 MOVES = ["ACTION1", "ACTION2", "ACTION3", "ACTION4"]
 MAX_LOG = 20000            # log everything below this; above it, say what was dropped
 def _first(state):
-    """The position the search log draws — the first entity group's first member."""
+    """The position the search log draws — the first entity group's first member.
+
+    Some games have no entity groups at all: sk48's state is two integers, so
+    there is nothing on a grid to draw. The log still records the transition;
+    only the position is absent.
+    """
     for group in ents(state).values():
         if group:
             return list(group[0][:2])
-    return None
+    import dataclasses
+    nums = [getattr(state, f.name) for f in dataclasses.fields(state)
+            if isinstance(getattr(state, f.name), int)]
+    return nums[:2] if len(nums) >= 2 else None
 
 
 def ents(state):
@@ -75,12 +83,13 @@ def logged_bfs(model, start, max_depth=120):
             n += 1
             nxt, status = model.step(state, Action(a))
             here, there = _first(state), _first(nxt)
-            rec = {"n": n, "d": len(path) + 1, "a": ai, "f": list(here) if here else None}
+            rec = {"n": n, "d": len(path) + 1, "a": ai,
+                   "f": list(here) if here is not None else None}
             if status == Status.GAME_OVER:
                 deaths += 1
                 rec.update(o="death", t=None)
             elif status == Status.LEVEL_COMPLETED or model.is_goal(nxt):
-                rec.update(o="goal", t=list(there) if there else None)
+                rec.update(o="goal", t=list(there) if there is not None else None)
                 if len(log) < MAX_LOG:
                     log.append(rec)
                 return path + [Action(a)], log, stats(expanded)
@@ -89,15 +98,15 @@ def logged_bfs(model, start, max_depth=120):
                 if key in visited:
                     if here == there:
                         blocked += 1
-                        rec.update(o="blocked", t=list(there))
+                        rec.update(o="blocked", t=list(there) if there is not None else None)
                     else:
                         revisits += 1
-                        rec.update(o="revisit", t=list(there))
+                        rec.update(o="revisit", t=list(there) if there is not None else None)
                 else:
                     visited.add(key)
                     q.append((nxt, path + [Action(a)]))
                     frontier += 1
-                    rec.update(o="frontier", t=list(there))
+                    rec.update(o="frontier", t=list(there) if there is not None else None)
             if len(log) < MAX_LOG:
                 log.append(rec)
     return [], log, stats(expanded)
@@ -117,14 +126,24 @@ def build_level(game, level, sols, meta):
     replay = [{"k": 0, "action": None, "grid": crop(init), "pred_diff": [],
                "cells_off": 0, "status": "RUNNING", "terminal": False,
                "ents": ents(state)}]
+    # A model may legitimately not render — sk48's dynamics are enough to plan
+    # with but its frame is not reconstructed pixel-for-pixel. Then the replay
+    # still shows what happened, with the prediction column marked unavailable
+    # rather than the whole page failing to build.
+    renders = True
+    try:
+        model.render(state)
+    except NotImplementedError:
+        renders = False
+
     for i, n in enumerate(sols[level], start=1):
         s.act(n)
         state, _ = model.step(state, Action(n))
         actual = None if s.dead else s.grid
-        pred = model.render(state)
+        pred = model.render(state) if renders else None
         cleared = (actual is not None) and s.raw.levels_completed > lv0
         diff = []
-        if actual is not None:
+        if actual is not None and pred is not None:
             for r in range(len(actual)):
                 for c in range(len(actual[0])):
                     if (r, c) not in hud and pred[r][c] != actual[r][c]:
@@ -134,7 +153,7 @@ def build_level(game, level, sols, meta):
             "grid": crop(actual) if actual is not None else None,
             "pred_diff": [d for d in diff
                           if 0 <= d[0] <= r1 - r0 and 0 <= d[1] <= c1 - c0],
-            "cells_off": len(diff),
+            "cells_off": len(diff) if renders else None,
             "status": ("GAME_OVER" if actual is None
                        else "LEVEL_COMPLETED" if cleared else "RUNNING"),
             # The frame after a level clears is the NEXT level's maze, which this
@@ -165,11 +184,15 @@ def build_level(game, level, sols, meta):
         "journal": [{k: v for k, v in e.items()
                      if k not in ("frame", "predicted_frame", "actual_frame",
                                   "search_log")} for e in j],
+        "renders": renders,
         "fidelity": {
             "steps": len(replay) - 1,
             "exact": sum(1 for f in replay[1:]
                          if f["cells_off"] == 0 and not f["terminal"]),
             "terminal_excluded": sum(1 for f in replay[1:] if f["terminal"]),
+            # A model with no renderer cannot be frame-checked at all; saying
+            # "0 exact" would read as a failure rather than as not applicable.
+            "checkable": renders,
         },
     }
 
@@ -183,6 +206,14 @@ def build_matrix(game, sols, meta):
         for level in sorted(sols):
             model = model_for(game, version=0, legacy=legacy)
             state = model.reconstruct(s.grid)
+            try:
+                model.render(state)
+            except NotImplementedError:
+                rows.append({"level": level, "exact": 0, "checked": 0,
+                             "terminal": 0, "first_bug": None})
+                for n in sols[level]:
+                    s.act(n)
+                continue
             hud = ignored_cells(model, s.grid) or set()
             lv0 = s.raw.levels_completed
             exact = terminal = 0

@@ -32,7 +32,7 @@ from collections import Counter, deque
 
 import _cli
 from agents.wm.core import Action, diff_cells, ignored_cells
-from agents.wm.harness import Session, load_solutions
+from agents.wm.harness import Session, engine_steps, load_solutions
 from agents.wm.journal import Journal
 from agents.wm.models import has_model, model_for
 
@@ -256,7 +256,8 @@ def main():
         prefix = prefix + [best[1]]
         best_overall = best
 
-    print(f"total {total} real actions spent")
+    print(f"total {total} probe actions; {engine_steps()} engine steps including "
+          f"the replays needed to set each probe up")
     if best_overall:
         print(f"BEST LEAD: {' -> '.join(prefix) or best_overall[1]}  ::  {best_overall[2]}")
     if J:
