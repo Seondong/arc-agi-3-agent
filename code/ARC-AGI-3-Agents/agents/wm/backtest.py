@@ -122,7 +122,10 @@ def run_backtest(model: WorldModel, timeline: Timeline) -> BacktestReport:
                     status_mismatch=status_bad,
                     predicted_status=pred_status,
                     actual_status=tr.status,
-                    changed_cells=diff_cells(pred_frame, tr.after_frame, ignore),
+                    # No recorded frame means nothing to count; a status-only
+                    # mismatch still has to be reportable.
+                    changed_cells=(0 if tr.after_frame is None
+                                   else diff_cells(pred_frame, tr.after_frame, ignore)),
                     predicted_frame=pred_frame,
                     actual_frame=tr.after_frame,
                 ),

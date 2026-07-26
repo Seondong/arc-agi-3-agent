@@ -1,5 +1,11 @@
 # HANDOFF — world-model solve, per game
 
+**Two documents, on purpose.** This one is the state of the WORK — which games,
+what is solved, what to do next. `ARCHITECTURE.md` next to it is the state of the
+SYSTEM — every module, why it exists, and what it caught. Read this first, then
+that one before changing anything structural. If something is only in a
+conversation, it does not exist.
+
 Read this first when resuming. It is the durable state of the work; the
 conversation that produced it is gone. Last updated when the pipeline was
 namespaced by game and ls20 was opened.
@@ -177,6 +183,21 @@ report says so.
 design, not a bug — an uncertified model produced a confident plan on L2 that
 killed the player. If it stops, investigate the pointed bug and fix the model.
 It appends to the journal; pass `--reset` only if you really mean to erase one.
+
+### Modules added from the ARC-AGI-3 papers (full write-up in ARCHITECTURE.md)
+
+```bash
+uv run python scripts/wm/execute_gated.py  --game m0r0 --level 1 "..."  # checked actions
+uv run python scripts/wm/simplify_model.py --game tu93 --journal        # weaken + verify
+uv run python scripts/wm/stuck_report.py   --game m0r0 --level 2        # what was never tried
+```
+
+`simplify_model.py` weakens the model one retired rule at a time and replays every
+recorded solution AND probe through it; a rule that survives was never forced by
+anything we saw. It earned its place by catching that m0r0's hazard rule had no
+recorded evidence at all — the ten measurements behind it had been run in an
+ad-hoc script that never journaled. Re-probing the 10-action discriminating
+sequence with journaling closed it.
 
 ### Measuring ourselves (added from the ARC-AGI-3 papers)
 
