@@ -26,8 +26,8 @@
     <p class="lede">This is the second game the loop has been pointed at. The interesting number
       is not how fast it was solved but how little of the first game transferred: of the rules
       carried over from <a href="../tu93/paper.html">tu93</a>, exactly one survived contact. Two
-      levels are cleared; the third is open, and this page says which parts are known and which
-      are guesses.</p>
+      levels are cleared; the third is not, and this page is as specific about what has been
+      ruled out there as about what was solved.</p>
   </div>
 </header>
 
@@ -129,10 +129,27 @@
   coordinate tried. On L2, clicking any of the three 2×2 marks of value 9 turns that mark into 11
   <b>and turns all thirty-two agent cells from value 10 into value 1</b>. Clicking an agent does
   nothing. The marks are switches, and throwing one transforms both agents into something else.</p>
+  <p>Probing it out: the marks are a <b>control transfer</b>. Selecting one freezes both agents
+  and hands <code>ACTION1–4</code> to the mark, which then walks the corridors 4px at a time.
+  Clicking a frozen agent cancels everything; clicking another mark hands control to that one; a
+  mark left somewhere stays there. <code>ACTION5</code> is inert throughout.</p>
   <div class="open">
-    <b>Open.</b> What value-1 agents can do — pass the hazard, merge, move differently — has not
-    been probed. Until it is, the model does not pretend to plan L2, and the loop refuses. That
-    refusal is the feature: the alternative is a confident plan built on an invented rule.
+    <b>L2 is not solved, and here is what has been ruled out — by measurement, not by feel.</b>
+    <ul style="margin:8px 0 0 0;padding-left:20px">
+      <li>The agents <b>cannot meet</b>. Their occupiable columns run 14, 18, 22, 26 — then jump
+        to 34, 38, 42, 46, 50. Column 30, exactly the mirror axis where they would merge, is
+        missing: the whole band at rows 28–52 carries value 15 at cols 30–31 and hazard 8 at cols
+        32–33. 101 reachable joint states, none coincident, closest 8 apart.</li>
+      <li>The marks <b>cannot reach the agents</b> — a mark driven downward stops at row 15.</li>
+      <li>Marks <b>cannot merge</b>: a route computed as if a mark were passable stopped one step
+        short every time, so a mark blocks a mark.</li>
+      <li>Repositioning a mark <b>does not change</b> the agents' reachable set: still exactly
+        101 states.</li>
+    </ul>
+    So what the marks are <em>for</em> is still unknown, and the model says so rather than
+    inventing a rule to plan on. Untried: <code>ACTION6</code> on squares that are neither mark
+    nor agent, whether the step counters matter, and whether some mark <em>arrangement</em>
+    rather than a mark position is the win condition.
   </div>
 
   <h2 id="ledger">The ledger so far</h2>
