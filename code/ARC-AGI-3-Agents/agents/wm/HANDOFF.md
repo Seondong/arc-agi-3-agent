@@ -135,8 +135,12 @@ uv run python scripts/wm/probe_movers.py --game tu93 --level 6 "ACTION4,ACTION4"
 # certify the model against a real sequence, with a predicted/actual diff on failure
 uv run python scripts/wm/backtest_level.py --game tu93 --level 6 "ACTION4,ACTION4"
 
-# probe → certify → plan in-model → execute → save solution, journaling live
+# probe → certify → plan in-model → execute GATED → save solution, journaling live
 uv run python scripts/wm/solve_level.py --game tu93 --level 6 "ACTION4,ACTION4"
+
+# run a plan one checked action at a time, stopping at the first mispredicted step
+uv run python scripts/wm/execute_gated.py --game m0r0 --level 1 "ACTION2,..." \
+    --legacy no_mirror_law     # gate with a RETIRED version to see where it breaks
 
 # rebuild every page's data from the journals + real engine runs, then serve
 uv run python scripts/wm/games/tu93/gen_paper.py     # the write-up (landing page)
@@ -160,6 +164,14 @@ thing:
   `ACTION6` on a representative square of every value region, ranks what actually
   happened, and follows the best lead into the state it opens. On m0r0 L2 it
   re-found the switch mechanic unaided, first out of 22 candidates.
+
+**Execution is gated.** A plan is no longer run blind: before each action the
+model predicts, after it the prediction is checked, and the first mismatch stops
+execution with a pointed bug and the replay key. Proven on m0r0 L1 — the retired
+`no_mirror_law` model's 20-action plan aborts at step 12 with 64 mispredicted
+cells and 8 actions unspent, where running it blind spent all 20 to learn only
+"no clear". A model with no renderer (sk48) is gated on status alone and the
+report says so.
 
 `solve_level.py` **stops at a refutation and refuses to plan**. That is by
 design, not a bug — an uncertified model produced a confident plan on L2 that

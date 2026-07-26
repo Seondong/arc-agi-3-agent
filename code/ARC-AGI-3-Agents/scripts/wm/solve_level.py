@@ -12,6 +12,7 @@ from agents.wm.harness import engine_steps, Session, save_solution
 from agents.wm.journal import Journal, summary
 from agents.wm.models import model_for
 from agents.wm.planner import run_bfs
+from execute_gated import execute_gated
 
 MOVES = ["ACTION1", "ACTION2", "ACTION3", "ACTION4"]
 
@@ -144,23 +145,28 @@ def main():
               f"--game {a.game} --level {a.level} --follow 3")
         return 1
 
-    # ---- execute -----------------------------------------------------------
-    before, lv2 = s2.steps, s2.raw.levels_completed
-    died = False
-    for n in names:
-        s2.act(n)
-        if s2.dead:
-            died = True
-            break
-    cleared = (not died) and s2.raw.levels_completed > lv2
-    J.execute(actions=names, result=("DIED" if died else
-                                     ("CLEARED" if cleared else "no clear")),
-              cleared=cleared, died_at=(len(names) if died else None),
+    # ---- execute, one checked experiment at a time --------------------------
+    # Each action is gated on the model's own prediction. A plan built on a wrong
+    # rule stops at the first step that proves it wrong, instead of spending the
+    # whole plan to learn only "no clear".
+    before = s2.steps
+    res = execute_gated(s2, model2, st0, names, journal=J, version=a.version,
+                        verbose=True)
+    cleared, died = res["cleared"], res["died"]
+    names_run = res["taken"]
+    J.execute(actions=names_run,
+              result=("DIED" if died else "CLEARED" if cleared
+                      else f"aborted at {res['aborted_at']}" if res["aborted_at"]
+                      else "no clear"),
+              cleared=cleared, died_at=(len(names_run) if died else None),
               env_steps=s2.steps - before, engine_steps=s2.steps)
-    print(f"  execution: {'DIED' if died else ('L%d CLEARED' % a.level if cleared else 'no clear')}")
+    print(f"  execution: {'DIED' if died else ('L%d CLEARED' % a.level if cleared else 'no clear')}"
+          f" — {len(names_run)}/{len(names)} actions spent"
+          + (f", {res['saved']} saved by the gate" if res["saved"] else "")
+          + f", checked on {res['checked']}")
     if cleared:
-        save_solution(a.game, a.level, names)
-        print(f"  saved solution for L{a.level} ({len(names)} actions)")
+        save_solution(a.game, a.level, names_run)
+        print(f"  saved solution for L{a.level} ({len(names_run)} actions)")
     print("summary:", summary(J.entries()))
     print(f"  cost: {s.steps + s2.steps} engine steps this run "
           f"({len(names)} of them the solution itself)")

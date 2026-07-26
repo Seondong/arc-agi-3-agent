@@ -225,9 +225,26 @@ def export(game, out_dir):
                                "died": e.get("died", False)},
                 })
             elif kind == "refute":
-                nxt = next((x for x in entries
-                            if x["kind"] == "author" and x["seq"] > e["seq"]), None)
-                before = e.get("source")          # not stored on refute; see below
+                # The answer to a refutation is the next author entry that
+                # actually says what changed and carries the source. The loop also
+                # writes routine "changed: none" author entries when a carried
+                # model simply passes, and pairing a bug with one of those would
+                # teach the model that the fix for a pointed bug is to do nothing.
+                after = [x for x in entries
+                         if x["kind"] == "author" and x["seq"] > e["seq"]]
+                nxt = next((x for x in after
+                            if x.get("source") and x.get("changed") not in (None, "", "none")),
+                           None)
+                if nxt is None:
+                    nxt = next((x for x in after if x.get("source")), None)
+                # The "before" side of a repair pair is the source the last author
+                # entry recorded, i.e. the model as it stood when the bug was
+                # found. Empty when the refuted version was never journaled with
+                # its source — which is the case for everything written before
+                # source capture existed.
+                prev = [x for x in entries
+                        if x["kind"] == "author" and x["seq"] < e["seq"] and x.get("source")]
+                before = prev[-1].get("source") if prev else None
                 after = nxt.get("source") if nxt else None
                 if not after:
                     gaps.append({"type": "repair", "level": level, "seq": e["seq"],
