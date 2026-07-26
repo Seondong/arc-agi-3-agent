@@ -32,13 +32,22 @@ from agents.wm.planner import run_bfs
 
 MOVES = ["ACTION1", "ACTION2", "ACTION3", "ACTION4"]
 MAX_LOG = 20000            # log everything below this; above it, say what was dropped
-ENTITY_KEYS = ("players", "guards", "patrols", "pursuers")
+def _first(state):
+    """The position the search log draws — the first entity group's first member."""
+    for group in ents(state).values():
+        if group:
+            return list(group[0][:2])
+    return None
 
 
 def ents(state):
+    """Whatever entity groups this game's state carries — no per-game field names."""
+    import dataclasses
     out = {}
-    for k in ENTITY_KEYS:
-        out[k] = [[e[0], e[1], e[2]] for e in getattr(state, k, ())]
+    for fld in dataclasses.fields(state):
+        v = getattr(state, fld.name)
+        if isinstance(v, tuple) and v and all(isinstance(x, tuple) for x in v):
+            out[fld.name] = [list(e[:3]) for e in v]
     return out
 
 
@@ -65,8 +74,7 @@ def logged_bfs(model, start, max_depth=120):
         for ai, a in enumerate(MOVES):
             n += 1
             nxt, status = model.step(state, Action(a))
-            here = state.players[0][:2] if state.players else None
-            there = nxt.players[0][:2] if nxt.players else None
+            here, there = _first(state), _first(nxt)
             rec = {"n": n, "d": len(path) + 1, "a": ai, "f": list(here) if here else None}
             if status == Status.GAME_OVER:
                 deaths += 1

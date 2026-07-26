@@ -35,8 +35,14 @@ def pointed_cells(m, limit=400):
 
 
 def entities(state):
-    return {k: getattr(state, k) for k in ("players", "guards", "patrols", "pursuers")
-            if getattr(state, k, ())}
+    """Whatever entity groups this game's state carries — no per-game field names."""
+    import dataclasses
+    out = {}
+    for fld in dataclasses.fields(state):
+        v = getattr(state, fld.name)
+        if isinstance(v, tuple) and v and all(isinstance(x, tuple) for x in v):
+            out[fld.name] = v
+    return out
 
 
 def main():

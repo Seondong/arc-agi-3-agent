@@ -140,12 +140,19 @@ class Session:
         self.actions = []           # the prefix is implied by the level, not recorded
         return self.raw
 
-    def act(self, name: str):
+    def act(self, name: str, x=None, y=None):
+        """`name` may carry coordinates as ACTION6(x,y) for click-style actions."""
         from arcengine import GameAction
+        if "(" in name:
+            name, coords = name.split("(", 1)
+            x, y = (int(v) for v in coords.rstrip(")").split(","))
         a = GameAction.from_name(name)
-        self.raw = self.env.step(a, data=a.action_data.model_dump(), reasoning={})
+        data = a.action_data.model_dump()
+        if x is not None:
+            data.update(x=x, y=y)
+        self.raw = self.env.step(a, data=data, reasoning={})
         self.steps += 1
-        self.actions.append(name)
+        self.actions.append(name if x is None else f"{name}({x},{y})")
         return self.raw
 
     @property

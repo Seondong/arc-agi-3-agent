@@ -133,10 +133,14 @@ def entity_summary(game, grid):
     """What a model would say is on screen — only if the game has a model."""
     if not has_model(game) or grid is None:
         return None
+    import dataclasses
     st = model_for(game, version=0).reconstruct(grid)
-    return {k: [list(e) for e in getattr(st, k, ())]
-            for k in ("players", "guards", "patrols", "pursuers")
-            if getattr(st, k, ())}
+    out = {}
+    for fld in dataclasses.fields(st):
+        v = getattr(st, fld.name)
+        if isinstance(v, tuple) and v and all(isinstance(x, tuple) for x in v):
+            out[fld.name] = [list(e) for e in v]
+    return out
 
 
 def export(game, out_dir):

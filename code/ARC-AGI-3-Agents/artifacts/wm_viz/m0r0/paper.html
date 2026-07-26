@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>m0r0 — the win condition is not a place</title>
+<link rel="stylesheet" href="../shared/style.css">
+<style>
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:14.5px;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:14px 0}
+  .kv b{color:var(--dim);font-weight:600;white-space:nowrap}
+  .open{border-left:3px solid var(--bad);background:var(--panel);padding:12px 16px;
+    border-radius:0 8px 8px 0;font-size:15.5px;margin:22px 0}
+</style>
+</head>
+<body>
+<button class="theme" id="theme">◐</button>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="../index.html">← method</a> ·
+      <a href="./level.html">level by level</a> · <a href="./model_evolve.html">model evolution</a></div>
+    <h1>The win condition is not a place</h1>
+    <div class="byline">m0r0 — a mirror pair, and a level cleared by a search that never touched
+      the environment.</div>
+    <p class="lede">This is the second game the loop has been pointed at. The interesting number
+      is not how fast it was solved but how little of the first game transferred: of the rules
+      carried over from <a href="../tu93/paper.html">tu93</a>, exactly one survived contact.</p>
+  </div>
+</header>
+
+<main>
+<div class="col">
+  <h2 id="transfer">What transferred, and what did not</h2>
+  <p>The pipeline transferred completely — every script ran with <code>--game m0r0</code> and
+  nothing in it was edited. The <em>rules</em> transferred almost not at all, and the first
+  reading of the screen was wrong precisely because it assumed they had.</p>
+  <figure>
+    <div class="fig"><table id="cmp"></table></div>
+    <figcaption><b>Table 1. tu93's rules against m0r0's.</b> The floor value is inverted, so
+    reading the first game's meanings onto the second put the walls and the corridors exactly the
+    wrong way round. The probe caught it: the agents start inside the 5-region, move through it,
+    and stop exactly where it ends.</figcaption>
+  </figure>
+
+  <h2 id="mirror">One action, two agents, opposite directions</h2>
+  <p>Two solid squares of value 10 sit in a mirror-symmetric maze. A single action drives both:
+  <code>ACTION1/2</code> move them the same way vertically, <code>ACTION3/4</code> move them in
+  <em>opposite</em> horizontal directions. While both are free the sum of their columns is
+  conserved — 19+39, 14+44, 9+49, 24+34 all give 58 — which is what fixes the mirror axis.</p>
+  <p>They are not rigidly locked. Each is blocked by its own walls: the second
+  <code>ACTION1</code> took the left agent from row 44 to 39 while the right one stayed at 44,
+  because its own way up was territory. That independent blocking is the single rule inherited
+  from tu93, where several player blocks obeyed one action and were each stopped on their own.</p>
+
+  <h2 id="goal">Finding a goal with no goal tile</h2>
+  <p>There is no goal-coloured value anywhere on m0r0's first screen — the whole inventory is
+  four values, and none of them plays the part tu93's value 14 did. So the model was written with
+  <code>is_goal</code> returning <code>False</code>: a model that invents a goal lets the planner
+  return confident nonsense, while one that admits it has none simply cannot plan. That is the
+  honest failure, and it is cheap to recover from.</p>
+  <p>The recovery is the part worth keeping. With the dynamics certified, the model is a
+  simulator, so its <b>entire reachable state space</b> could be enumerated at zero environment
+  cost: 2627 joint states. In 43 of them the two mirror agents stand on the same square. The
+  shortest is 15 actions away. Running it returned <code>LEVEL_COMPLETED</code> on the first
+  try.</p>
+  <div class="aside">
+    <b>Count the interactions.</b> Discovering the win condition cost <b>15 real actions</b> —
+    the ones that executed the answer. The search that found it cost <b>2088 simulated
+    interactions and zero real ones</b>. A trial-and-error agent has to find that same
+    configuration by walking the environment into it.
+  </div>
+</div>
+
+<div class="wide">
+  <figure>
+    <div class="fig">
+      <div class="ctl">
+        <span style="font-weight:700">L0 · the 15 actions that ended it</span>
+        <button id="first">⏮</button><button id="prev">◀</button>
+        <button id="play">▶ play</button><button id="next">▶</button>
+        <input type="range" id="slider" min="0" value="0">
+        <span id="label" style="font-variant-numeric:tabular-nums;min-width:100px"></span>
+      </div>
+      <div class="row"><div><canvas id="cv"></canvas></div></div>
+      <div class="status" id="stat"></div>
+    </div>
+    <figcaption><b>Figure 1. The mirror pair closing.</b> Watch the columns: horizontal actions
+      move the two towards or away from each other at double rate, vertical ones move them
+      together. They meet at the top, in the wide corridor that is the only crossing between the
+      halves — which is also why the halves are not the separate mazes they look like.</figcaption>
+  </figure>
+</div>
+
+<div class="col">
+  <h2 id="l1">L1 adds two rules and blocks on a third</h2>
+  <p>The next level changes the agents to 4×4 stepping 4. The model had the first level's size
+  hardcoded and saw <em>nothing at all</em> — a clean reminder that a quantity measured once is a
+  quantity measured on one level. Size is now read off the frame.</p>
+  <p>Then a genuinely new law. At step 12 of a 20-action plan the left agent stepped down into
+  plain corridor — every cell checked, all value 5 — while the right one was blocked, and the
+  next frame had <b>both agents back at their starting squares</b>. A move only some agents can
+  make sends everyone back. Encoding that took the sequence from breaking at step 12 to
+  reproducing all twenty steps exactly.</p>
+  <div class="open">
+    <b>Open, and the model says so.</b> With that law switched on, only 34 states are reachable
+    within depth 9 and none has the pair meeting, so the planner returns <em>no plan</em> for L1.
+    The level is presumably solvable, so the law as stated is too strong or attributed to the
+    wrong cause. <code>ACTION5</code> and <code>ACTION6</code> were both probed and do nothing
+    here — <code>ACTION6</code> at seven coordinates including both agents, corridor, hazard and
+    the centre strip.
+    <br><br>
+    The attempt to confirm the law with a second instance <b>failed, and the failure is the
+    useful part</b>: the search was run inside the model with the law already on, so it only ever
+    visits states the law permits and cannot produce a counterexample. Enumerate with the law
+    <em>off</em>, then check the candidate asymmetric moves against the real engine. That is the
+    next experiment — and it is the same mistake tu93's L4 taught, where a probe set that could
+    not discriminate certified whatever it was handed.
+  </div>
+
+  <h2 id="ledger">The ledger so far</h2>
+  <figure>
+    <div class="fig"><table id="ledgertab"></table></div>
+    <figcaption><b>Table 2. Per level.</b> Probing buys rules, planning is free because it happens
+      inside the model, solving executes a verified plan. L1 is shown unsolved because it is.</figcaption>
+  </figure>
+
+  <h2 id="repro">Reproducing</h2>
+  <pre>cd code/ARC-AGI-3-Agents
+uv run python scripts/wm/observe_level.py  --game m0r0 --level 0
+uv run python scripts/wm/probe_diff.py     --game m0r0 --level 0 --each
+uv run python scripts/wm/backtest_level.py --game m0r0 --level 1 "ACTION2,ACTION3"
+uv run python scripts/wm/solve_level.py    --game m0r0 --level 0
+uv run python scripts/wm/gen_site.py       --game m0r0</pre>
+  <p>See also: <a href="./level.html">every level, uniformly instrumented</a> ·
+    <a href="./model_evolve.html">how this model evolved</a> ·
+    <a href="../tu93/paper.html">the first game</a>.</p>
+</div>
+</main>
+
+<footer><div class="col">Black box throughout: dynamics come from stepping the engine and reading
+frames back. <code>environment_files/</code> was never opened.</div></footer>
+
+<script>
+const PAL=["#0d1117","#0074D9","#FF4136","#2ECC40","#FFDC00","#9AA6B2","#F012BE",
+  "#FF851B","#7FDBFF","#B0344B","#B10DC9","#01FF70","#FF69B4","#85144b","#39D3C9","#DDDDDD"];
+let L=null,k=0,timer=null;
+const root=document.documentElement;
+document.getElementById("theme").onclick=()=>{
+  const cur=root.getAttribute("data-theme")||
+    (matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+  root.setAttribute("data-theme",cur==="dark"?"light":"dark");};
+
+function draw(){
+  const f=L.replay[k];
+  if(!f.grid){document.getElementById("stat").textContent="no frame";return;}
+  const G=f.grid,R=G.length,C=G[0].length,cs=Math.max(4,Math.floor(760/C));
+  const cv=document.getElementById("cv");cv.width=C*cs;cv.height=R*cs;
+  const x=cv.getContext("2d");
+  for(let i=0;i<R;i++)for(let j=0;j<C;j++){x.fillStyle=PAL[G[i][j]]||"#f0f";
+    x.fillRect(j*cs,i*cs,cs,cs);}
+  const ag=(f.ents&&f.ents.agents)||[];
+  for(const a of ag){x.strokeStyle="#39D3C9";x.lineWidth=2;
+    x.strokeRect((a[1]-L.origin[1])*cs-1,(a[0]-L.origin[0])*cs-1,cs*5+2,cs*5+2);}
+  document.getElementById("slider").value=k;
+  document.getElementById("label").textContent=`step ${f.k} / ${L.replay.length-1}`;
+  const st=document.getElementById("stat");
+  const cols=ag.map(a=>a[1]);
+  st.className="status"+(f.terminal?" good":"");
+  st.innerHTML=`<b>${f.action||"opening frame"}</b> — agents `+
+    ag.map(a=>`(${a[0]},${a[1]})`).join(" ")+
+    (cols.length===2?` · column sum <b>${cols[0]+cols[1]}</b>`:"")+
+    (f.terminal?" · <b>LEVEL CLEARED — they are on the same square</b>":
+      (f.cells_off?` · <b style="color:var(--bad)">${f.cells_off} cells mispredicted</b>`:
+       " · prediction exact"));
+}
+function go(i){k=Math.max(0,Math.min(L.replay.length-1,i));draw();}
+
+fetch("./data/level_0.json").then(r=>r.json()).then(d=>{
+  L=d;document.getElementById("slider").max=d.replay.length-1;draw();
+});
+fetch("./data/index.json").then(r=>r.json()).then(X=>{
+  document.getElementById("ledgertab").innerHTML=
+    "<tr><th>level</th><th>new mechanic</th><th>probe</th><th>planning</th><th>solve</th>"+
+    "<th>real deaths</th><th>sims</th><th>result</th></tr>"+
+    X.levels.map(Lv=>{const c=Lv.ledger||{};
+      return `<tr><td><a href="./level.html?l=${Lv.level}">L${Lv.level}</a></td>`+
+      `<td style="font-size:12.5px">${Lv.mechanic||"—"}</td>`+
+      `<td class="n">${c.probe_env_steps??"—"}</td>`+
+      `<td class="n" style="color:var(--accent)">0</td>`+
+      `<td class="n">${Lv.solution_len}</td><td class="n">${c.real_deaths??"—"}</td>`+
+      `<td class="n">${Lv.search_stats.sims}</td><td class="ok">solved</td></tr>`;}).join("")+
+    `<tr><td>L1</td><td style="font-size:12.5px">agents are 4×4 stepping 4; a move only some
+      agents can make sends everyone back to the start</td>`+
+    `<td class="n">29</td><td class="n" style="color:var(--accent)">0</td><td class="n">—</td>`+
+    `<td class="n">0</td><td class="n">148</td>`+
+    `<td class="no">unsolved — the planner refuses</td></tr>`;
+});
+
+document.getElementById("cmp").innerHTML=
+  "<tr><th>rule</th><th>tu93</th><th>m0r0</th></tr>"+
+  [["value 5","wall","<b>corridor</b> — the inverse"],
+   ["agent shape","3×3 with a facing notch","solid square, no notch"],
+   ["agent size / step","3×3, moves 6 px","5×5 moving 5 on L0, <b>4×4 moving 4</b> on L1"],
+   ["how many are driven","one player (a second look-alike is inert)","both, always"],
+   ["horizontal motion","one direction for everyone","<b>opposite for the two</b>"],
+   ["blocked independently","yes","yes — <b>the one rule that carried over</b>"],
+   ["goal","a 3×3 goal tile to stand on","<b>no goal tile at all</b>: the two agents must meet"],
+   ["step budget","row 63, consumed right to left","rows 0 and 63, mirrored, rate not understood"]]
+  .map(([a,b,c])=>`<tr><td>${a}</td><td style="color:var(--dim)">${b}</td><td>${c}</td></tr>`)
+  .join("");
+
+document.getElementById("first").onclick=()=>go(0);
+document.getElementById("prev").onclick=()=>go(k-1);
+document.getElementById("next").onclick=()=>go(k+1);
+document.getElementById("slider").oninput=e=>go(+e.target.value);
+document.getElementById("play").onclick=e=>{
+  if(timer){clearInterval(timer);timer=null;e.target.textContent="▶ play";return;}
+  e.target.textContent="⏸ pause";
+  timer=setInterval(()=>{k>=L.replay.length-1?go(0):go(k+1);},520);};
+</script>
+</body>
+</html>
