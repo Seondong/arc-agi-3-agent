@@ -30,7 +30,11 @@ recordings_*/
 
 # Large training data & generated artifacts (regenerable / downloaded)
 data/
-artifacts/
+# Run artifacts are huge (~1.8G) and regenerable — except the world-model
+# journals and write-up, which are the durable record of the work.
+artifacts/*
+!artifacts/wm_viz/
+!artifacts/wm_journal/
 
 # Logs
 *.log

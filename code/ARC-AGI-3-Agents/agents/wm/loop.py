@@ -65,8 +65,10 @@ class SolveLoop:
         *,
         trace_path: Optional[str] = None,
     ) -> EpisodeResult:
-        actions = [Action(a) for a in env.available_actions]
         frame = env.reset()
+        # Read available actions AFTER reset: real envs (ArcAgiEnv) only populate
+        # them once the game is reset, so reading them first yields an empty list.
+        actions = [Action(a) for a in env.available_actions]
         timeline = Timeline(frame)
         writer = TraceWriter(trace_path)
 

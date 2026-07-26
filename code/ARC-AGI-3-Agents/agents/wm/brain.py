@@ -61,6 +61,7 @@ class CallableBrain:
             source_code=m.source_code,
             confidence=m.confidence,
             fingerprint=m.fingerprint,
+            ignore=m.ignore,
         )
 
 

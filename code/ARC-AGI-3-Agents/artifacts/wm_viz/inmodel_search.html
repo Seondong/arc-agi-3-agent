@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tu93 · in-model search log</title>
+<style>
+  :root{--bg:#0e1116;--panel:#161b22;--panel2:#1c232d;--border:#2a3441;--text:#e6edf3;
+    --dim:#8b98a5;--accent:#39d3c9;--good:#3fb950;--bad:#f85149;--warn:#e3b341;
+    --frontier:#6ea8fe;--revisit:#6b7684;--blocked:#4a5563;--code:#0b0e13}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}
+  header{padding:14px 24px;border-bottom:1px solid var(--border);background:var(--panel);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header h1{font-size:16px;margin:0;font-weight:650}
+  header .sub{color:var(--dim);font-size:12px;max-width:760px}
+  .badge{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+  .pill{background:var(--panel2);border:1px solid var(--border);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;white-space:nowrap}
+  .pill.z{color:var(--accent);border-color:#1c4a47}
+  .pill.bad{color:var(--bad);border-color:#4a2226}
+  .pill.warn{color:var(--warn);border-color:#4a4220}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:18px;padding:18px 24px;max-width:1520px;margin:0 auto}
+  @media(max-width:1140px){.wrap{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .card h2{margin:0 0 12px;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);font-weight:650}
+  .controls{display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap}
+  button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 11px;font-size:13px;font-weight:600;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  button.on{border-color:var(--accent);color:var(--accent)}
+  input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}
+  .steplabel{font-variant-numeric:tabular-nums;font-weight:700;min-width:150px;font-size:12px}
+  .gwrap{display:flex;justify-content:center}
+  canvas{border:1px solid var(--border);border-radius:6px;image-rendering:pixelated;background:#000}
+  .banner{margin-top:12px;padding:9px 12px;border-radius:7px;font-size:12.5px;font-weight:600}
+  .banner.death{background:#2a1518;border:1px solid #4a2226;color:#f5a5a5}
+  .banner.frontier{background:#14233d;border:1px solid #26426e;color:#a9c7f5}
+  .banner.revisit,.banner.blocked{background:#1c2229;border:1px solid var(--border);color:var(--dim)}
+  .banner.goal{background:#0f2e18;border:1px solid #1f4a2c;color:#8bdca0}
+  .meta{margin-top:7px;font-size:11.5px;color:var(--dim)}
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:11px}
+  .stat{background:var(--panel2);border:1px solid var(--border);border-radius:9px;padding:7px 5px;text-align:center}
+  .stat .v{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums}
+  .stat .l{font-size:9.5px;color:var(--dim);text-transform:uppercase;letter-spacing:.03em}
+  .stat.d .v{color:var(--bad)} .stat.f .v{color:var(--frontier)} .stat.r .v{color:var(--revisit)}
+  table.cmp{width:100%;border-collapse:collapse;font-size:11.5px}
+  table.cmp td,table.cmp th{border:1px solid var(--border);padding:5px 6px;text-align:left}
+  table.cmp th{color:var(--dim);font-weight:600}
+  table.cmp td.n{font-variant-numeric:tabular-nums}
+  tr.died td{background:#2a151833}
+  .ok{color:var(--good);font-weight:700} .died{color:var(--bad);font-weight:700}
+  .logwrap{max-height:300px;overflow:auto}
+  table.log{width:100%;border-collapse:collapse;font-size:11px}
+  table.log th,table.log td{padding:2px 5px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+  table.log th{color:var(--dim);font-weight:600;position:sticky;top:0;background:var(--panel)}
+  tr.cur{background:#1c3a3799}
+  td.mono{font-variant-numeric:tabular-nums}
+  .o-death{color:var(--bad);font-weight:700} .o-frontier{color:var(--frontier)}
+  .o-revisit,.o-blocked{color:var(--revisit)} .o-goal{color:var(--good);font-weight:700}
+  .note{font-size:12px;line-height:1.6;color:var(--text)}
+  .note b{color:var(--accent)}
+  .legend{display:flex;gap:11px;flex-wrap:wrap;justify-content:center;margin-top:8px;font-size:11px;color:var(--dim)}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .dotv{width:10px;height:10px;border-radius:50%;display:inline-block}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>tu93 L2 · <span style="color:var(--accent)">in-model</span> search log — every simulated interaction</h1>
+    <div class="sub" id="about"></div>
+  </div>
+  <div class="badge" id="badges"></div>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <div class="controls">
+      <button id="first">⏮</button><button id="prev">◀</button>
+      <button id="play">▶ Play</button><button id="next">▶</button>
+      <button id="nextdeath">☠ imagined death</button>
+      <button id="trail" class="on">trail</button>
+      <input type="range" id="slider" min="0" value="0">
+      <span class="steplabel" id="steplabel"></span>
+    </div>
+    <div class="gwrap"><canvas id="cv"></canvas></div>
+    <div class="legend">
+      <span><span class="dotv" style="background:#6ea8fe"></span>frontier (new state)</span>
+      <span><span class="dotv" style="background:#6b7684"></span>revisit / blocked (wasted)</span>
+      <span><span class="dotv" style="background:#f85149"></span>imagined death (pruned)</span>
+      <span><span class="dotv" style="background:#3fb950"></span>goal</span>
+    </div>
+    <div class="banner" id="banner"></div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <div class="card">
+      <h2>Search counters (running)</h2>
+      <div class="stats">
+        <div class="stat"><div class="v" id="s-sims">0</div><div class="l">sims</div></div>
+        <div class="stat"><div class="v" id="s-nodes">0</div><div class="l">nodes</div></div>
+        <div class="stat d"><div class="v" id="s-deaths">0</div><div class="l">deaths</div></div>
+        <div class="stat f"><div class="v" id="s-frontier">0</div><div class="l">frontier</div></div>
+        <div class="stat r"><div class="v" id="s-waste">0</div><div class="l">wasted</div></div>
+      </div>
+      <div style="font-size:11.5px;color:var(--dim)" id="wastenote"></div>
+    </div>
+    <div class="card">
+      <h2>Model fidelity → search quality</h2>
+      <table class="cmp" id="cmp"></table>
+      <div class="note" style="margin-top:9px" id="cmpnote"></div>
+    </div>
+    <div class="card">
+      <h2>Every simulated interaction</h2>
+      <div class="logwrap"><table class="log"><thead><tr><th>#</th><th>d</th><th>from</th><th>act</th><th>outcome</th></tr></thead>
+      <tbody id="logBody"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PAL=["#000000","#0074D9","#FF4136","#2ECC40","#FFDC00","#9AA6B2","#F012BE",
+  "#FF851B","#7FDBFF","#B0344B","#B10DC9","#01FF70","#FF69B4","#85144b","#39D3C9","#DDDDDD"];
+const OC={death:"#f85149",frontier:"#6ea8fe",revisit:"#6b7684",blocked:"#4a5563",goal:"#3fb950"};
+let D=null,idx=0,timer=null,CELL=9,R0=16,C0=10,trail=true;
+
+function draw(){
+  const cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+  const bg=D.base_grid,R=bg.length,C=bg[0].length;
+  cv.width=C*CELL;cv.height=R*CELL;
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const v=bg[r][c];
+    ctx.fillStyle=(v===5?"#171d25":v===2?"#1d2a1f":v===8?"#4a2c10":v===14?"#12402a":"#0d1117");
+    ctx.fillRect(c*CELL,r*CELL,CELL,CELL);
+  }
+  // guards + goal from base grid, drawn solid for orientation
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const v=bg[r][c];
+    if(v===8||v===15){ctx.fillStyle="#FF851B";ctx.fillRect(c*CELL,r*CELL,CELL,CELL);}
+    if(v===14){ctx.fillStyle="#39D3C9";ctx.fillRect(c*CELL,r*CELL,CELL,CELL);}
+  }
+  const upto=trail?idx:idx;
+  // trail of visited outcomes
+  if(trail){
+    for(let i=0;i<=upto;i++){
+      const s=D.search[i];const p=s.to||s.from;
+      if(!p)continue;
+      const rr=p[0]-R0,ccc=p[1]-C0;
+      ctx.globalAlpha=s.outcome==="death"?0.85:0.32;
+      ctx.fillStyle=OC[s.outcome]||"#888";
+      ctx.fillRect(ccc*CELL,rr*CELL,3*CELL,3*CELL);
+      ctx.globalAlpha=1;
+    }
+  }
+  // current
+  const s=D.search[idx];
+  const from=s.from,to=s.to;
+  if(from){ctx.strokeStyle="#e6edf3";ctx.lineWidth=2;
+    ctx.strokeRect((from[1]-C0)*CELL,(from[0]-R0)*CELL,3*CELL,3*CELL);}
+  if(to){ctx.fillStyle=OC[s.outcome];ctx.globalAlpha=.75;
+    ctx.fillRect((to[1]-C0)*CELL,(to[0]-R0)*CELL,3*CELL,3*CELL);ctx.globalAlpha=1;
+    ctx.strokeStyle=OC[s.outcome];ctx.lineWidth=2;
+    ctx.strokeRect((to[1]-C0)*CELL,(to[0]-R0)*CELL,3*CELL,3*CELL);}
+  if(s.outcome==="death"){
+    const dr=from[0]-R0,dc=from[1]-C0;
+    ctx.strokeStyle="#f85149";ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(dc*CELL,dr*CELL);ctx.lineTo((dc+3)*CELL,(dr+3)*CELL);
+    ctx.moveTo((dc+3)*CELL,dr*CELL);ctx.lineTo(dc*CELL,(dr+3)*CELL);ctx.stroke();
+  }
+}
+function render(){
+  const s=D.search[idx];
+  draw();
+  document.getElementById("slider").value=idx;
+  document.getElementById("steplabel").textContent=`sim ${s.n} / ${D.search.length}`;
+  const b=document.getElementById("banner");
+  const msg={death:"☠ imagined death — the model says this move gets the player caught. Branch pruned. NO real action spent.",
+    frontier:"✓ new state reached in imagination → queued for further search",
+    revisit:"↺ state already seen → discarded (wasted simulation)",
+    blocked:"⊘ wall — player would not move (wasted simulation)",
+    goal:"🏁 model reaches the goal → plan found. Search stops."}[s.outcome];
+  b.className="banner "+s.outcome;b.textContent=msg;
+  document.getElementById("meta").innerHTML=
+    `depth <b>${s.depth}</b> · from <code>(${s.from[0]},${s.from[1]})</code> <b>+${s.action}</b>`+
+    (s.to?` → <code>(${s.to[0]},${s.to[1]})</code>`:"")+
+    ` · guards alive <b>${s.guards_before}</b>`;
+  // running counters
+  let sims=0,deaths=0,front=0,waste=0,nodes=0;
+  for(let i=0;i<=idx;i++){const x=D.search[i];sims++;nodes=Math.max(nodes,x.expanded_at);
+    if(x.outcome==="death")deaths++; else if(x.outcome==="frontier")front++;
+    else if(x.outcome==="revisit"||x.outcome==="blocked")waste++;}
+  document.getElementById("s-sims").textContent=sims;
+  document.getElementById("s-nodes").textContent=nodes;
+  document.getElementById("s-deaths").textContent=deaths;
+  document.getElementById("s-frontier").textContent=front;
+  document.getElementById("s-waste").textContent=waste;
+  document.getElementById("wastenote").innerHTML=
+    `wasted = revisits + wall-blocked simulations — currently <b>${sims?Math.round(100*waste/sims):0}%</b> of all simulation. `+
+    `This is the slack an in-model-interaction study would attack.`;
+  document.querySelectorAll("#logBody tr").forEach((tr,i)=>{tr.classList.toggle("cur",i===idx);
+    if(i===idx)tr.scrollIntoView({block:"nearest"});});
+}
+function go(i){idx=Math.max(0,Math.min(D.search.length-1,i));render();}
+function play(){if(timer){clearInterval(timer);timer=null;document.getElementById("play").textContent="▶ Play";return;}
+  document.getElementById("play").textContent="⏸ Pause";
+  timer=setInterval(()=>{idx>=D.search.length-1?go(0):go(idx+1);},110);}
+function nextDeath(){for(let i=idx+1;i<D.search.length;i++)if(D.search[i].outcome==="death"){go(i);return;}
+  for(let i=0;i<D.search.length;i++)if(D.search[i].outcome==="death"){go(i);return;}}
+
+fetch("./inmodel_search.json").then(r=>r.json()).then(data=>{
+  D=data;
+  document.getElementById("about").textContent=D.about;
+  document.getElementById("slider").max=D.search.length-1;
+  const v=D.variants.find(x=>x.version===D.certified);
+  document.getElementById("badges").innerHTML=
+    `<span class="pill z">${v.stats.sims} simulated interactions</span>`+
+    `<span class="pill bad">${v.stats.deaths} imagined deaths</span>`+
+    `<span class="pill warn">${v.stats.revisits} wasted</span>`+
+    `<span class="pill">0 real env actions</span>`;
+  // fidelity table
+  document.getElementById("cmp").innerHTML=
+    `<tr><th>model</th><th>guards known</th><th>sims</th><th>imagined deaths</th><th>plan</th><th>executed for real</th></tr>`+
+    D.variants.map(x=>`<tr class="${x.execution.cleared?'':'died'}">
+      <td><b>${x.version}</b>${x.version===D.certified?' ✓':''}</td>
+      <td class="n">${x.guards_modelled}</td><td class="n">${x.stats.sims}</td>
+      <td class="n">${x.stats.deaths}</td><td class="n">${x.plan_len}</td>
+      <td class="${x.execution.cleared?'ok':'died'}">${x.execution.cleared?'CLEARED':'☠ DIED at step '+x.execution.at}</td></tr>`).join("");
+  document.getElementById("cmpnote").innerHTML=
+    `<b>v4</b> modelled only one of the three guards, so its search happily planned a 9-action "shortcut" `+
+    `straight through a guard it did not know about — and that plan <b>killed the player for real</b>. `+
+    `In-model search is only as trustworthy as the model it searches: this is why the loop refuses to plan `+
+    `on an uncertified model. v5–v7 differ only in how they <i>render</i> a death, which does not change the plan.`;
+  document.getElementById("logBody").innerHTML=D.search.map((s,i)=>
+    `<tr onclick="go(${i})" style="cursor:pointer"><td class="mono">${s.n}</td><td class="mono">${s.depth}</td>`+
+    `<td class="mono">${s.from[0]},${s.from[1]}</td><td>${s.action.replace("ACTION","A")}</td>`+
+    `<td class="o-${s.outcome}">${s.outcome}</td></tr>`).join("");
+  render();
+});
+document.getElementById("first").onclick=()=>go(0);
+document.getElementById("prev").onclick=()=>go(idx-1);
+document.getElementById("next").onclick=()=>go(idx+1);
+document.getElementById("play").onclick=play;
+document.getElementById("nextdeath").onclick=nextDeath;
+document.getElementById("trail").onclick=e=>{trail=!trail;e.target.classList.toggle("on",trail);render();};
+document.getElementById("slider").oninput=e=>go(+e.target.value);
+window.addEventListener("keydown",e=>{if(e.key==="ArrowRight")go(idx+1);
+  if(e.key==="ArrowLeft")go(idx-1);if(e.key===" "){e.preventDefault();play();}});
+</script>
+</body>
+</html>

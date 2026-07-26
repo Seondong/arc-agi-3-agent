@@ -22,6 +22,15 @@ _AGENTS_ROOT = os.path.abspath(os.path.join(_HERE, ".."))
 if _AGENTS_ROOT not in sys.path:
     sys.path.insert(0, _AGENTS_ROOT)
 
+# Load the project .env (ANTHROPIC_API_KEY, etc.) if present.
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv(os.path.join(_AGENTS_ROOT, "..", "..", ".env"))
+    load_dotenv(os.path.join(_AGENTS_ROOT, "..", ".env"))
+except ImportError:
+    pass
+
 from wm.brain import CallableBrain, ClaudeBrain
 from wm.env_arcagi import ArcAgiEnv
 from wm.loop import SolveLoop

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>tu93 · L1 search process (dying to find it)</title>
+<style>
+  :root{--bg:#0e1116;--panel:#161b22;--panel2:#1c232d;--border:#2a3441;--text:#e6edf3;
+    --dim:#8b98a5;--accent:#39d3c9;--good:#3fb950;--bad:#f85149;--warn:#e3b341;--enemy:#ff851b;
+    --frontier:#6ea8fe;--revisit:#6b7684}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5}
+  header{padding:14px 24px;border-bottom:1px solid var(--border);background:var(--panel);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header h1{font-size:16px;margin:0;font-weight:650}
+  header .sub{color:var(--dim);font-size:12px}
+  .badge{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+  .pill{background:var(--panel2);border:1px solid var(--border);border-radius:999px;padding:5px 11px;font-size:12px;font-weight:600;white-space:nowrap}
+  .pill.bad{color:var(--bad);border-color:#4a2226}
+  .pill.ok{color:var(--good);border-color:#1f4a2c}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:18px;padding:18px 24px;max-width:1460px;margin:0 auto}
+  @media(max-width:1120px){.wrap{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .card h2{margin:0 0 12px;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--dim);font-weight:650}
+  .controls{display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap}
+  button{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:7px 11px;font-size:13px;font-weight:600;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  input[type=range]{flex:1;min-width:130px;accent-color:var(--accent)}
+  .steplabel{font-variant-numeric:tabular-nums;font-weight:700;min-width:150px;font-size:12px}
+  .gwrap{display:flex;justify-content:center}
+  canvas{border:1px solid var(--border);border-radius:6px;image-rendering:pixelated;background:#000}
+  .banner{margin-top:12px;padding:9px 12px;border-radius:7px;font-size:13px;font-weight:600}
+  .banner.death{background:#2a1518;border:1px solid #4a2226;color:#f5a5a5}
+  .banner.frontier{background:#14233d;border:1px solid #26426e;color:#a9c7f5}
+  .banner.revisit{background:#1c2229;border:1px solid var(--border);color:var(--dim)}
+  .banner.solved{background:#0f2e18;border:1px solid #1f4a2c;color:#8bdca0}
+  .meta{margin-top:8px;font-size:12px;color:var(--dim)}
+  .meta code{color:var(--text)}
+  .legend{display:flex;gap:11px;flex-wrap:wrap;justify-content:center;margin-top:8px;font-size:11px;color:var(--dim)}
+  .legend span{display:inline-flex;align-items:center;gap:5px}
+  .sw{width:11px;height:11px;border-radius:3px;border:1px solid #0006}
+  .stats{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+  .stat{background:var(--panel2);border:1px solid var(--border);border-radius:9px;padding:8px 6px;text-align:center}
+  .stat .v{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+  .stat .l{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+  .stat.death .v{color:var(--bad)} .stat.vis .v{color:var(--frontier)}
+  .logwrap{max-height:300px;overflow:auto}
+  table.log{width:100%;border-collapse:collapse;font-size:11.5px}
+  table.log th,table.log td{padding:3px 6px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+  table.log th{color:var(--dim);font-weight:600;position:sticky;top:0;background:var(--panel)}
+  tr.cur{background:#1c3a3799}
+  td.mono{font-variant-numeric:tabular-nums}
+  .o-death{color:var(--bad)} .o-frontier{color:var(--frontier)} .o-revisit{color:var(--revisit)} .o-solved{color:var(--good);font-weight:700}
+  .expl{font-size:12.5px;line-height:1.6;color:var(--text)}
+  .expl b{color:var(--accent)}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>tu93 · Level 1 — the <span style="color:var(--bad)">search</span>, not just the answer</h1>
+    <div class="sub" id="method"></div>
+  </div>
+  <div class="badge" id="badges"></div>
+</header>
+
+<div class="wrap">
+  <div class="card">
+    <div class="controls">
+      <button id="first">⏮</button><button id="prev">◀</button>
+      <button id="play">▶ Play</button><button id="next">▶</button>
+      <button id="nextdeath" title="jump to next death">☠ next death</button>
+      <input type="range" id="slider" min="0" value="0">
+      <span class="steplabel" id="steplabel"></span>
+    </div>
+    <div class="gwrap"><canvas id="cv"></canvas></div>
+    <div class="legend" id="legend"></div>
+    <div class="banner" id="banner"></div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <div class="card">
+      <h2>Search progress (running)</h2>
+      <div class="stats">
+        <div class="stat"><div class="v" id="s-tried">0</div><div class="l">tried</div></div>
+        <div class="stat death"><div class="v" id="s-deaths">0</div><div class="l">deaths</div></div>
+        <div class="stat vis"><div class="v" id="s-visited">0</div><div class="l">positions</div></div>
+        <div class="stat"><div class="v" id="s-frontier">0</div><div class="l">frontier</div></div>
+      </div>
+      <div style="font-size:11.5px;color:var(--dim)">discovered-position map (blue = reached, <span style="color:var(--bad)">red ✕ = died here</span>):</div>
+      <div class="gwrap" style="margin-top:6px"><canvas id="mini"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>What you're looking at</h2>
+      <div class="expl" id="expl"></div>
+    </div>
+    <div class="card">
+      <h2>Every attempt (BFS order)</h2>
+      <div class="logwrap"><table class="log"><thead><tr><th>#</th><th>d</th><th>from</th><th>+move</th><th>outcome</th></tr></thead>
+      <tbody id="logBody"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PAL=["#000000","#0074D9","#FF4136","#2ECC40","#FFDC00","#9AA6B2","#F012BE",
+  "#FF851B","#7FDBFF","#B0344B","#B10DC9","#01FF70","#FF69B4","#85144b","#39D3C9","#DDDDDD"];
+const NAMES={0:"floor",2:"doorway",5:"wall",8:"enemy",9:"player",14:"goal"};
+let D=null,idx=0,timer=null,CELL=12,MC=4;
+
+function drawMain(){
+  const s=D.attempts[idx],cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+  const grid=s.grid,R=grid.length,C=grid[0].length;cv.width=C*CELL;cv.height=R*CELL;
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){ctx.fillStyle=PAL[grid[r][c]]||"#f0f";ctx.fillRect(c*CELL,r*CELL,CELL,CELL);}
+  if(s.enemy){ctx.strokeStyle="#ff851b";ctx.lineWidth=2;ctx.strokeRect(s.enemy[1]*CELL,s.enemy[0]*CELL,3*CELL,3*CELL);}
+  // goal outline (value 14 present in grid)
+  let gr=null;for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(grid[r][c]===14&&gr===null)gr=[r,c];
+  if(gr){ctx.strokeStyle="#3fb950";ctx.lineWidth=2;ctx.strokeRect(gr[1]*CELL,gr[0]*CELL,3*CELL,3*CELL);}
+  if(s.outcome==="death"&&s.dead_cell){
+    const [dr,dc]=s.dead_cell;
+    // arrow from parent to fatal dest + red X
+    ctx.strokeStyle="#f85149";ctx.lineWidth=3;
+    ctx.strokeRect(dc*CELL+2,dr*CELL+2,3*CELL-4,3*CELL-4);
+    ctx.beginPath();ctx.moveTo(dc*CELL+4,dr*CELL+4);ctx.lineTo((dc+3)*CELL-4,(dr+3)*CELL-4);
+    ctx.moveTo((dc+3)*CELL-4,dr*CELL+4);ctx.lineTo(dc*CELL+4,(dr+3)*CELL-4);ctx.stroke();
+  }
+  if(s.outcome==="solved"){ctx.strokeStyle="#3fb950";ctx.lineWidth=3;ctx.strokeRect(1,1,cv.width-2,cv.height-2);}
+}
+function drawMini(){
+  const cv=document.getElementById("mini"),ctx=cv.getContext("2d");
+  const R=D.crop.rows,C=D.crop.cols;cv.width=C*MC;cv.height=R*MC;
+  const bg=D.base_grid;
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){const v=bg[r][c];
+    ctx.fillStyle=(v===5?"#1a2029":v===2?"#20140f":"#0c0f14");ctx.fillRect(c*MC,r*MC,MC,MC);}
+  // accumulate up to idx
+  for(let i=0;i<=idx;i++){const a=D.attempts[i];
+    if((a.outcome==="frontier"||a.outcome==="solved")&&a.result_player){
+      ctx.fillStyle=a.outcome==="solved"?"#3fb950":"#6ea8fe";
+      ctx.fillRect(a.result_player[1]*MC,a.result_player[0]*MC,3*MC,3*MC);}
+  }
+  for(let i=0;i<=idx;i++){const a=D.attempts[i];
+    if(a.outcome==="death"&&a.dead_cell){const [r,c]=a.dead_cell;
+      ctx.strokeStyle="#f85149";ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(c*MC,r*MC);ctx.lineTo((c+3)*MC,(r+3)*MC);
+      ctx.moveTo((c+3)*MC,r*MC);ctx.lineTo(c*MC,(r+3)*MC);ctx.stroke();}
+  }
+  // current position ring
+  const s=D.attempts[idx];const p=s.result_player||s.dead_cell;
+  if(p){ctx.strokeStyle="#e6edf3";ctx.lineWidth=1.5;ctx.strokeRect(p[1]*MC-1,p[0]*MC-1,3*MC+2,3*MC+2);}
+}
+function render(){
+  const s=D.attempts[idx];
+  drawMain();drawMini();
+  document.getElementById("slider").value=idx;
+  document.getElementById("steplabel").textContent=`attempt ${s.n} / ${D.totals.attempts}`;
+  const b=document.getElementById("banner");
+  const msg={death:"☠ GAME_OVER — this move walked into the enemy. Branch pruned.",
+    frontier:"✓ survived → new position, added to the frontier to explore.",
+    revisit:"↺ survived but a position already seen — skipped.",
+    solved:"🏁 reached goal 14 → LEVEL_COMPLETED. Search ends."}[s.outcome];
+  b.className="banner "+s.outcome;b.textContent=msg;
+  document.getElementById("meta").innerHTML=
+    `depth <code>${s.depth}</code> · from <code>${s.path}</code> <b>+${s.action}</b>`;
+  const c=s.counts;
+  document.getElementById("s-tried").textContent=c.tried;
+  document.getElementById("s-deaths").textContent=c.deaths;
+  document.getElementById("s-visited").textContent=c.visited;
+  document.getElementById("s-frontier").textContent=c.frontier;
+  document.querySelectorAll("#logBody tr").forEach((tr,i)=>{tr.classList.toggle("cur",i===idx);
+    if(i===idx)tr.scrollIntoView({block:"nearest"});});
+}
+function go(i){idx=Math.max(0,Math.min(D.attempts.length-1,i));render();}
+function play(){if(timer){clearInterval(timer);timer=null;document.getElementById("play").textContent="▶ Play";return;}
+  document.getElementById("play").textContent="⏸ Pause";
+  timer=setInterval(()=>{idx>=D.attempts.length-1?go(0):go(idx+1);},520);}
+function nextDeath(){for(let i=idx+1;i<D.attempts.length;i++)if(D.attempts[i].outcome==="death"){go(i);return;}
+  for(let i=0;i<D.attempts.length;i++)if(D.attempts[i].outcome==="death"){go(i);return;}}
+
+fetch("./l1_search.json").then(r=>r.json()).then(data=>{
+  D=data;
+  document.getElementById("method").textContent="method: "+D.method;
+  document.getElementById("slider").max=D.attempts.length-1;
+  const t=D.totals;
+  document.getElementById("badges").innerHTML=
+    `<span class="pill">${t.attempts} attempts</span>`+
+    `<span class="pill bad">${t.deaths} deaths</span>`+
+    `<span class="pill">${t.env_steps} real env-steps</span>`+
+    `<span class="pill ok">solved in ${D.solution_len}</span>`;
+  document.getElementById("legend").innerHTML=Object.entries(NAMES).map(([v,n])=>
+    `<span><span class="sw" style="background:${PAL[v]}"></span>${n} (${v})</span>`).join("");
+  document.getElementById("expl").innerHTML=
+    `This is the <b>whole black-box BFS</b>, not the final path. Each frame is one candidate move actually executed in the engine:<br>`+
+    `• <span style="color:var(--bad)">deaths</span> — the move hit the enemy → GAME_OVER → pruned (2 of them)<br>`+
+    `• <span style="color:var(--frontier)">frontier</span> — survived, new position to explore<br>`+
+    `• <span style="color:var(--revisit)">revisit</span> — survived but already-seen position<br>`+
+    `The mechanic ("enemy is a directional trap") was never told to the solver — it just tried moves and the two deaths marked where the enemy is lethal. Only the final green frame is the answer; everything before it is trial-and-death.`;
+  document.getElementById("logBody").innerHTML=D.attempts.map((a,i)=>
+    `<tr onclick="go(${i})" style="cursor:pointer"><td class="mono">${a.n}</td><td class="mono">${a.depth}</td>`+
+    `<td style="max-width:120px;overflow:hidden;text-overflow:ellipsis">${a.path}</td><td>${a.action}</td>`+
+    `<td class="o-${a.outcome}">${a.outcome}</td></tr>`).join("");
+  render();
+});
+document.getElementById("first").onclick=()=>go(0);
+document.getElementById("prev").onclick=()=>go(idx-1);
+document.getElementById("next").onclick=()=>go(idx+1);
+document.getElementById("play").onclick=play;
+document.getElementById("nextdeath").onclick=nextDeath;
+document.getElementById("slider").oninput=e=>go(+e.target.value);
+window.addEventListener("keydown",e=>{if(e.key==="ArrowRight")go(idx+1);
+  if(e.key==="ArrowLeft")go(idx-1);if(e.key===" "){e.preventDefault();play();}});
+</script>
+</body>
+</html>
