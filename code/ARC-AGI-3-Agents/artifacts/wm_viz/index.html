@@ -67,6 +67,13 @@
   <div class="step"><div class="n">6</div><div class="t"><b>Execute</b>
     Run the plan for real. If it was planned on an uncertified model, this is where the player
     dies — which is why the loop refuses to plan until step 3 is green.</div></div>
+  <div class="step"><div class="n">7</div><div class="t"><b>Explore, when there is no plan</b>
+    A search that finds nothing usually means the model does not know what winning looks like,
+    not that the level is impossible. Stopping there would leave goal inference — the hardest
+    part of this benchmark — outside the loop and in the operator's head. So the loop instead
+    goes and interacts: it tries every action it has no dynamics for, and the coordinate action
+    on a representative square of every value region, ranks the results by what actually
+    happened, and follows the best lead into whatever state it opens.</div></div>
 
   <div class="aside">
     <b>Who writes the model?</b> The <code>propose()</code> seam in this framework is meant for

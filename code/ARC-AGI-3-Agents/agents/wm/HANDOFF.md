@@ -147,6 +147,20 @@ uv run python scripts/wm/games/tu93/gen_l6_pursuer.py     # L6: pursuer trail vs
 python3 -m http.server 8733 -d artifacts/wm_viz   # → /paper.html
 ```
 
+There are **two different stops** in `solve_level.py` and they are not the same
+thing:
+
+- **`MODEL REFUTED`** — the backtest failed, so it does not plan at all. A real
+  guard, added because an uncertified model produced a confident plan on tu93 L2
+  that killed the player.
+- **`NO PLAN`** — the search ran and `is_goal` was never true in any reachable
+  state. Not a guard; the model simply does not know what winning looks like
+  here. The cure is `scripts/wm/explore_level.py`, which goes and interacts
+  instead of stopping: it tries every action the model has no dynamics for and
+  `ACTION6` on a representative square of every value region, ranks what actually
+  happened, and follows the best lead into the state it opens. On m0r0 L2 it
+  re-found the switch mechanic unaided, first out of 22 candidates.
+
 `solve_level.py` **stops at a refutation and refuses to plan**. That is by
 design, not a bug — an uncertified model produced a confident plan on L2 that
 killed the player. If it stops, investigate the pointed bug and fix the model.

@@ -130,8 +130,18 @@ def main():
     print(f"  in-model plan: found={plan.found} len={len(names)} sims={sims[0]} "
           f"nodes={plan.nodes_expanded} imagined_deaths={deaths[0]}")
     if not names:
-        J.note(text=f"L{a.level}: no plan found in-model.")
-        print("  NO PLAN")
+        # Not a refusal and not a safety check — the search simply never found a
+        # state where is_goal holds. On a level whose win condition the model does
+        # not know yet, that is the expected outcome, and the cure is to go and
+        # interact rather than to stop here.
+        J.note(text=(f"L{a.level}: no plan. The model's is_goal was never true in the "
+                     f"{plan.nodes_expanded} states it could reach, so either the goal "
+                     f"is unreachable or the model does not know what winning looks "
+                     f"like on this level."))
+        print(f"  NO PLAN — is_goal was never true in {plan.nodes_expanded} reachable "
+              f"states.\n  This is not a safety stop: the model does not know the win "
+              f"condition here.\n  Next: uv run python scripts/wm/explore_level.py "
+              f"--game {a.game} --level {a.level} --follow 3")
         return 1
 
     # ---- execute -----------------------------------------------------------
