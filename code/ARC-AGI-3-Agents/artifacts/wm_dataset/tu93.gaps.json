@@ -1,0 +1,359 @@
+{
+ "game": "tu93",
+ "gaps": [
+  {
+   "type": "probe",
+   "level": 3,
+   "seq": 2,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 3,
+   "seq": 3,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 3,
+   "seq": 4,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 3,
+   "seq": 5,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "analyse",
+   "level": 4,
+   "seq": 1,
+   "why": "no replay key ('at') on this entry, and no frame stored \u2014 written before the journal recorded either"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 2,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 3,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 4,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 5,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "repair",
+   "level": 4,
+   "seq": 6,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 10,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 12,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 13,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 14,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 15,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 16,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 17,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 18,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 19,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 20,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 21,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 22,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 23,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 24,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 25,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 26,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 27,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 28,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 29,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 30,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 31,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 32,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 33,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 34,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 35,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 36,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 37,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 38,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 39,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "analyse",
+   "level": 4,
+   "seq": 42,
+   "why": "no replay key ('at') on this entry, and no frame stored \u2014 written before the journal recorded either"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 43,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 44,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 45,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 4,
+   "seq": 46,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 5,
+   "seq": 2,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 5,
+   "seq": 3,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "repair",
+   "level": 5,
+   "seq": 7,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  },
+  {
+   "type": "probe",
+   "level": 6,
+   "seq": 2,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 6,
+   "seq": 3,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "repair",
+   "level": 6,
+   "seq": 4,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  },
+  {
+   "type": "repair",
+   "level": 6,
+   "seq": 22,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  },
+  {
+   "type": "probe",
+   "level": 6,
+   "seq": 26,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 6,
+   "seq": 27,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 6,
+   "seq": 34,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 7,
+   "seq": 2,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 7,
+   "seq": 3,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 8,
+   "seq": 2,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "probe",
+   "level": 8,
+   "seq": 3,
+   "why": "no replay key ('at'); the frame this probe was looking at cannot be identified because several runs are interleaved in one file"
+  },
+  {
+   "type": "repair",
+   "level": 8,
+   "seq": 8,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  }
+ ]
+}

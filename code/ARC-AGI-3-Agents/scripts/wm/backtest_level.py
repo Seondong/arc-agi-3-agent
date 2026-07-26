@@ -13,6 +13,20 @@ from agents.wm.harness import Session, bounds
 from agents.wm.journal import Journal
 from agents.wm.models import model_for
 
+def pointed_cells(m, limit=400):
+    """The cells a refutation actually points at: [row, col, predicted, actual]."""
+    if m.predicted_frame is None or m.actual_frame is None:
+        return []
+    out = []
+    for r in range(len(m.actual_frame)):
+        for c in range(len(m.actual_frame[0])):
+            if m.predicted_frame[r][c] != m.actual_frame[r][c]:
+                out.append([r, c, m.predicted_frame[r][c], m.actual_frame[r][c]])
+                if len(out) >= limit:
+                    return out
+    return out
+
+
 CH = {0: '·', 2: '▒', 4: '◆', 5: '█', 6: '.', 8: '♥', 9: '@', 11: '♠', 12: '◘',
       13: '?', 14: '⊕', 15: '♢'}
 
@@ -66,12 +80,15 @@ def main():
             show(m.predicted_frame, m.actual_frame, r0, r1, c0, c1)
         if J:
             J.refute(version=a.version, bug=m.summary(), step_index=m.step_index,
-                     action=m.action, cells_off=m.changed_cells)
+                     action=m.action, cells_off=m.changed_cells,
+                     diff=pointed_cells(m),
+                     at=_cli.actions(a.actions)[:m.step_index - 1])
     elif J:
         J.author(version=a.version, rules=["carried model reproduces this sequence"],
-                 code=f"see agents/wm/models/{a.game.split('-')[0]}.py", changed="none",
+                 code="carried unchanged", changed="none",
                  because=f"backtest {rep.matched}/{rep.total} exact",
-                 backtest={"matched": rep.matched, "total": rep.total, "ok": True})
+                 backtest={"matched": rep.matched, "total": rep.total, "ok": True},
+                 source_path=f"agents/wm/models/{a.game.split('-')[0]}.py")
     return 0 if rep.ok else 1
 
 

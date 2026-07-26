@@ -63,35 +63,37 @@ def main():
             if idx not in avail:
                 continue
             s.reset_to(a.level)
+            at = list(s.actions)
             s.act(name)
             if s.dead:
                 print(f"  {name}: GAME_OVER")
                 if J:
                     J.probe(actions=[name], hypothesis="what does this action change?",
-                            observed="GAME_OVER", died=True, env_steps=1)
+                            observed="GAME_OVER", died=True, env_steps=1, at=at)
                 continue
             d = diff(base, s.grid)
             print(f"  {name}: {describe(d)}")
             if J:
                 J.probe(actions=[name], hypothesis="what does this action change?",
-                        observed=describe(d), died=False, env_steps=1, entities=d)
+                        observed=describe(d), died=False, env_steps=1, entities=d, at=at)
         return
 
     s = Session.open(a.game, a.level)
     prev = s.grid
     for i, n in enumerate(_cli.actions(a.actions), start=1):
+        at = list(s.actions)
         s.act(n)
         if s.dead:
             print(f"  step {i} {n}: GAME_OVER")
             if J:
                 J.probe(actions=[n], hypothesis="what does this action change?",
-                        observed="GAME_OVER", died=True, env_steps=1)
+                        observed="GAME_OVER", died=True, env_steps=1, at=at)
             return
         d = diff(prev, s.grid)
         print(f"  step {i} {n}: {describe(d)}")
         if J:
             J.probe(actions=[n], hypothesis="what does this action change?",
-                    observed=describe(d), died=False, env_steps=1, entities=d)
+                    observed=describe(d), died=False, env_steps=1, entities=d, at=at)
         prev = s.grid
 
 

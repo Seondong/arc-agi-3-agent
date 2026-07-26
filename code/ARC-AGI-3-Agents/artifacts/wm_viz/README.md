@@ -128,6 +128,17 @@ every level, and `model_evolve.html` re-runs every retired version against every
 level. Where a record genuinely does not exist — L0–L2 predate the journal — the
 gap is shown as a gap, not back-filled from memory.
 
+### 11. A record is not yet a dataset — check by exporting one
+The journals looked complete and were not. Running
+`scripts/wm/export_dataset.py` showed that of five pair types, only `predict` and
+`plan` came out whole: probes stored the conclusion but not the frame that
+prompted them, and `author` entries stored a *pointer* to the model file, which
+resolves to a later version — so the `(pointed bug -> rewritten model)` pairs,
+the most valuable ones, were unrecoverable for the entire first game. The fix is
+forward (run ids, replay keys, real source text, pointed cells) because the past
+cannot be backfilled without inventing it. Export early on the next game, not
+after it.
+
 ---
 
 ## Pages

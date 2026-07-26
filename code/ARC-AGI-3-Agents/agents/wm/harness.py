@@ -116,6 +116,9 @@ class Session:
         self.env = None
         self.raw = None
         self.steps = 0
+        # Actions taken since reset_to(), i.e. AFTER the level prefix. This is the
+        # replay key the journal stores so any recorded frame can be reproduced.
+        self.actions: list[str] = []
 
     @classmethod
     def open(cls, game: str, level: int = 0):
@@ -134,6 +137,7 @@ class Session:
         self.steps += 1
         for name in prefix_for(self.game, level):
             self.act(name)
+        self.actions = []           # the prefix is implied by the level, not recorded
         return self.raw
 
     def act(self, name: str):
@@ -141,6 +145,7 @@ class Session:
         a = GameAction.from_name(name)
         self.raw = self.env.step(a, data=a.action_data.model_dump(), reasoning={})
         self.steps += 1
+        self.actions.append(name)
         return self.raw
 
     @property

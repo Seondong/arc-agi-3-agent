@@ -56,6 +56,37 @@ Solutions live in `artifacts/wm_journal/solutions.json` (the source of truth —
 every script reads it to replay to a level). Model: `agents/wm/tu93_model.py`,
 one model covering all levels, currently **v11**.
 
+## The dataset (the point of all this)
+
+`uv run python scripts/wm/export_dataset.py --all-games` turns the journals into
+typed training pairs in `artifacts/wm_dataset/<game>.jsonl`, and writes what it
+could NOT build to `<game>.gaps.json`.
+
+| pair type | input | target | tu93 today |
+|---|---|---|---|
+| `predict` | frame + action | next frame as a cell diff | **185** (free: the engine is deterministic, so solutions.json is enough) |
+| `plan` | frame | the action sequence that clears it | 6 |
+| `probe` | frame + open question | actions to spend + what came back | 18 of 70 |
+| `analyse` | frame | entities and structure | 7 of 9 |
+| `repair` | model source + pointed bug | rewritten source + why | **0 of 5** |
+
+`repair` is the one that teaches a model to *write* world models, and for tu93 it
+is gone: the author entries stored the string `"see agents/wm/models/tu93.py"`,
+which resolves to a later version, and no copy of the earlier source survives in
+git either because several versions were authored inside one session.
+
+Fixed forward, not backfilled:
+
+- `Journal` stamps every entry with a **run id** and **`at`** — the action prefix
+  that reproduces the frame the entry refers to.
+- `author()` stores the model's **actual source text + sha**, not a pointer.
+- `refute()` stores the **pointed cells** `[row, col, predicted, actual]`.
+
+The exporter recovers some older entries by replaying candidate prefixes and
+accepting one only when the replayed frame matches what was recorded; those
+examples are labelled `derived`, never `recorded`. The journal itself is never
+rewritten.
+
 ## THE NEXT TASK — ls20
 
 Opened, probed, not modelled. What the first probes established (journal:

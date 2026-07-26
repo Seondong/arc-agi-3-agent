@@ -78,12 +78,13 @@ def main():
     print(f"{a.game} L{a.level} step 0:\n    {fmt(cs)}")
 
     for i, n in enumerate(_cli.actions(a.actions), start=1):
+        at = list(s.actions)
         s.act(n)
         if s.dead:
             print(f"  step {i} {n}: GAME_OVER")
             if J:
                 J.probe(actions=[n], hypothesis="per-step census of every mover",
-                        observed="GAME_OVER", died=True, env_steps=1)
+                        observed="GAME_OVER", died=True, env_steps=1, at=at)
             return
         cs = census(s.grid)
         print(f"  step {i} {n} (levels_completed={s.raw.levels_completed}):\n    {fmt(cs)}")
@@ -91,7 +92,7 @@ def main():
             J.probe(actions=[n],
                     hypothesis="how does every moving entity respond to this action?",
                     observed=fmt(cs), died=False, env_steps=1,
-                    entities={str(v): b for v, b in cs["ents"].items()})
+                    entities={str(v): b for v, b in cs["ents"].items()}, at=at)
 
 
 if __name__ == "__main__":

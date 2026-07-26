@@ -16,6 +16,24 @@ from agents.wm.planner import run_bfs
 MOVES = ["ACTION1", "ACTION2", "ACTION3", "ACTION4"]
 
 
+def model_source(game):
+    return f"agents/wm/models/{game.split('-')[0]}.py"
+
+
+def pointed_cells(m, limit=400):
+    """The cells a refutation actually points at: [row, col, predicted, actual]."""
+    if m.predicted_frame is None or m.actual_frame is None:
+        return []
+    out = []
+    for r in range(len(m.actual_frame)):
+        for c in range(len(m.actual_frame[0])):
+            if m.predicted_frame[r][c] != m.actual_frame[r][c]:
+                out.append([r, c, m.predicted_frame[r][c], m.actual_frame[r][c]])
+                if len(out) >= limit:
+                    return out
+    return out
+
+
 def entities(state):
     return {k: getattr(state, k) for k in ("players", "guards", "patrols", "pursuers")
             if getattr(state, k, ())}
@@ -40,20 +58,20 @@ def main():
     model = model_for(a.game, version=0)
     s0 = model.reconstruct(init)
     J.observe(note=f"L{a.level} initial frame; levels_completed={lv}; "
-                   f"entities={entities(s0)}", entities={k: list(map(list, v))
-                                                         for k, v in entities(s0).items()})
+                   f"entities={entities(s0)}",
+              entities={k: list(map(list, v)) for k, v in entities(s0).items()}, at=[])
     print(f"L{a.level} init: {entities(s0)}")
 
     # ---- probe -------------------------------------------------------------
     tl, prev = Timeline(init), init
     for i, n in enumerate(_cli.actions(a.actions), start=1):
-        before = s.steps
+        before, at = s.steps, list(s.actions)
         s.act(n)
         if s.dead:
             tl.record(Transition(step_index=i, action=Action(n), before_frame=prev,
                                  after_frame=None, status=Status.GAME_OVER))
             J.probe(actions=[n], hypothesis="does the carried model predict this move?",
-                    observed="GAME_OVER", died=True, env_steps=s.steps - before)
+                    observed="GAME_OVER", died=True, env_steps=s.steps - before, at=at)
             break
         cur = s.grid
         st = Status.LEVEL_COMPLETED if s.raw.levels_completed > lv else Status.RUNNING
@@ -61,7 +79,7 @@ def main():
                              after_frame=cur, status=st))
         J.probe(actions=[n], hypothesis="does the carried model predict this move?",
                 observed=str(entities(model.reconstruct(cur))), died=False,
-                env_steps=s.steps - before)
+                env_steps=s.steps - before, at=at)
         prev = cur
 
     # ---- certify -----------------------------------------------------------
@@ -70,16 +88,18 @@ def main():
     if not rep.ok:
         m = rep.first_mismatch
         J.refute(version=a.version, bug=m.summary(), step_index=m.step_index,
-                 action=m.action, cells_off=m.changed_cells)
+                 action=m.action, cells_off=m.changed_cells,
+                 diff=pointed_cells(m), at=_cli.actions(a.actions)[:m.step_index - 1])
         J.note(text=f"L{a.level}: carried model refuted — investigate before planning.")
         print("  MODEL REFUTED — stopping before planning "
               "(uncertified models must not plan).")
         print("summary:", summary(J.entries()))
         return 1
-    J.author(version=a.version, rules=["carried model"], code="see agents/wm/models/",
+    J.author(version=a.version, rules=["carried model"], code="carried unchanged",
              changed="none",
              because=f"backtest {rep.matched}/{rep.total} exact on L{a.level} probes",
-             backtest={"matched": rep.matched, "total": rep.total, "ok": True})
+             backtest={"matched": rep.matched, "total": rep.total, "ok": True},
+             source_path=model_source(a.game))
 
     # ---- plan in-model (0 real actions) ------------------------------------
     s2 = Session.open(a.game, a.level)

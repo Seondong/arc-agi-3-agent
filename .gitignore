@@ -37,6 +37,11 @@ data/
 **/artifacts/*
 !**/artifacts/wm_viz/
 !**/artifacts/wm_journal/
+# The exported training pairs are regenerable from the journals, and the frames
+# make them large; keep the gap report, which is the part that says what the
+# record is missing, and leave the bulk out.
+!**/artifacts/wm_dataset/
+**/artifacts/wm_dataset/*.jsonl
 
 # Logs
 *.log
