@@ -49,11 +49,27 @@ _NOTCH_OFF = {"U": (0, 1), "D": (2, 1), "L": (1, 0), "R": (1, 2)}
 _ACT = {"U": "ACTION1", "D": "ACTION2", "L": "ACTION3", "R": "ACTION4"}
 _FLIP = {"U": "D", "D": "U", "L": "R", "R": "L"}
 
-# Top-left corners of 9-blocks that look exactly like the player but never move.
-# Discovered by probing, not by reading the frame: on L4 the block at (44,51) sat
-# out ACTION1 while the real player took the same step upward with a clear path
-# (scripts/probe_l4_second_block.py). Treated as part of the static maze.
-INERT_LOOKALIKES = frozenset({(44, 51)})
+def _discovered_facts():
+    """Per-level facts found by probing, loaded from data rather than baked in.
+
+    The RULE is "a 3x3 block of 9 with a player notch can be inert scenery, and
+    only acting tells you which". WHICH block that turned out to be on L4 is data
+    about one level; a coordinate in the rules could never transfer, so it lives
+    in artifacts/wm_journal/tu93/facts.json next to the probe that established it.
+    """
+    import json
+    from pathlib import Path
+    p = Path("artifacts/wm_journal/tu93/facts.json")
+    if not p.exists():
+        return {}
+    try:
+        return json.loads(p.read_text())
+    except ValueError:
+        return {}
+
+
+INERT_LOOKALIKES = frozenset(
+    tuple(x) for x in _discovered_facts().get("inert_lookalikes", ()))
 
 
 @dataclass(frozen=True)

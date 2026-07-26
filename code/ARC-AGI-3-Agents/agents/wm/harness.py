@@ -92,6 +92,15 @@ def open_arcade():
     return Arcade(operation_mode=OperationMode.OFFLINE)
 
 
+def baseline_actions(arc, game: str):
+    """The human first-contact baseline per level, straight from the engine."""
+    key = short_id(game)
+    for e in arc.get_environments():
+        if e.game_id.startswith(key):
+            return list(e.baseline_actions or [])
+    return []
+
+
 def resolve_game(arc, game: str) -> str:
     """`tu93` -> the engine's full id, with a listing when it does not exist."""
     ids = sorted(e.game_id for e in arc.get_environments())
@@ -113,11 +122,23 @@ def died(raw) -> bool:
     return raw is None or not raw.frame or raw.state.name == "GAME_OVER"
 
 
+class BudgetExceeded(RuntimeError):
+    """Raised when a run spends more actions on a level than it is allowed.
+
+    The published harnesses cap a level attempt (1500 actions in one, the
+    official leaderboard cuts off at 5x the human baseline). We had no cap at
+    all, which is how a single sk48 diagnostic spent 3229 engine steps. The cap
+    is on ACTIONS TAKEN IN THE LEVEL, not on replays, because that is what the
+    benchmark counts.
+    """
+
+
 class Session:
     """One engine run, replayed to a level, counting every real step it costs."""
 
-    def __init__(self, arc, gid: str, game: str):
+    def __init__(self, arc, gid: str, game: str, budget=None):
         self.arc, self.gid, self.game = arc, gid, game
+        self.budget = budget           # actions allowed in the level, None = no cap
         self.env = None
         self.raw = None
         self.steps = 0
@@ -126,10 +147,16 @@ class Session:
         self.actions: list[str] = []
 
     @classmethod
-    def open(cls, game: str, level: int = 0):
+    def open(cls, game: str, level: int = 0, budget=None, budget_x=None):
+        """`budget_x` sets the cap at that multiple of the level's human baseline
+        — 5 is the official leaderboard cutoff."""
         arc = open_arcade()
         gid = resolve_game(arc, game)
-        s = cls(arc, gid, game)
+        if budget is None and budget_x is not None:
+            base = baseline_actions(arc, game)
+            if base and level < len(base):
+                budget = int(base[level] * budget_x)
+        s = cls(arc, gid, game, budget=budget)
         s.reset_to(level)
         return s
 
@@ -164,6 +191,11 @@ class Session:
         self.steps += 1
         ENGINE_STEPS[0] += 1
         self.actions.append(name if x is None else f"{name}@{x}:{y}")
+        if self.budget is not None and len(self.actions) > self.budget:
+            raise BudgetExceeded(
+                f"{short_id(self.game)}: {len(self.actions)} actions spent on this "
+                f"level, cap is {self.budget}. The benchmark counts these; a run "
+                f"that blows through the cap has already lost the level's score.")
         return self.raw
 
     @property

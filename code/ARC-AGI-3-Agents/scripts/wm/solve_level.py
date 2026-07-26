@@ -54,10 +54,13 @@ def main():
     p.add_argument("--reset", action="store_true",
                    help="erase this level's journal first (rarely what you want)")
     p.add_argument("--max-depth", type=int, default=120)
+    p.add_argument("--budget-x", type=float, default=5.0,
+                   help="stop after this multiple of the level's human baseline "
+                        "(5 is the official leaderboard cutoff; 0 disables)")
     a = p.parse_args()
 
     J = Journal(a.game, a.level, reset=a.reset)
-    s = Session.open(a.game, a.level)
+    s = Session.open(a.game, a.level, budget_x=(a.budget_x or None))
     init, lv = s.grid, s.raw.levels_completed
     if lv != a.level:
         print(f"WARNING: expected L{a.level} but levels_completed={lv}")
@@ -109,7 +112,7 @@ def main():
              source_path=model_source(a.game))
 
     # ---- plan in-model (0 real actions) ------------------------------------
-    s2 = Session.open(a.game, a.level)
+    s2 = Session.open(a.game, a.level, budget_x=(a.budget_x or None))
     model2 = model_for(a.game, version=0)
     st0 = model2.reconstruct(s2.grid)
     sims, deaths, inner = [0], [0], model2.step

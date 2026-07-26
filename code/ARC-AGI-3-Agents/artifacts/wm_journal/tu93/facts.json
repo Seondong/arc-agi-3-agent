@@ -1,0 +1,5 @@
+{
+ "_about": "Facts about THIS game discovered by probing, kept out of the model's rules. The rules say what an inert look-alike IS; this file says which block turned out to be one, which is data about one level and cannot generalise.",
+ "inert_lookalikes": [[44, 51]],
+ "inert_lookalikes_evidence": "L4: ACTION1 from (20,27) lifted the real player to (14,27) while the block at (44,51) sat still with a clear door above it (scripts/wm/games/tu93/probe_l4_second_block.py)"
+}

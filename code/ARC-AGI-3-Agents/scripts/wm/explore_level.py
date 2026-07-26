@@ -224,11 +224,14 @@ def main():
     p.add_argument("--budget", type=int, default=200,
                    help="maximum real actions to spend")
     p.add_argument("--quiet-journal", action="store_true")
+    p.add_argument("--budget-x", type=float, default=5.0,
+                   help="stop after this multiple of the level's human baseline "
+                        "(5 is the official leaderboard cutoff; 0 disables)")
     a = p.parse_args()
 
     J = None if a.quiet_journal else Journal(a.game, a.level)
     prefix, total, best_overall = [], 0, None
-    s_init = Session.open(a.game, a.level)
+    s_init = Session.open(a.game, a.level, budget_x=(a.budget_x or None))
     seen_sigs = {signature(s_init.grid)}
     for rnd in range(a.follow + 1):
         results, spent = explore(a.game, a.level, prefix, a.depth,

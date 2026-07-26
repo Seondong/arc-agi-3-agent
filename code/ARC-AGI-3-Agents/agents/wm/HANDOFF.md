@@ -178,6 +178,23 @@ design, not a bug — an uncertified model produced a confident plan on L2 that
 killed the player. If it stops, investigate the pointed bug and fix the model.
 It appends to the journal; pass `--reset` only if you really mean to erase one.
 
+### Measuring ourselves (added from the ARC-AGI-3 papers)
+
+```bash
+uv run python scripts/wm/score_rhae.py --all-games   # the benchmark's own metric
+uv run python scripts/wm/model_debt.py --all-games   # magic constants, masks, flags
+uv run python scripts/wm/stuck_report.py --game m0r0 --level 2   # what was never tried
+```
+
+`score_rhae.py` is the number that matters and the one we never had: RHAE counts
+unsolved levels as zero and weights the later ones most. Every level we solve
+beats the human action count, so our problem is coverage, not efficiency —
+tu93 100, m0r0 14.3, sk48 2.8, mean 39.0.
+
+Solving and exploring now take `--budget-x` (default 5, the official cutoff),
+which raises `BudgetExceeded` rather than letting a diagnostic spend thousands of
+actions the way one sk48 enumeration did.
+
 ### Regression set (run after every model change)
 
 ```bash
