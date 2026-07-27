@@ -47,11 +47,23 @@ self-contained module defining:
 
     def build(version: int = 1) -> WorldModel
 
-`WorldModel` and `Action`/`Status` are importable as:
+`build` must return ANY object providing the six methods below. Define your own
+class and return an instance of it:
 
-    from agents.wm.core import Action, Frame, Status, WorldModel
+    class Model:
+        def reconstruct(self, frame): ...
+        def step(self, state, action): ...
+        ...
+    def build(version: int = 1):
+        return Model()
 
-The model must provide:
+Do NOT construct `agents.wm.core.WorldModel` — it is a dataclass whose fields are
+callables, and calling `WorldModel()` raises TypeError for five missing
+arguments. That single mistake has cost two runs eleven minutes each. `Action`
+and `Status` may be imported from `agents.wm.core` if you want them, but nothing
+here requires it: `status` is just one of the three strings below.
+
+The object must provide:
   reconstruct(frame)   -> state      built from ONE frame, the level's first
   step(state, action)  -> (state, status)   status in "RUNNING",
                                             "LEVEL_COMPLETED", "GAME_OVER"
