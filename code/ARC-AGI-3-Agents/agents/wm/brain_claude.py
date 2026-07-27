@@ -66,6 +66,9 @@ The model must provide:
                                      a step counter.
 
 Rules:
+- An action arrives as `Action(name, x, y)`. Directional actions have x=y=None.
+  ACTION6 is a COORDINATE action: `action.x` is the column and `action.y` the row
+  that was clicked. Some games offer ACTION6 and nothing else.
 - State must be immutable and hashable through `fingerprint`.
 - Do not read any file outside what is given here. Do not import the game.
 - Prefer rules that are forced by the evidence below. An unforced special case

@@ -39,8 +39,57 @@ from agents.wm.planner import run_bfs
 from execute_gated import execute_gated
 from explore_level import explore, signature
 
-MOVES = ["ACTION1", "ACTION2", "ACTION3", "ACTION4"]
-PROBE_ACTIONS = ["ACTION1", "ACTION2", "ACTION3", "ACTION4", "ACTION5", "ACTION7"]
+DIRECTIONAL = ["ACTION1", "ACTION2", "ACTION3", "ACTION4", "ACTION5", "ACTION7"]
+MAZE_ISH = {0, 5, 6}          # too common to be worth a click each
+
+
+def action_set(grid, avail, max_coords=20):
+    """The actions a planner may consider here.
+
+    Some games (ft09, vc33) offer ONLY the coordinate action, so a planner
+    restricted to ACTION1-4 cannot act at all — it would search an empty space
+    and report "no plan" forever. Coordinates cannot be enumerated either: 64x64
+    is 4096 branches per node. So the coordinate action is offered at one
+    representative square per distinct value REGION, which is where a click has
+    ever meant anything in the games seen so far.
+    """
+    acts = [Action(f"ACTION{i}") for i in avail if f"ACTION{i}" in DIRECTIONAL]
+    if 6 in avail:
+        from explore_level import regions
+        values = sorted({v for row in grid for v in row} - MAZE_ISH)
+        per = max(1, max_coords // max(1, len(values)))
+        for v in values:
+            for (r, c) in regions(grid, v, limit=per):
+                acts.append(Action("ACTION6", x=c, y=r))
+    return acts
+
+
+def sweep_candidates(game, level, base, already, step=6, keep=10):
+    """When value-regions miss, find where a click does ANYTHING by sweeping.
+
+    ft09 offers only the coordinate action, and every square its value-regions
+    nominated was inert: a brain given that evidence sees a game where nothing
+    ever happens and — correctly — refuses to invent dynamics. A coarse sweep
+    costs one session per square but answers the only question that matters
+    first: where is this game even listening? On ft09 L0, 8 of 100 squares
+    responded, all of them in one corner no region had nominated.
+    """
+    seen = {(a.x, a.y) for a in already}
+    hits = []
+    for y in range(2, len(base), step):
+        for x in range(2, len(base[0]), step):
+            if (x, y) in seen:
+                continue
+            try:
+                t = Session.open(game, level)
+                t.act("ACTION6", x=x, y=y)
+            except Exception:                              # noqa: BLE001
+                continue
+            if t.dead or t.grid != base:
+                hits.append(Action("ACTION6", x=x, y=y))
+                if len(hits) >= keep:
+                    return hits
+    return hits
 
 
 def gather_evidence(game, level, budget_x):
@@ -49,32 +98,54 @@ def gather_evidence(game, level, budget_x):
     to explain what is seen, and more probing is what the loop does after a
     refutation, not before the first model."""
     s = Session.open(game, level, budget_x=budget_x)
-    avail = [f"ACTION{i}" for i in s.raw.available_actions]
-    tls = []
-    for name in [a for a in PROBE_ACTIONS if a in avail]:
-        s.reset_to(level)
-        init = s.grid
-        tl = Timeline(init)
-        s.act(name)
-        tl.record(Transition(step_index=1, action=Action(name), before_frame=init,
-                             after_frame=None if s.dead else s.grid,
-                             status=(Status.GAME_OVER if s.dead else Status.RUNNING)))
-        tls.append(tl)
+    avail = s.raw.available_actions
+    acts = action_set(s.grid, avail)
+
+    def probe_each(actions):
+        got, live = [], 0
+        for act in actions:
+            s.reset_to(level)
+            init = s.grid
+            tl = Timeline(init)
+            s.act(act.name, x=act.x, y=act.y)
+            after = None if s.dead else s.grid
+            tl.record(Transition(step_index=1, action=act, before_frame=init,
+                                 after_frame=after,
+                                 status=(Status.GAME_OVER if s.dead else Status.RUNNING)))
+            got.append(tl)
+            if after is None or after != init:
+                live += 1
+        return got, live
+
+    tls, live = probe_each(acts)
+    # A game where every nominated square is inert is not a game with no
+    # dynamics; it is a game we are knocking on the wrong door of. Only then is
+    # the sweep worth its one-session-per-square price.
+    if live == 0 and 6 in avail:
+        extra = sweep_candidates(game, level, s.grid, acts)
+        if extra:
+            more, live = probe_each(extra)
+            tls += more
+            acts += extra
     # a short walk, so consecutive dynamics are visible and not just single steps
     s.reset_to(level)
     init = s.grid
     tl = Timeline(init)
     prev, lv0 = init, s.raw.levels_completed
+    avail_names = [f"ACTION{i}" for i in avail]
     walk = [a for a in ["ACTION1", "ACTION1", "ACTION4", "ACTION2", "ACTION3",
-                        "ACTION4", "ACTION1", "ACTION3"] if a in avail]
+                        "ACTION4", "ACTION1", "ACTION3"] if a in avail_names]
+    if not walk:                    # a coordinate-only game: walk the candidates
+        walk = [a for a in acts if a.x is not None][:8]
     for i, n in enumerate(walk, start=1):
-        s.act(n)
+        n = n if isinstance(n, Action) else Action(n)
+        s.act(n.name, x=n.x, y=n.y)
         if s.dead:
-            tl.record(Transition(step_index=i, action=Action(n), before_frame=prev,
+            tl.record(Transition(step_index=i, action=n, before_frame=prev,
                                  after_frame=None, status=Status.GAME_OVER))
             break
         cleared = s.raw.levels_completed > lv0
-        tl.record(Transition(step_index=i, action=Action(n), before_frame=prev,
+        tl.record(Transition(step_index=i, action=n, before_frame=prev,
                              after_frame=None if cleared else s.grid,
                              status=(Status.LEVEL_COMPLETED if cleared
                                      else Status.RUNNING)))
@@ -145,10 +216,12 @@ def solve_level(game, level, brain, J, args, deadline):
 
     s2 = Session.open(game, level, budget_x=args.budget_x or None)
     st0 = model.reconstruct(s2.grid)
-    plan = run_bfs(model, st0, [Action(x) for x in MOVES], max_depth=args.max_depth)
-    names = [x.name for x in (plan.actions or [])]
-    J.plan(version=f"brain-{calls}" if calls else "carried", actions=names,
-           stats={"sims": plan.nodes_expanded * len(MOVES),
+    acts2 = action_set(s2.grid, s2.raw.available_actions)
+    plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
+    names = list(plan.actions or [])
+    J.plan(version=f"brain-{calls}" if calls else "carried",
+           actions=[str(x) for x in names],
+           stats={"sims": plan.nodes_expanded * max(1, len(acts2)),
                   "nodes": plan.nodes_expanded, "found": plan.found,
                   "plan_len": len(names)})
     if not names:
@@ -206,9 +279,8 @@ def solve_level(game, level, brain, J, args, deadline):
             print(f"  re-propose failed: {str(exc)[:200]}")
             return False
         st0 = model.reconstruct(Session.open(game, level).grid)
-        plan = run_bfs(model, st0, [Action(x) for x in MOVES],
-                       max_depth=args.max_depth)
-        names = [x.name for x in (plan.actions or [])]
+        plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
+        names = list(plan.actions or [])
         if not names:
             print("  still no plan after exploration")
             return False
