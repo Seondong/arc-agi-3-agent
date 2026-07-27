@@ -298,6 +298,49 @@ def rule_blocks(meta):
     return blocks
 
 
+def write_level_page(game):
+    """Give a game the level-by-level page, from the shared template.
+
+    Only tu93 and m0r0 ever had one, because each was written by hand with the
+    game id baked into five places. sk48 had data and no page for weeks and
+    nobody noticed; ft09 and vc33 would have gone the same way. The template
+    reads its own directory name instead, so this is a copy, not a generation.
+
+    An existing page is never overwritten: tu93's and m0r0's carry hand-written
+    deep-dive links this template knows nothing about.
+    """
+    out = viz_dir(game) / "level.html"
+    if out.exists():
+        return False
+    tpl = viz_dir("").parent / "wm_viz" / "shared" / "level_template.html"
+    if not tpl.exists():
+        return False
+    out.parent.mkdir(parents=True, exist_ok=True)
+    html = tpl.read_text()
+    # Only link to sibling pages that exist. The first cut of this template
+    # carried m0r0's links to paper.html and model_evolve.html, so every game
+    # that had neither got dead links -- which the page linter caught, which is
+    # the whole reason it exists.
+    has_paper = (out.parent / "paper.html").exists()
+    has_ev = (out.parent / "model_evolve.html").exists()
+    bits = []
+    if has_paper:
+        bits.append('<a href=\\"./paper.html\\">the write-up</a>')
+    if has_ev:
+        bits.append('<a href=\\"./model_evolve.html\\">how the model itself evolved</a>')
+    html = html.replace("<!--SIBLINGS-->",
+                        ' · <a href="./paper.html">← the write-up</a>' if has_paper
+                        else "")
+    html = html.replace("<!--SIBTEXT-->",
+                        ("Deep dives: " + " · ".join(bits) + ".") if bits
+                        else "No deep dive for this game yet.")
+    html = html.replace("<!--EVOLVECHIP-->",
+                        '<a class=\\"chip\\" href=\\"./model_evolve.html\\">'
+                        'model evolution →</a>' if has_ev else "")
+    out.write_text(html)
+    return True
+
+
 def refresh_games_index():
     """The root index: every game with a model OR a journal, and how far it got.
 
@@ -325,6 +368,13 @@ def refresh_games_index():
             "deep_dives": [{"href": h, "level": lv, "title": t}
                            for h, lv, t in meta.get("deep_dives", [])],
             "has_pages": (viz_dir(key) / "paper.html").exists(),
+            # Where a card should actually point. Every game with a model used
+            # to be linked to paper.html whether or not it had one, so ft09,
+            # vc33 and sk48 got 404s from the front page the moment they were
+            # modelled.
+            "landing": ("paper.html" if (viz_dir(key) / "paper.html").exists()
+                        else "level.html" if (viz_dir(key) / "level.html").exists()
+                        else None),
             "has_model": key in MODELS,
         })
     (viz_dir("").parent / "wm_viz" / "games.json").write_text(json.dumps({"games": out}))
@@ -397,6 +447,8 @@ def main():
     }))
 
     games = refresh_games_index()
+    if write_level_page(game):
+        print(f"wrote {viz_dir(game)}/level.html from the shared template")
     print(f"\nwrote {out}/ ({len(index)} levels) and games.json "
           f"({len(games)} game(s) with a model)")
 

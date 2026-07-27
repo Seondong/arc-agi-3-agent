@@ -137,14 +137,15 @@ function n(v){return v===undefined||v===null?"—":v;}
 fetch("./games.json").then(r=>r.json()).then(d=>{
   document.getElementById("gamecards").innerHTML=d.games.map(g=>{
     const dives=g.deep_dives.map(x=>x.title).join(" · ");
-    if(!g.has_model)
+    if(!g.has_model || !g.landing)
       return `<div class="card todo">
         <h3>${g.title}</h3>
-        <div class="b">Opened, not yet modelled — the journal has the first observations and
-          probes, and there is no theory to plan with until a model is written.</div>
+        <div class="b">${g.has_model
+          ? "Modelled, but it has no page yet — the journal and the model file are there."
+          : "Opened, not yet modelled — the journal has the first observations and probes, and there is no theory to plan with until a model is written."}</div>
         <div class="s"><span><b>${g.journal_files}</b> journal file(s)</span>
           <span><b>${g.levels_solved}</b> levels solved</span></div></div>`;
-    return `<a class="card" href="./${g.game}/paper.html">
+    return `<a class="card" href="./${g.game}/${g.landing}">
       <h3>${g.title}</h3>
       <div class="b">${g.blurb||"no write-up yet"}</div>
       <div class="s">

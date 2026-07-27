@@ -97,7 +97,11 @@ def check(path: Path):
 
 def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else "artifacts/wm_viz")
-    pages = sorted(root.rglob("*.html"))
+    # A *_template.html is not served: its relative links and fetches resolve
+    # against whichever game directory it is copied into, never against
+    # shared/. Checking it as a page reports every one of them as broken.
+    pages = sorted(p for p in root.rglob("*.html")
+                   if not p.name.endswith("_template.html"))
     if not pages:
         print(f"no pages under {root}")
         return 1
