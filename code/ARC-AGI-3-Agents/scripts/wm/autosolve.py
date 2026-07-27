@@ -252,7 +252,7 @@ def solve_level(game, level, brain, J, args, deadline):
             print(f"  accepted after {time.time() - t0:.0f}s: {note}")
             J.author(version=f"brain-{calls}",
                      rules=["proposed by headless Claude Code and verified by replay"],
-                     code="proposed source stored with this entry",
+                     code=source,
                      changed=f"model proposed from {len(tls)} evidence run(s)",
                      because=note, backtest={"note": note})
             # the source itself, so this is a usable training target
