@@ -116,6 +116,27 @@ counted coordinates *narrated in docstring prose* as hardcoded ones and therefor
 reported the models getting worse at the moment real debt was removed. A
 simplicity metric that miscounts is worse than none.
 
+### The action set is derived, never assumed — `autosolve.action_set`
+
+The runner used to hardcode `ACTION1..4` for planning and `ACTION1..5,7` for
+probing. That is not a small bug on this benchmark: **ft09 and vc33 offer
+ACTION6 and nothing else**, so the planner searched an empty action space and
+reported NO PLAN forever while the probe stage recorded nothing. bp35 has no
+ACTION1/2 either. Only cd82 of those four was playable.
+
+The action set now comes from `raw.available_actions`. The coordinate action
+cannot be enumerated — 64x64 is 4096 branches per node — so it is offered at one
+representative square per distinct value region, which is where a click has ever
+meant anything in the games seen so far.
+
+`sweep_candidates` is the fallback for when that heuristic knocks on the wrong
+door. On ft09 L0 every one of the 14 nominated squares was inert. A brain handed
+that evidence sees a game with no dynamics and — correctly, as it did once
+before — refuses to invent any. A coarse sweep found 8 responsive squares
+clustered in a corner no value region had nominated. It runs ONLY when nothing
+responded, because it costs one session per square, and its first version missed
+every hit by sampling on a stride that stepped over all of them.
+
 ## Instrumentation
 
 ### The journal — `agents/wm/journal.py`

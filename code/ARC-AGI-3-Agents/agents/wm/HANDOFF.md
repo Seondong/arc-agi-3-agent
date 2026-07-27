@@ -354,3 +354,34 @@ reports what changed, so "nothing happened" and "an object moved" are
 distinguishable before anything is known. Carrying the previous game's constants
 across is the mistake it exists to prevent — ls20's step is 5 px where tu93's is
 6, and ls20 draws glyphs in value 9, the value that was the player in tu93.
+
+
+---
+
+## 2026-07-27 — four new games, and the coordinate action
+
+Running `autosolve` on ft09, vc33, bp35, cd82. Checking their action sets first
+was what saved the session:
+
+| game | available actions | levels | human baseline |
+|---|---|---|---|
+| ft09 | **6 only** | 6 | 17, 19, 15, 21, 65, 26 |
+| vc33 | **6 only** | 7 | 6, 13, 31, 59, 92, 24, 82 |
+| bp35 | 3, 4, 6, 7 | 9 | 15, 72, 36, 31, 31, 48, 86, 155, 163 |
+| cd82 | 1, 2, 3, 4, 5, 6 | 6 | 41, 8, 30, 21, 19, 17 |
+
+Two of the four are coordinate-only. See ARCHITECTURE.md, "The action set is
+derived, never assumed". Evidence gathering after the fix, at level 0:
+
+    ft09  23 runs,  8 changed   (all 8 found by the sweep fallback)
+    vc33   8 runs, 14 changed
+    bp35  16 runs, 19 changed
+    cd82  15 runs, 20 changed
+
+**ft09's responsive squares are clustered**: of 100 coarse-sweep clicks only the
+block at x,y >= 38 did anything, each changing 38 cells. Whatever ft09 is, it
+listens in one corner. That is the first thing to look at when reading its
+journal.
+
+Run configuration: two streams, 70 min per game, `--max-brain 8 --budget-x 5`.
+Logs in `artifacts/wm_runs/<game>.log`; journals are per-game as usual.
