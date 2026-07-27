@@ -49,6 +49,15 @@ logs.log
 
 # Models (large binary)
 models/
+# ...but agents/wm/models/ is SOURCE, not weights: it is the per-game world
+# model, the one game-specific artefact the whole approach produces. This rule
+# had been silently dropping it. `git add -A` skips ignored paths without a
+# word, so commits claiming a model was persisted contained no model, and only
+# tu93.py survived because it predates the rule. A directory excluded by
+# `models/` cannot have its contents re-included until the directory itself is
+# re-included, hence both lines.
+!**/agents/wm/models/
+!**/agents/wm/models/**
 *.gguf
 *.pt
 *.pth
