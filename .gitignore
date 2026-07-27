@@ -71,3 +71,8 @@ code/environment_files/
 # Large files
 *.pdf
 *.whl
+
+# Agent skills — installed globally to ~/.agents/skills, not part of this repo
+.agents/
+.claude/skills/
+skills-lock.json
