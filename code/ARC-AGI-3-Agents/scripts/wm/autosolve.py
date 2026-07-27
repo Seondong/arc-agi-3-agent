@@ -127,6 +127,16 @@ def gather_evidence(game, level, budget_x):
             more, live = probe_each(extra)
             tls += more
             acts += extra
+    # Which of them actually did anything. The planner needs THIS, not the
+    # nominations: on ft09 the 14 nominated squares are all inert and the only
+    # responsive ones came from the sweep, so a planner handed the nominations
+    # searches a space where nothing can happen and reports 1 reachable state
+    # no matter what model the brain writes. That is what stalled ft09 for four
+    # brain calls before this was noticed.
+    live_acts = [tl.transitions[0].action for tl in tls
+                 if tl.transitions and (tl.transitions[0].after_frame is None
+                                        or tl.transitions[0].after_frame
+                                        != tl.initial_frame)]
     # a short walk, so consecutive dynamics are visible and not just single steps
     s.reset_to(level)
     init = s.grid
@@ -153,13 +163,13 @@ def gather_evidence(game, level, budget_x):
         if cleared:
             break
     tls.append(tl)
-    return tls, s.steps
+    return tls, s.steps, live_acts
 
 
 def solve_level(game, level, brain, J, args, deadline):
     """One level: model it, plan it, run it. Returns True if cleared."""
     print(f"\n=== {game} L{level}")
-    tls, spent = gather_evidence(game, level, args.budget_x or None)
+    tls, spent, live_acts = gather_evidence(game, level, args.budget_x or None)
     print(f"  evidence: {len(tls)} run(s), {spent} engine steps")
     J.observe(note=f"autosolve: gathered {len(tls)} evidence run(s) on L{level}",
               at=[])
@@ -225,6 +235,10 @@ def solve_level(game, level, brain, J, args, deadline):
     s2 = Session.open(game, level, budget_x=args.budget_x or None)
     st0 = model.reconstruct(s2.grid)
     acts2 = action_set(s2.grid, s2.raw.available_actions)
+    known = {(a.name, a.x, a.y) for a in acts2}
+    acts2 += [a for a in live_acts if (a.name, a.x, a.y) not in known]
+    print(f"  planner action set: {len(acts2)} "
+          f"({len(live_acts)} of them known to do something)")
     plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
     names = list(plan.actions or [])
     J.plan(version=f"brain-{calls}" if calls else "carried",
