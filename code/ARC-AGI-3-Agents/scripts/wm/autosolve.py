@@ -26,6 +26,7 @@ Usage:
 """
 import time
 import traceback
+from pathlib import Path
 
 import _cli
 from agents.wm.backtest import run_backtest
@@ -90,6 +91,58 @@ def sweep_candidates(game, level, base, already, step=6, keep=10):
                 if len(hits) >= keep:
                     return hits
     return hits
+
+
+SHIM = """
+
+# ---------------------------------------------------------------------------
+# Registry adapter, written by scripts/wm/autosolve.py alongside the model.
+# The brain writes `build(version)`; the registry calls
+# `<game>_world_model(**kwargs)` and passes keywords a brain-written model has
+# never heard of (`legacy=[...]`, used by the simplification pass).
+# ---------------------------------------------------------------------------
+def {g}_world_model(version: int = 1, **_ignored):
+    return build(version)
+"""
+
+
+def persist_model(game, level, source, note):
+    """Write a winning model into the repo, as a permanent file.
+
+    A model that only ever lived in a temp dir and a JSONL line dies with the
+    process. ft09 L0 was cleared by a model that had no file anywhere, and
+    recovering it afterwards took a separate tool. Anything that WINS has to
+    survive the run without a human deciding to save it: the next session, the
+    simplification pass, the site generator and the level after this one all
+    look the game up by module.
+
+    A file already there is never clobbered — a hand-written model outranks a
+    freshly proposed one, and the proposal is still in the journal.
+    """
+    out = Path("agents/wm/models") / f"{game}.py"
+    if out.exists():
+        print(f"  (agents/wm/models/{game}.py already exists; left alone)")
+        return None
+    header = (f'"""Written by a headless Claude Code brain during an autosolve run.\n\n'
+              f'Accepted only after replaying every recorded step exactly, and in\n'
+              f'force when L{level} cleared: {note}\n\n'
+              f'Not hand-written and not hand-edited. Saved here by\n'
+              f'scripts/wm/autosolve.py so it outlives the process that wrote it.\n"""\n')
+    out.write_text(header + source + SHIM.replace("{g}", game))
+    print(f"  wrote agents/wm/models/{game}.py — the model now outlives this run")
+
+    reg = Path("agents/wm/models/__init__.py")
+    t = reg.read_text()
+    if f'"{game}"' not in t:
+        t = t.replace("from ..core import WorldModel",
+                      f"from ..core import WorldModel\nfrom .{game} import "
+                      f"{game}_world_model", 1)
+        t = t.replace("MODELS: dict[str, Callable[..., WorldModel]] = {",
+                      f'MODELS: dict[str, Callable[..., WorldModel]] = {{\n'
+                      f'    "{game}": {game}_world_model,', 1)
+        reg.write_text(t)
+        print(f"  registered {game} in agents/wm/models/__init__.py")
+    return out
 
 
 def parse_action(n):
@@ -216,6 +269,7 @@ def solve_level(game, level, brain, J, args, deadline):
               at=[])
 
     source = None
+    note = None
     model = None
     if has_model(game):
         try:
@@ -418,6 +472,12 @@ def solve_level(game, level, brain, J, args, deadline):
         if res["cleared"]:
             save_solution(game, level, res["taken"])
             print(f"  CLEARED in {len(res['taken'])} actions — saved")
+            if source:
+                try:
+                    persist_model(game, level, source,
+                                  note or "accepted by replay")
+                except Exception as exc:                   # noqa: BLE001
+                    print(f"  could not persist the model: {exc}")
             return True
         print(f"  not cleared ({len(res['taken'])}/{len(names)} actions spent"
               + (f", {res['saved']} saved by the gate" if res["saved"] else "")
