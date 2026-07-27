@@ -145,6 +145,57 @@ def persist_model(game, level, source, note):
     return out
 
 
+def explore_and_repropose(game, level, tls, seen, J, args, brain, source, acts2,
+                          calls, deadline, why):
+    """Go and look at the game again, re-propose, re-plan. One round.
+
+    Both ways a repair can fail — the brain erroring out, and a repaired model
+    that no longer reaches its own goal — used to end the game. They are the
+    same condition the NO PLAN path already knows how to treat: not enough is
+    known yet, so gather more. This is that treatment, factored so the repair
+    loop and the goal-inference loop cannot drift apart again.
+
+    Returns (tls, model, source, note, names, calls); model is None if the round
+    produced nothing usable.
+    """
+    if calls >= args.max_brain or time.time() > deadline:
+        return tls, None, source, None, [], calls
+    results, spent = explore(game, level, [], 6, args.explore_budget, J, calls, seen)
+    useful = [r for r in results if r[0] > 0]
+    print(f"  explored {len(results)} interaction(s) for {spent} action(s); "
+          f"{len(useful)} of them did something")
+    for score, label, txt, name, xy, *_ in sorted(useful, reverse=True,
+                                                  key=lambda r: r[0])[:6]:
+        s4 = Session.open(game, level)
+        init4 = s4.grid
+        tl4 = Timeline(init4)
+        s4.act(name, x=xy[0], y=xy[1]) if xy else s4.act(name)
+        after4 = None if s4.dead else s4.grid
+        seen.add(signature(after4) if after4 else "dead")
+        tl4.record(Transition(step_index=1, action=Action(label),
+                              before_frame=init4, after_frame=after4,
+                              status=(Status.GAME_OVER if s4.dead
+                                      else Status.RUNNING)))
+        tls = tls + [tl4]
+    calls += 1
+    print(f"  brain call {calls}/{args.max_brain} (after exploring again) ...")
+    try:
+        model, source, note = brain.propose(tls, source, None, extra=why)
+        print(f"  accepted: {note}")
+        J.author(version=f"brain-explore-{calls}",
+                 rules=["re-proposed after a failed repair"], code=source,
+                 changed="repair failed; re-proposed with fresh exploration",
+                 because=note, backtest={"note": note})
+        J.note(text=f"BRAIN SOURCE (explore {calls}, {len(source)} chars):\n{source}")
+    except Exception as exc:                              # noqa: BLE001
+        print(f"  re-proposal failed: {str(exc)[:200]}")
+        J.note(text=f"L{level}: re-proposal at call {calls} failed: {str(exc)[:400]}")
+        return tls, None, source, None, [], calls
+    st = model.reconstruct(Session.open(game, level).grid)
+    plan = run_bfs(model, st, acts2, max_depth=args.max_depth)
+    return tls, model, source, note, list(plan.actions or []), calls
+
+
 def parse_action(n):
     """`ACTION6@38:44` (Session's spelling) or a plain name."""
     if isinstance(n, Action):
@@ -264,6 +315,9 @@ def solve_level(game, level, brain, J, args, deadline):
     """One level: model it, plan it, run it. Returns True if cleared."""
     print(f"\n=== {game} L{level}")
     tls, spent, live_acts = gather_evidence(game, level, args.budget_x or None)
+    # shared by both recovery paths, so it must outlive the branch that
+    # used to be the only one that explored
+    seen = {signature(Session.open(game, level).grid)}
     print(f"  evidence: {len(tls)} run(s), {spent} engine steps")
     J.observe(note=f"autosolve: gathered {len(tls)} evidence run(s) on L{level}",
               at=[])
@@ -359,7 +413,6 @@ def solve_level(game, level, brain, J, args, deadline):
         # none. Every one of ft09/vc33/bp35/cd82 scored zero leads and gave up
         # after 1 of 8 brain calls and 12 of 70 minutes. The budget the operator
         # set has to actually be spent.
-        seen = {signature(Session.open(game, level).grid)}
         for round_no in range(1, max(1, args.max_brain - calls) + 1):
             if time.time() > deadline:
                 J.note(text=f"L{level}: out of time during goal inference.")
@@ -516,15 +569,49 @@ def solve_level(game, level, brain, J, args, deadline):
             J.note(text=f"BRAIN SOURCE (repair {calls}, {len(source)} chars):"
                         f"\\n{source}")
         except Exception as exc:                          # noqa: BLE001
+            # Same disease as the three paths fixed this morning, and it was in
+            # the repair loop written to cure them: bp35 ended here with 50
+            # minutes and 7 brain calls unspent, right after the gate had done
+            # its job and saved 15 of 19 planned actions. A brain that failed
+            # gets fresh evidence and another turn, not the end of the game.
             print(f"  repair failed: {str(exc)[:200]}")
-            return False
+            J.note(text=f"L{level}: repair call {calls} failed: {str(exc)[:400]}")
+            tls, model, source, note, names, calls = explore_and_repropose(
+                game, level, tls, seen, J, args, brain, source, acts2, calls,
+                deadline, why)
+            if model is None or not names:
+                J.note(text=f"L{level}: exploration after a failed repair "
+                            f"produced no plan; stopping.")
+                return False
+            s2 = Session.open(game, level, budget_x=args.budget_x or None)
+            st0 = model.reconstruct(s2.grid)
+            print(f"  replan: {len(names)} actions")
+            continue
         s2 = Session.open(game, level, budget_x=args.budget_x or None)
         st0 = model.reconstruct(s2.grid)
         plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
         names = list(plan.actions or [])
         if not names:
-            print("  no plan after repair")
-            return False
+            # A repaired model with no plan means is_goal is now unreachable or
+            # absent — that is the NO PLAN condition again, and its cure is
+            # exploration, not stopping. cd82 quit here at call 3 of 10.
+            print("  no plan after repair; exploring again")
+            J.note(text=f"L{level}: no plan after repair {calls}; exploring.")
+            why = ("Your repaired model is self-consistent but the planner can "
+                   "reach no state where is_goal is true, so it cannot be played. "
+                   "Keep the dynamics the evidence forces and re-think the win "
+                   "condition; state a falsifiable hypothesis rather than False.")
+            tls, model, source, note, names, calls = explore_and_repropose(
+                game, level, tls, seen, J, args, brain, source, acts2, calls,
+                deadline, why)
+            if model is None or not names:
+                J.note(text=f"L{level}: exploration after a failed repair "
+                            f"produced no plan; stopping.")
+                return False
+            s2 = Session.open(game, level, budget_x=args.budget_x or None)
+            st0 = model.reconstruct(s2.grid)
+            print(f"  replan: {len(names)} actions")
+            continue
         print(f"  replan: {len(names)} actions from {plan.nodes_expanded} nodes")
 
 
