@@ -541,7 +541,7 @@ def main():
     a = p.parse_args()
     game = short_id(a.game)
     deadline = time.time() + a.minutes * 60
-    brain = ClaudeCodeBrain(game=game, max_attempts=2, timeout_s=a.brain_timeout)
+    brain = ClaudeCodeBrain(game=game, max_attempts=4, timeout_s=a.brain_timeout)
     print(f"autosolve {game}: up to {a.levels} level(s), {a.minutes:.0f} min, "
           f"{a.max_brain} brain call(s)/level, {a.budget_x}x action budget")
     print(f"brain workdir: {brain.workdir}")

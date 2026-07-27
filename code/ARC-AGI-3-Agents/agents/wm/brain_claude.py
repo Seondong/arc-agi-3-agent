@@ -143,6 +143,30 @@ def crop_box(frame, pad=1):
             max(0, min(cs) - pad), min(len(frame[0]) - 1, max(cs) + pad))
 
 
+def _pair_text(before, after, r0, r1, c0, c1, mark=None):
+    """The changed region, before beside after, so the shape of the change shows.
+
+    A flat list of 38 `[row,col,from,to]` tuples contains the same information
+    and hides it: the reader has to plot 38 coordinates by hand before any
+    geometry appears. Every coordinate-game model proposed for ft09, vc33, bp35
+    and cd82 failed at step 1 while being given exactly that list. Two crops side
+    by side make a rectangle filling in, a row shifting, or a block clearing
+    visible at a glance.
+
+    `mark` is the clicked cell, drawn as `*` in the BEFORE crop — a click whose
+    location is not shown is a rule with its subject missing.
+    """
+    w = c1 - c0 + 1
+    head = "    " + "".join(str(c % 10) for c in range(c0, c1 + 1))
+    lines = [f"{head}   |{head}"]
+    for r in range(r0, r1 + 1):
+        b = "".join("*" if mark == (r, c) else f"{before[r][c]:x}"
+                    for c in range(c0, c1 + 1))
+        a = "".join(f"{after[r][c]:x}" for c in range(c0, c1 + 1))
+        lines.append(f"{r:3d} {b}   |{r:3d} {a}")
+    return "\n".join(lines), w
+
+
 def evidence_text(timelines: list[Timeline], max_steps=30, max_cells=120) -> str:
     """What has been seen: the opening frame, and every cell each action changed.
 
@@ -151,6 +175,9 @@ def evidence_text(timelines: list[Timeline], max_steps=30, max_cells=120) -> str
     which was the correct answer to a bad question. A world model cannot be
     written from "100 cells changed somewhere"; it needs which cells, from what,
     to what.
+
+    The second version gave the cells and nothing else, which is complete but
+    unreadable for a coordinate game: see `_pair_text`.
     """
     out = []
     for i, tl in enumerate(timelines):
@@ -169,14 +196,39 @@ def evidence_text(timelines: list[Timeline], max_steps=30, max_cells=120) -> str
             d = [(r, c, prev[r][c], tr.after_frame[r][c])
                  for r in range(len(prev)) for c in range(len(prev[0]))
                  if prev[r][c] != tr.after_frame[r][c]]
+            act = tr.action
+            where = ""
+            if getattr(act, "x", None) is not None:
+                y, x = act.y, act.x
+                held = (prev[y][x] if 0 <= y < len(prev) and 0 <= x < len(prev[0])
+                        else "?")
+                where = (f"; clicked row {y} col {x}, which held value "
+                         f"{held:x}" if held != "?" else
+                         f"; clicked row {y} col {x} (outside the grid)")
             if not d:
-                out.append(f"  {tr.action} -> {tr.status}; nothing changed at all")
-            else:
-                shown = ", ".join(f"[{r},{c},{a},{b}]" for r, c, a, b in d[:max_cells])
-                more = (f" ...and {len(d) - max_cells} more"
-                        if len(d) > max_cells else "")
-                out.append(f"  {tr.action} -> {tr.status}; {len(d)} cell(s) changed "
-                           f"[row,col,from,to]: {shown}{more}")
+                out.append(f"  {act} -> {tr.status}{where}; nothing changed at all")
+                prev = tr.after_frame
+                continue
+
+            rows = [c[0] for c in d]
+            cols = [c[1] for c in d]
+            br0, br1 = max(0, min(rows) - 2), min(len(prev) - 1, max(rows) + 2)
+            bc0, bc1 = max(0, min(cols) - 2), min(len(prev[0]) - 1, max(cols) + 2)
+            out.append(f"  {act} -> {tr.status}{where}; {len(d)} cell(s) changed, "
+                       f"all inside rows {br0}-{br1} cols {bc0}-{bc1}")
+            # A change spanning the whole board is not a picture of anything;
+            # the cell list stays the better representation there.
+            if (br1 - br0 + 1) * (bc1 - bc0 + 1) <= 1200:
+                mark = ((act.y, act.x) if getattr(act, "x", None) is not None
+                        else None)
+                body, _ = _pair_text(prev, tr.after_frame, br0, br1, bc0, bc1,
+                                     mark)
+                out.append("  BEFORE (* = the clicked cell)   |AFTER")
+                out.append(body)
+            shown = ", ".join(f"[{r},{c},{a},{b}]" for r, c, a, b in d[:max_cells])
+            more = (f" ...and {len(d) - max_cells} more"
+                    if len(d) > max_cells else "")
+            out.append(f"  same change as [row,col,from,to]: {shown}{more}")
             prev = tr.after_frame
     return "\n".join(out)
 
