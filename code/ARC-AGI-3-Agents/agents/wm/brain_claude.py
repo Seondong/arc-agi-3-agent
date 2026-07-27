@@ -40,6 +40,36 @@ from .core import Timeline, WorldModel
 
 CODE_BLOCK = re.compile(r"```(?:python)?\s*\n(.*?)```", re.S)
 
+# "You've hit your session limit · resets 7:50pm (Asia/Seoul)", and the usual
+# transport-level refusals that mean the same thing: come back later.
+RATE_LIMIT = re.compile(r"session limit|rate limit|rate_limit|429|"
+                        r"overloaded|quota|usage limit", re.I)
+RESET_AT = re.compile(r"resets?\s+(\d{1,2})(?::(\d{2}))?\s*(am|pm)", re.I)
+
+
+class RateLimited(RuntimeError):
+    """The account is out of capacity. Not a failed proposal; costs no budget."""
+
+    def __init__(self, message):
+        super().__init__(message)
+        self.message = message
+
+    def reset_epoch(self, now=None):
+        """When the limit lifts, as a unix time, or None if the text has no clue."""
+        import datetime as _dt
+        m = RESET_AT.search(self.message)
+        if not m:
+            return None
+        now = now or _dt.datetime.now()
+        hour = int(m.group(1)) % 12
+        if (m.group(3) or "").lower() == "pm":
+            hour += 12
+        at = now.replace(hour=hour, minute=int(m.group(2) or 0), second=0,
+                         microsecond=0)
+        if at <= now:                       # it must mean tomorrow
+            at += _dt.timedelta(days=1)
+        return at.timestamp()
+
 CONTRACT = '''You are writing an executable world model for an unfamiliar grid game.
 
 Return ONE fenced python code block and nothing else. It must be a complete,
@@ -261,8 +291,17 @@ class ClaudeCodeBrain:
         r = subprocess.run(cmd, capture_output=True, text=True,
                            timeout=self.timeout_s, cwd=str(self.workdir))
         if r.returncode != 0:
-            raise RuntimeError(f"claude -p failed ({r.returncode}): "
-                               f"{(r.stderr or r.stdout)[:400]}")
+            msg = (r.stderr or r.stdout)[:400]
+            # Not the same kind of thing as a bad proposal, and the caller must
+            # not spend budget on it. Four games running in parallel exhausted
+            # the account's session limit, and the loop then treated each
+            # instant refusal as a failed model: 34 of 45 brain calls across the
+            # four runs were consumed in seconds, each one also paying for an
+            # exploration round of real engine steps. ft09 hit it at call 3 of
+            # 12 and the other nine evaporated without a single question asked.
+            if RATE_LIMIT.search(msg):
+                raise RateLimited(msg)
+            raise RuntimeError(f"claude -p failed ({r.returncode}): {msg}")
         return r.stdout
 
     def build_prompt(self, timelines, prev_source, report, extra=None) -> str:
@@ -320,6 +359,10 @@ class ClaudeCodeBrain:
                                  prompt + f"\n\nYOUR PREVIOUS ANSWER WAS REJECTED:\n"
                                           f"{last_err}\nFix exactly that and return "
                                           f"the whole module again.")
+            except RateLimited:
+                # Straight through: retrying here would burn the remaining
+                # attempts against a wall that does not move for hours.
+                raise
             except subprocess.TimeoutExpired:
                 # A timeout used to kill the whole level: cd82's first call ran
                 # out at 900s and the level was abandoned with 7 brain calls and

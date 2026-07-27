@@ -30,7 +30,7 @@ from pathlib import Path
 
 import _cli
 from agents.wm.backtest import run_backtest
-from agents.wm.brain_claude import ClaudeCodeBrain
+from agents.wm.brain_claude import ClaudeCodeBrain, RateLimited
 from agents.wm.core import Action, Status, Timeline, Transition
 from agents.wm.harness import (BudgetExceeded, Session, engine_steps,
                                load_solutions, save_solution)
@@ -145,6 +145,41 @@ def persist_model(game, level, source, note):
     return out
 
 
+def ask_brain(brain, tls, source, report, extra, args, deadline, J, level):
+    """propose(), waiting out a capacity limit instead of spending budget on it.
+
+    Hitting the account's session limit is not a failed proposal, and the loop
+    used to be unable to tell the difference: it counted the refusal as a brain
+    call and paid for an exploration round on top. Across four parallel runs
+    that cost 34 of 45 calls in seconds, and ft09 lost nine of twelve without a
+    single question reaching a model.
+
+    The wait is bounded by the run's own deadline, so an overnight run sleeps
+    through a reset and a short one gives up and says why.
+    """
+    while True:
+        try:
+            return brain.propose(tls, source, report, extra=extra)
+        except RateLimited as rl:
+            at = rl.reset_epoch()
+            wait = (at - time.time()) if at else 900
+            # Capped low on purpose: a retry while still limited costs
+            # nothing, and sleeping through the actual reset by hours
+            # wastes more of the run than polling does.
+            wait = max(60.0, min(wait + 30, 1800))
+            if time.time() + wait > deadline:
+                J.note(text=f"L{level}: out of capacity ({rl.message[:200]}); the "
+                            f"reset is past this run's deadline, so it stops here "
+                            f"with its brain budget unspent.")
+                raise
+            print(f"  out of capacity: {rl.message[:120]}")
+            print(f"  waiting {wait / 60:.0f} min for the reset — this costs no "
+                  f"brain call")
+            J.note(text=f"L{level}: rate limited, waiting {wait:.0f}s. "
+                        f"{rl.message[:200]}")
+            time.sleep(wait)
+
+
 def explore_and_repropose(game, level, tls, seen, J, args, brain, source, acts2,
                           calls, deadline, why):
     """Go and look at the game again, re-propose, re-plan. One round.
@@ -180,7 +215,8 @@ def explore_and_repropose(game, level, tls, seen, J, args, brain, source, acts2,
     calls += 1
     print(f"  brain call {calls}/{args.max_brain} (after exploring again) ...")
     try:
-        model, source, note = brain.propose(tls, source, None, extra=why)
+        model, source, note = ask_brain(brain, tls, source, None, why,
+                                        args, deadline, J, level)
         print(f"  accepted: {note}")
         J.author(version=f"brain-explore-{calls}",
                  rules=["re-proposed after a failed repair"], code=source,
@@ -356,7 +392,8 @@ def solve_level(game, level, brain, J, args, deadline):
             hint = None if last_fail is None else (
                 f"An earlier attempt at this same task failed with:\n{last_fail}\n"
                 f"Take a different approach rather than repeating that one.")
-            model, source, note = brain.propose(tls, source, rep, extra=hint)
+            model, source, note = ask_brain(brain, tls, source, rep, hint,
+                                            args, deadline, J, level)
             print(f"  accepted after {time.time() - t0:.0f}s: {note}")
             J.author(version=f"brain-{calls}",
                      rules=["proposed by headless Claude Code and verified by replay"],
@@ -471,8 +508,9 @@ def solve_level(game, level, brain, J, args, deadline):
             print(f"  brain call {calls}/{args.max_brain} (goal inference, "
                   f"round {round_no}) ...")
             try:
-                model, source, note = brain.propose(tls + extra_tls, source,
-                                                    None, extra=hint)
+                model, source, note = ask_brain(brain, tls + extra_tls,
+                                                source, None, hint, args,
+                                                deadline, J, level)
                 print(f"  accepted: {note}")
                 J.author(version=f"brain-goal-{round_no}",
                          rules=["goal hypothesis after exploration"],
@@ -559,7 +597,8 @@ def solve_level(game, level, brain, J, args, deadline):
         calls += 1
         print(f"  brain call {calls}/{args.max_brain} (repair after execution) ...")
         try:
-            model, source, note = brain.propose(tls, source, None, extra=why)
+            model, source, note = ask_brain(brain, tls, source, None, why,
+                                            args, deadline, J, level)
             print(f"  accepted: {note}")
             J.author(version=f"brain-repair-{calls}",
                      rules=["repaired after a gated execution"], code=source,
