@@ -184,6 +184,7 @@ def solve_level(game, level, brain, J, args, deadline):
             model = None
 
     calls = 0
+    last_fail = None
     while model is None and calls < args.max_brain:
         if time.time() > deadline:
             print("  out of wall-clock time before a model was accepted")
@@ -193,7 +194,10 @@ def solve_level(game, level, brain, J, args, deadline):
         t0 = time.time()
         try:
             rep = None
-            model, source, note = brain.propose(tls, source, rep)
+            hint = None if last_fail is None else (
+                f"An earlier attempt at this same task failed with:\n{last_fail}\n"
+                f"Take a different approach rather than repeating that one.")
+            model, source, note = brain.propose(tls, source, rep, extra=hint)
             print(f"  accepted after {time.time() - t0:.0f}s: {note}")
             J.author(version=f"brain-{calls}",
                      rules=["proposed by headless Claude Code and verified by replay"],
@@ -209,7 +213,11 @@ def solve_level(game, level, brain, J, args, deadline):
                 if not pr.accepted and pr.error:
                     J.note(text=f"BRAIN REJECTED (attempt {pr.attempt}): "
                                 f"{pr.error[:600]}")
-            return False
+            # Not fatal. A failed call used to abandon the level with the rest of
+            # the brain budget and most of the wall clock unspent; the next call
+            # is told what went wrong and asked to try differently.
+            last_fail = str(exc)[:900]
+            continue
 
     if model is None:
         return False
@@ -233,60 +241,104 @@ def solve_level(game, level, brain, J, args, deadline):
               f"states; exploring for the win condition")
         J.note(text=f"L{level}: no plan; is_goal never true in "
                     f"{plan.nodes_expanded} reachable states. Exploring.")
-        s3 = Session.open(game, level)
-        results, spent = explore(game, level, [], 6, args.explore_budget, J, 0,
-                                 {signature(s3.grid)})
-        leads = [r for r in results if r[0] >= 50]
-        print(f"  explored {len(results)} interaction(s) for {spent} action(s); "
-              f"{len(leads)} lead(s)")
-        if not leads or time.time() > deadline:
-            J.note(text=f"L{level}: exploration found "
-                        f"{len(leads)} lead(s); stopping.")
-            return False
-        # turn the best leads into evidence and ask again
-        extra_tls = []
-        for score, label, txt, name, xy, *_ in leads[:3]:
-            s4 = Session.open(game, level)
-            init4 = s4.grid
-            tl4 = Timeline(init4)
-            if xy:
-                s4.act(name, x=xy[0], y=xy[1])
+
+        # The first proposal is ALWAYS going to land here. The contract tells the
+        # brain to leave is_goal False when it does not know the win condition,
+        # and it obeys — so "no plan" is the expected first outcome, not a
+        # failure. The earlier version treated it as one: it explored once, took
+        # only results scoring >= 50 as leads, and returned as soon as there were
+        # none. Every one of ft09/vc33/bp35/cd82 scored zero leads and gave up
+        # after 1 of 8 brain calls and 12 of 70 minutes. The budget the operator
+        # set has to actually be spent.
+        seen = {signature(Session.open(game, level).grid)}
+        for round_no in range(1, max(1, args.max_brain - calls) + 1):
+            if time.time() > deadline:
+                J.note(text=f"L{level}: out of time during goal inference.")
+                return False
+            results, spent = explore(game, level, [], 6, args.explore_budget, J,
+                                     round_no, seen)
+            # Anything that CHANGED something is evidence. Scoring it and then
+            # discarding everything under an arbitrary 50 threw away the only
+            # observations these games ever produced.
+            useful = [r for r in results if r[0] > 0]
+            print(f"  round {round_no}: explored {len(results)} interaction(s) "
+                  f"for {spent} action(s); {len(useful)} of them did something")
+            extra_tls = []
+            for score, label, txt, name, xy, *_ in sorted(useful, reverse=True,
+                                                          key=lambda r: r[0])[:6]:
+                s4 = Session.open(game, level)
+                init4 = s4.grid
+                tl4 = Timeline(init4)
+                s4.act(name, x=xy[0], y=xy[1]) if xy else s4.act(name)
+                after4 = None if s4.dead else s4.grid
+                seen.add(signature(after4) if after4 else "dead")
+                tl4.record(Transition(step_index=1, action=Action(label),
+                                      before_frame=init4, after_frame=after4,
+                                      status=(Status.GAME_OVER if s4.dead
+                                              else Status.RUNNING)))
+                extra_tls.append(tl4)
+
+            hint = ("The planner searched the model you wrote and found NO state "
+                    "where is_goal is true, so the model cannot be used to play. "
+                    "You were right not to invent a win condition earlier; now "
+                    "reason about what it most likely IS, from the evidence. "
+                    "State your best hypothesis in is_goal even if you are unsure "
+                    "— a wrong hypothesis is refutable and therefore useful, "
+                    "while False is neither. Keep every dynamic the evidence "
+                    "forces.")
+            if plan.nodes_expanded <= 1:
+                # A model whose step() is a no-op replays a mostly-inert probe
+                # set perfectly and is still worthless. ft09's first model had
+                # exactly ONE reachable state and passed 30/30.
+                hint += (f"\n\nAlso: the search reached only "
+                         f"{plan.nodes_expanded} distinct state(s) from the "
+                         f"opening frame, which means your step() returns an "
+                         f"unchanged state for nearly every action offered. The "
+                         f"evidence below shows actions that DO change the grid; "
+                         f"the model must reproduce those changes as state "
+                         f"changes, not merely as a passing replay.")
+            if extra_tls:
+                hint += (f"\n\nThe last {len(extra_tls)} recorded run(s) are "
+                         f"fresh interactions found by exploration.")
             else:
-                s4.act(name)
-            tl4.record(Transition(step_index=1, action=Action(label),
-                                  before_frame=init4,
-                                  after_frame=None if s4.dead else s4.grid,
-                                  status=(Status.GAME_OVER if s4.dead
-                                          else Status.RUNNING)))
-            extra_tls.append(tl4)
-        print(f"  re-proposing with {len(extra_tls)} lead(s) added to the evidence")
-        try:
-            model, source, note = brain.propose(
-                tls + extra_tls, source, None,
-                extra=("The planner found no state satisfying is_goal. The extra "
-                       "runs at the end are interactions that changed something "
-                       "the earlier evidence never showed - they are the best "
-                       "candidates for the win condition or for a mechanic the "
-                       "model is missing."))
-            print(f"  accepted: {note}")
-            J.author(version=f"brain-explore", rules=["re-proposed after exploration"],
-                     code="proposed source stored with this entry",
-                     changed="model re-proposed with exploration leads as evidence",
-                     because=note, backtest={"note": note})
-            J.note(text=f"BRAIN SOURCE (accepted after exploration, "
-                        f"{len(source)} chars):\n{source}")
-        except Exception as exc:                          # noqa: BLE001
-            print(f"  re-propose failed: {str(exc)[:200]}")
-            return False
-        st0 = model.reconstruct(Session.open(game, level).grid)
-        plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
-        names = list(plan.actions or [])
+                hint += ("\n\nExploration this round changed nothing at all. "
+                         "Say plainly in a comment which action or coordinate "
+                         "you would need to see tried to make progress.")
+
+            calls += 1
+            print(f"  brain call {calls}/{args.max_brain} (goal inference, "
+                  f"round {round_no}) ...")
+            try:
+                model, source, note = brain.propose(tls + extra_tls, source,
+                                                    None, extra=hint)
+                print(f"  accepted: {note}")
+                J.author(version=f"brain-goal-{round_no}",
+                         rules=["goal hypothesis after exploration"],
+                         code=source, source_path=None,
+                         changed=f"is_goal hypothesised after exploration round "
+                                 f"{round_no} ({len(extra_tls)} fresh run(s))",
+                         because=note, backtest={"note": note})
+                J.note(text=f"BRAIN SOURCE (goal round {round_no}, "
+                            f"{len(source)} chars):\n{source}")
+            except Exception as exc:                      # noqa: BLE001
+                print(f"  brain failed: {str(exc)[:200]}")
+                J.note(text=f"L{level}: brain failed in goal round {round_no}: "
+                            f"{str(exc)[:400]}")
+                continue
+            st0 = model.reconstruct(Session.open(game, level).grid)
+            plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
+            names = list(plan.actions or [])
+            if names:
+                print(f"  plan after {round_no} goal round(s): "
+                      f"{len(names)} actions from {plan.nodes_expanded} nodes")
+                break
+            print(f"  still no plan ({plan.nodes_expanded} reachable states)")
         if not names:
-            print("  still no plan after exploration")
+            J.note(text=f"L{level}: goal inference exhausted its brain budget "
+                        f"without producing a plan.")
             return False
         s2 = Session.open(game, level, budget_x=args.budget_x or None)
         st0 = model.reconstruct(s2.grid)
-        print(f"  plan after exploration: {len(names)} actions")
     print(f"  plan: {len(names)} actions from {plan.nodes_expanded} nodes")
 
     try:

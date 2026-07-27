@@ -251,10 +251,21 @@ class ClaudeCodeBrain:
         prompt = self.build_prompt(timelines, prev_source, report, extra)
         last_err = None
         for attempt in range(1, self.max_attempts + 1):
-            text = self._ask(prompt if last_err is None else
-                             prompt + f"\n\nYOUR PREVIOUS ANSWER WAS REJECTED:\n"
-                                      f"{last_err}\nFix exactly that and return the "
-                                      f"whole module again.")
+            try:
+                text = self._ask(prompt if last_err is None else
+                                 prompt + f"\n\nYOUR PREVIOUS ANSWER WAS REJECTED:\n"
+                                          f"{last_err}\nFix exactly that and return "
+                                          f"the whole module again.")
+            except subprocess.TimeoutExpired:
+                # A timeout used to kill the whole level: cd82's first call ran
+                # out at 900s and the level was abandoned with 7 brain calls and
+                # 55 minutes unspent. A slow answer is not a wrong one, and the
+                # next attempt is asked to be brief rather than asked again.
+                last_err = (f"your previous attempt did not finish within "
+                            f"{self.timeout_s}s. Answer with the shortest model "
+                            f"that fits the evidence; do not explain it.")
+                self.log.append(Proposal("", False, "", attempt, last_err))
+                continue
             blocks = CODE_BLOCK.findall(text)
             if not blocks:
                 last_err = "no fenced python block in the reply"
