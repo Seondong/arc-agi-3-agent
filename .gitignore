@@ -41,6 +41,12 @@ data/
 # make them large; keep the gap report, which is the part that says what the
 # record is missing, and leave the bulk out.
 !**/artifacts/wm_dataset/
+# The stdout narrative of an unattended run. The journal records the
+# structured events, but not everything: today's whole diagnosis of why
+# four runs stopped early came out of these files, and nothing else held
+# it. 400K for the record of what the loop actually did overnight.
+!**/artifacts/wm_runs/
+!**/artifacts/wm_runs/**
 **/artifacts/wm_dataset/*.jsonl
 
 # Logs

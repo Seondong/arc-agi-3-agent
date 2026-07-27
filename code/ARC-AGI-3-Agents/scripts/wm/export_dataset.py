@@ -33,6 +33,29 @@ from agents.wm.models import has_model, model_for, short_id
 
 OUT_ROOT = Path("artifacts/wm_dataset")
 
+PLACEHOLDER_MAX = 80          # "proposed source stored with this entry" is 38
+
+
+def model_text(entry):
+    """The model source an author entry actually carries, from either field.
+
+    `source` is filled only when the entry was written with a `source_path`, so
+    it exists for hand-written models that live in a file. A brain-written model
+    has no file at the time it is journaled, and its text goes in `code`. This
+    function used to read `source` alone, so every model the loop wrote itself
+    looked like an entry with no source — and repair pairs, the scarcest and
+    most valuable type, came out at zero for all four games attempted today
+    while the journal held 9056 characters of the very source it wanted.
+
+    Early `code` values are the string "proposed source stored with this entry".
+    Anything that short is a pointer, not a model.
+    """
+    src = entry.get("source")
+    if src:
+        return src
+    code = entry.get("code") or ""
+    return code if len(code) > PLACEHOLDER_MAX else None
+
 
 def grid_diff(a, b):
     return [[r, c, b[r][c]] for r in range(len(a)) for c in range(len(a[0]))
@@ -134,13 +157,12 @@ def entity_summary(game, grid):
     """What a model would say is on screen — only if the game has a model."""
     if not has_model(game) or grid is None:
         return None
-    import dataclasses
+    from agents.wm.core import state_fields
     st = model_for(game, version=0).reconstruct(grid)
     out = {}
-    for fld in dataclasses.fields(st):
-        v = getattr(st, fld.name)
+    for name, v in state_fields(st):
         if isinstance(v, tuple) and v and all(isinstance(x, tuple) for x in v):
-            out[fld.name] = [list(e) for e in v]
+            out[name] = [list(e) for e in v]
     return out
 
 
@@ -233,19 +255,20 @@ def export(game, out_dir):
                 after = [x for x in entries
                          if x["kind"] == "author" and x["seq"] > e["seq"]]
                 nxt = next((x for x in after
-                            if x.get("source") and x.get("changed") not in (None, "", "none")),
+                            if model_text(x) and x.get("changed") not in (None, "", "none")),
                            None)
                 if nxt is None:
-                    nxt = next((x for x in after if x.get("source")), None)
+                    nxt = next((x for x in after if model_text(x)), None)
                 # The "before" side of a repair pair is the source the last author
                 # entry recorded, i.e. the model as it stood when the bug was
                 # found. Empty when the refuted version was never journaled with
                 # its source — which is the case for everything written before
                 # source capture existed.
                 prev = [x for x in entries
-                        if x["kind"] == "author" and x["seq"] < e["seq"] and x.get("source")]
-                before = prev[-1].get("source") if prev else None
-                after = nxt.get("source") if nxt else None
+                        if x["kind"] == "author" and x["seq"] < e["seq"]
+                        and model_text(x)]
+                before = model_text(prev[-1]) if prev else None
+                after = model_text(nxt) if nxt else None
                 if not after:
                     gaps.append({"type": "repair", "level": level, "seq": e["seq"],
                                  "why": "the author entry that answered this refutation "

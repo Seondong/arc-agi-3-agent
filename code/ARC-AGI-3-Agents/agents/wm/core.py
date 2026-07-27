@@ -186,3 +186,29 @@ def ignored_cells(model, frame: Frame):
     except Exception:  # noqa: BLE001 - a broken ignore mask just means "compare all"
         return None
     return {tuple(c) for c in cells} or None
+
+
+def state_fields(state):
+    """(name, value) pairs for a model's state, whatever shape it has.
+
+    The contract has only ever required a state to be immutable and hashable
+    through `fingerprint`. Every hand-written model happened to use a dataclass,
+    so the tools that introspect state called `dataclasses.fields()` directly —
+    and the first model written by the brain, which uses a plain class, broke
+    them. It broke gen_site.py (the whole site build died) and export_dataset.py
+    (ft09 and vc33, the two games solved unattended, produced zero training
+    pairs and said nothing about it). Fixed twice separately before being put
+    here, which is why it is here.
+    """
+    import dataclasses
+    if dataclasses.is_dataclass(state):
+        return [(f.name, getattr(state, f.name)) for f in dataclasses.fields(state)]
+    if hasattr(state, "_fields"):                       # NamedTuple
+        return list(zip(state._fields, state))
+    if hasattr(state, "__dict__"):
+        return [(k, v) for k, v in vars(state).items() if not k.startswith("_")]
+    if hasattr(state, "__slots__"):
+        return [(k, getattr(state, k, None)) for k in state.__slots__]
+    if isinstance(state, tuple):
+        return [(f"f{i}", v) for i, v in enumerate(state)]
+    return []

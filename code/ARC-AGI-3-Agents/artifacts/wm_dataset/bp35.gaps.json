@@ -1,0 +1,11 @@
+{
+ "game": "bp35",
+ "gaps": [
+  {
+   "type": "repair",
+   "level": 0,
+   "seq": 269,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  }
+ ]
+}

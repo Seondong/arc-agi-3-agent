@@ -1,6 +1,9 @@
 # OS and environment
 .DS_Store
 *.log
+# ...except the record of an unattended run. A deeper .gitignore wins, so
+# the negation in the repository root could not reach these.
+!artifacts/wm_runs/*.log
 *.env
 !.env-example
 

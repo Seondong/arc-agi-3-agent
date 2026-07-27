@@ -47,28 +47,7 @@ def _first(state):
     return nums[:2] if len(nums) >= 2 else None
 
 
-def state_fields(state):
-    """(name, value) for a state object, whatever shape it has.
-
-    Every hand-written model used a dataclass, so these generators called
-    dataclasses.fields() directly. A model recovered from the journal was
-    written by the brain, which is under no such obligation — ft09's state is a
-    plain class — and the whole site build died on the first one with
-    "must be called with a dataclass type or instance". The state contract has
-    only ever required immutability and a fingerprint.
-    """
-    import dataclasses
-    if dataclasses.is_dataclass(state):
-        return [(f.name, getattr(state, f.name)) for f in dataclasses.fields(state)]
-    if hasattr(state, "_fields"):                       # NamedTuple
-        return list(zip(state._fields, state))
-    if hasattr(state, "__dict__"):
-        return [(k, v) for k, v in vars(state).items() if not k.startswith("_")]
-    if hasattr(state, "__slots__"):
-        return [(k, getattr(state, k, None)) for k in state.__slots__]
-    if isinstance(state, tuple):
-        return [(f"f{i}", v) for i, v in enumerate(state)]
-    return []
+from agents.wm.core import state_fields  # noqa: E402
 
 
 def parse_action(n):
