@@ -41,12 +41,17 @@ def execute_gated(session, model, state, actions, *, journal=None, version="v0",
     lv0 = session.raw.levels_completed
     taken = []
 
-    for i, name in enumerate(actions, start=1):
+    for i, act in enumerate(actions, start=1):
+        # An action may carry coordinates; ft09 and vc33 have nothing else.
+        act = act if isinstance(act, Action) else Action(act)
+        # The `@x:y` spelling, not str(act)'s `(x,y)`: this list is saved as the
+        # level's solution and replayed by Session.act, which parses `@x:y`.
+        name = act.name if act.x is None else f"{act.name}@{act.x}:{act.y}"
         at = list(session.actions)
-        pred_state, pred_status = model.step(state, Action(name))
+        pred_state, pred_status = model.step(state, act)
         pred_frame = model.render(pred_state) if renders else None
 
-        session.act(name)
+        session.act(act.name, x=act.x, y=act.y)
         taken.append(name)
         died = session.dead
         cleared = (not died) and session.raw.levels_completed > lv0

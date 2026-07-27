@@ -92,6 +92,47 @@ def sweep_candidates(game, level, base, already, step=6, keep=10):
     return hits
 
 
+def parse_action(n):
+    """`ACTION6@38:44` (Session's spelling) or a plain name."""
+    if isinstance(n, Action):
+        return n
+    if "@" in n:
+        base, coords = n.split("@", 1)
+        x, y = (int(v) for v in coords.split(":"))
+        return Action(base, x=x, y=y)
+    return Action(n)
+
+
+def walked_timeline(game, level, taken):
+    """Replay what a gated execution actually walked, as recorded evidence.
+
+    A run that mispredicted or died has just produced the most informative
+    observations of the session, and they were being discarded. Replaying costs
+    engine steps but nothing that has to be reasoned about: the actions are
+    known and the frames come back the same way.
+    """
+    s = Session.open(game, level)
+    init = s.grid
+    tl = Timeline(init)
+    prev, lv0 = init, s.raw.levels_completed
+    for i, n in enumerate(taken, start=1):
+        act = parse_action(n)
+        s.act(act.name, x=act.x, y=act.y)
+        if s.dead:
+            tl.record(Transition(step_index=i, action=act, before_frame=prev,
+                                 after_frame=None, status=Status.GAME_OVER))
+            break
+        cleared = s.raw.levels_completed > lv0
+        tl.record(Transition(step_index=i, action=act, before_frame=prev,
+                             after_frame=None if cleared else s.grid,
+                             status=(Status.LEVEL_COMPLETED if cleared
+                                     else Status.RUNNING)))
+        if cleared:
+            break
+        prev = s.grid
+    return tl
+
+
 def gather_evidence(game, level, budget_x):
     """Spend a few real actions to have something to model: each action once from
     the opening frame, then a short walk. Deliberately small — the brain's job is
@@ -355,26 +396,76 @@ def solve_level(game, level, brain, J, args, deadline):
         st0 = model.reconstruct(s2.grid)
     print(f"  plan: {len(names)} actions from {plan.nodes_expanded} nodes")
 
-    try:
-        res = execute_gated(s2, model, st0, names, journal=J,
-                            version=f"brain-{calls}" if calls else "carried")
-    except BudgetExceeded as exc:
-        print(f"  {exc}")
-        J.note(text=f"L{level}: {exc}")
-        return False
-    J.execute(actions=res["taken"],
-              result=("CLEARED" if res["cleared"] else
-                      f"aborted at {res['aborted_at']}" if res["aborted_at"]
-                      else "no clear"),
-              cleared=res["cleared"], env_steps=len(res["taken"]),
-              engine_steps=s2.steps)
-    if res["cleared"]:
-        save_solution(game, level, res["taken"])
-        print(f"  CLEARED in {len(res['taken'])} actions — saved")
-        return True
-    print(f"  not cleared ({len(res['taken'])}/{len(names)} actions spent"
-          + (f", {res['saved']} saved by the gate" if res["saved"] else "") + ")")
-    return False
+    # Execute, and if the gate catches a misprediction, REPAIR. The mismatch is
+    # the most valuable thing this loop can produce -- it is the input half of a
+    # repair pair and the only kind of evidence that arrives already pointed at
+    # the wrong rule. The earlier version printed it and returned False, ending
+    # the game with most of the brain budget and wall clock unspent.
+    while True:
+        try:
+            res = execute_gated(s2, model, st0, names, journal=J,
+                                version=f"brain-{calls}" if calls else "carried")
+        except BudgetExceeded as exc:
+            print(f"  {exc}")
+            J.note(text=f"L{level}: {exc}")
+            return False
+        J.execute(actions=res["taken"],
+                  result=("CLEARED" if res["cleared"] else
+                          f"aborted at {res['aborted_at']}" if res["aborted_at"]
+                          else "no clear"),
+                  cleared=res["cleared"], env_steps=len(res["taken"]),
+                  engine_steps=s2.steps)
+        if res["cleared"]:
+            save_solution(game, level, res["taken"])
+            print(f"  CLEARED in {len(res['taken'])} actions — saved")
+            return True
+        print(f"  not cleared ({len(res['taken'])}/{len(names)} actions spent"
+              + (f", {res['saved']} saved by the gate" if res["saved"] else "")
+              + ")")
+        if calls >= args.max_brain or time.time() > deadline:
+            J.note(text=f"L{level}: out of brain budget or time after a gated "
+                        f"execution that did not clear.")
+            return False
+
+        # Everything the run just walked through is new recorded evidence,
+        # whether it ended in a mispredicted cell or simply in no clear.
+        tls = tls + [walked_timeline(game, level, res["taken"])]
+        if res["bug"]:
+            why = (f"The plan was executed against the real game and your model "
+                   f"got a step WRONG:\\n{res['bug']}\\nThe run below records what "
+                   f"actually happened. Fix the rule that made that prediction.")
+        elif res["died"]:
+            why = ("The plan was executed and the agent DIED partway through. "
+                   "Your model did not predict that, so it is missing whatever "
+                   "kills. The run below records it.")
+        else:
+            why = ("The plan ran to the end with every step predicted correctly "
+                   "and the level did not clear. So the dynamics are right and "
+                   "is_goal is wrong: it is true in a state that is not actually "
+                   "a win. Re-think the win condition.")
+        calls += 1
+        print(f"  brain call {calls}/{args.max_brain} (repair after execution) ...")
+        try:
+            model, source, note = brain.propose(tls, source, None, extra=why)
+            print(f"  accepted: {note}")
+            J.author(version=f"brain-repair-{calls}",
+                     rules=["repaired after a gated execution"], code=source,
+                     changed=(res["bug"] or ("death not predicted" if res["died"]
+                                             else "is_goal was wrong")),
+                     because=note, backtest={"note": note})
+            J.note(text=f"BRAIN SOURCE (repair {calls}, {len(source)} chars):"
+                        f"\\n{source}")
+        except Exception as exc:                          # noqa: BLE001
+            print(f"  repair failed: {str(exc)[:200]}")
+            return False
+        s2 = Session.open(game, level, budget_x=args.budget_x or None)
+        st0 = model.reconstruct(s2.grid)
+        plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
+        names = list(plan.actions or [])
+        if not names:
+            print("  no plan after repair")
+            return False
+        print(f"  replan: {len(names)} actions from {plan.nodes_expanded} nodes")
 
 
 def main():
