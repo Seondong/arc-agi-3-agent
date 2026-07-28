@@ -149,7 +149,7 @@ def main():
 
     from mlx_lm import generate, load
     kw = {"adapter_path": a.adapter} if a.adapter else {}
-    print(f"loading {a.model}" + (f" + adapter {a.adapter}" if a.adapter else ""))
+    print(f"loading {a.model}", flush=True) if False else print(f"loading {a.model}" + (f" + adapter {a.adapter}" if a.adapter else ""))
     model, tok = load(a.model, **kw)
 
     cache, rows = {}, []
@@ -176,9 +176,9 @@ def main():
         else:
             row.update({"loads": False, "replays": False, "why": "no fenced block"})
         rows.append(row)
-        print(f"  [{i}/{len(tasks)}] {t['game']} L{t['level']}  "
+        print(f"  [{i}/{len(tasks)}] {t['game']} L{t['level']}  {dt:.0f}s  "
               f"fenced={row['fenced']} loads={row.get('loads')} "
-              f"replays={row.get('replays')}  {row.get('why','')[:70]}")
+              f"replays={row.get('replays')}  {row.get('why','')[:70]}", flush=True)
 
     n = len(rows)
     summary = {

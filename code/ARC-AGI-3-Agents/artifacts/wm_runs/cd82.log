@@ -1,0 +1,25 @@
+autosolve cd82: up to 6 level(s), 55 min, 12 brain call(s)/level, 5.0x action budget
+brain workdir: /var/folders/kw/lgjkyr1x1lxc8twp2pdqfjw80000gn/T/wmbrain-v91jurzk
+
+=== cd82 L0
+2026-07-29 05:23:09 | INFO | Created new scorecard: 5c9646f3-7cf3-4cf1-b1b4-fb470b281cb0
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+2026-07-29 05:23:09 | INFO | Created new scorecard: 444bcfb0-39d6-46b6-b97d-48fed3761e3d
+2026-07-29 05:23:09 | INFO | Successfully loaded game class Cd82 from environment_files/cd82/fb555c5d/cd82.py
+  evidence: 15 run(s), 38 engine steps
+  brain call 1/12 ...

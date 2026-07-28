@@ -116,10 +116,28 @@
    "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
   },
   {
+   "type": "analyse",
+   "level": 1,
+   "seq": 680,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "repair",
+   "level": 1,
+   "seq": 681,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 1,
+   "seq": 684,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
    "type": "duplicate",
    "level": null,
    "seq": null,
-   "why": "645 identical pair(s) collapsed"
+   "why": "675 identical pair(s) collapsed"
   }
  ]
 }

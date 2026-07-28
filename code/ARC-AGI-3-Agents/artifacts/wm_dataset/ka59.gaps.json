@@ -2,12 +2,6 @@
  "game": "ka59",
  "gaps": [
   {
-   "type": "repair",
-   "level": 0,
-   "seq": 222,
-   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
-  },
-  {
    "type": "analyse",
    "level": 0,
    "seq": 1,
@@ -53,7 +47,7 @@
    "type": "duplicate",
    "level": null,
    "seq": null,
-   "why": "135 identical pair(s) collapsed"
+   "why": "152 identical pair(s) collapsed"
   }
  ]
 }

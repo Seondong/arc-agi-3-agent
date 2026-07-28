@@ -1,0 +1,122 @@
+autosolve ft09: up to 6 level(s), 85 min, 14 brain call(s)/level, 5.0x action budget
+brain workdir: /var/folders/kw/lgjkyr1x1lxc8twp2pdqfjw80000gn/T/wmbrain-w_bhr0ve
+
+=== ft09 L1
+2026-07-29 02:01:14 | INFO | Created new scorecard: 76e4ad04-b998-4e62-a098-60c28936b061
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:01:14 | INFO | Created new scorecard: b488c175-8dc5-4ce4-ad77-dccaab724ad6
+2026-07-29 02:01:14 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+  evidence: 16 run(s), 108 engine steps
+  carried model refuted: backtest 0/1 then pointed bug at step 1 after ACTION6(23,16): 38 cell(s) mispredicted
+  brain call 1/14 ...
+  brain failed after 1206s: claude -p failed (1): API Error: Connection closed mid-response. The response above may be incomplete.
+
+  brain call 2/14 ...
+  accepted after 179s: replayed 23/23 recorded steps exactly
+2026-07-29 02:24:19 | INFO | Created new scorecard: 9ec6ef2a-ed2a-486c-bb6e-42cc214385a6
+2026-07-29 02:24:20 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+  planner action set: 15 (4 of them known to do something)
+  NO PLAN — is_goal never true in 16 reachable states; exploring for the win condition
+2026-07-29 02:24:20 | INFO | Created new scorecard: c8547584-161d-48c3-9da0-7483766dfae1
+2026-07-29 02:24:20 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+model reaches 1 states with []; is_goal true in 0 of them
+2026-07-29 02:24:20 | INFO | Created new scorecard: df754a57-56e9-4b72-9d39-d43a513731e9
+2026-07-29 02:24:20 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:20 | INFO | Created new scorecard: 278768ab-11b5-4834-b91a-c7c12321cb7f
+2026-07-29 02:24:20 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:20 | INFO | Created new scorecard: 9586dcd2-c8c3-42c0-8a12-ae586d73f438
+2026-07-29 02:24:20 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:20 | INFO | Created new scorecard: 1aa19c3f-e196-405a-98ca-06e969467790
+2026-07-29 02:24:20 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:20 | INFO | Created new scorecard: c90a1e3e-171e-4bab-862a-bde9dec3e79c
+2026-07-29 02:24:20 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:20 | INFO | Created new scorecard: 4565de11-763e-486e-9578-6c3666854804
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: d6b7cec2-b9b3-4349-b63d-b8cc60d7c361
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: 5d284f1f-c5bc-4e89-b19e-35acac3249ef
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: e05501e9-3c68-4116-a3b8-17794d04b1fe
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: d8d317c5-935b-4e1e-939e-b1a1218c694c
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: 2a5dc3a2-46e2-4839-bf63-25ed970cfebb
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: 0ea8f443-f619-4a47-908a-4f70e7859d5c
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: ccfd251b-17ed-4463-88ed-7d5c02c8e623
+2026-07-29 02:24:21 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:21 | INFO | Created new scorecard: 6fcb9e02-4520-48fe-9af1-41f210de9298
+2026-07-29 02:24:22 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:22 | INFO | Created new scorecard: c9a4d4f9-c769-44a9-9ba3-9190de2fb9bf
+2026-07-29 02:24:22 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+  round 1: explored 15 interaction(s) for 15 action(s); 4 of them did something
+2026-07-29 02:24:22 | INFO | Created new scorecard: 81809d47-305c-4b1c-925a-c4dfc8242df8
+2026-07-29 02:24:22 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:22 | INFO | Created new scorecard: 6a166174-a6e8-4ffb-b9f0-a3dfeeb50fe5
+2026-07-29 02:24:22 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:22 | INFO | Created new scorecard: 6be1bb8b-6c0d-4af3-bc59-dff8ff326f2a
+2026-07-29 02:24:22 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:24:22 | INFO | Created new scorecard: b014099a-355f-4c8e-b513-fd689c1b0bb5
+2026-07-29 02:24:22 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+  brain call 3/14 (goal inference, round 1) ...
+  brain failed: claude -p failed (1): API Error: Connection closed mid-response. The response above may be incomplete.
+
+2026-07-29 02:58:02 | INFO | Created new scorecard: 339e7f4b-822a-41d8-9bbe-1164c33a9c31
+2026-07-29 02:58:02 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+model reaches 1 states with []; is_goal true in 0 of them
+2026-07-29 02:58:02 | INFO | Created new scorecard: 939516d5-5d9b-4fed-925c-149d62bd76f4
+2026-07-29 02:58:02 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:02 | INFO | Created new scorecard: e531050a-3e5c-42af-9d54-f486cbc43c6a
+2026-07-29 02:58:02 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:02 | INFO | Created new scorecard: 57252686-cf7d-4431-b283-8a5c87f5fb9c
+2026-07-29 02:58:02 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:02 | INFO | Created new scorecard: 8183153c-bd4a-4a02-aa73-c9aa68984548
+2026-07-29 02:58:02 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:02 | INFO | Created new scorecard: 822af12c-e355-4da2-91ce-4d46334ecb68
+2026-07-29 02:58:02 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:02 | INFO | Created new scorecard: 49c76d92-bf24-4064-a71a-35addf269241
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: a93ae84c-e568-43f9-86da-713772990cc0
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 97c45046-7c09-4d30-870b-4d2d592d1c96
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 951e4cec-7ec8-4845-8b0a-8b69c76b8973
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 15a426ec-9981-4c2f-9cb9-f6fbf753a1a1
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 192fd82f-2372-40b3-859c-54803cf16f89
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 7e85fe1e-e0ac-4166-a0dd-0a91a367e285
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 55748285-1d34-44b9-8f0c-588bc9b02480
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: a22fc322-039e-4b2b-8c8a-670b8229be2b
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 3f4e8ca9-7255-4848-8164-100585d0fae7
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+  round 2: explored 15 interaction(s) for 15 action(s); 4 of them did something
+2026-07-29 02:58:03 | INFO | Created new scorecard: bd70f4a5-f251-417f-a7ff-49c807e608ae
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 4422118f-09f4-4fc1-bc47-0754574db75e
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 6c28a611-3495-48a6-9a0b-36a8e8487ca8
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py
+2026-07-29 02:58:03 | INFO | Created new scorecard: 323f17e3-4a71-493c-be39-d1b7b2e255bb
+2026-07-29 02:58:03 | INFO | Successfully loaded game class Ft09 from environment_files/ft09/0d8bbf25/ft09.py

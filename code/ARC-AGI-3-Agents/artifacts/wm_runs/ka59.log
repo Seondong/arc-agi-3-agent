@@ -88,3 +88,9 @@ brain workdir: /var/folders/kw/lgjkyr1x1lxc8twp2pdqfjw80000gn/T/wmbrain-8_r6cv24
 2026-07-29 01:35:46 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
 2026-07-29 01:35:46 | INFO | Created new scorecard: ef6768e9-ef0c-4484-8c91-4547cb4db0e8
 2026-07-29 01:35:46 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+  brain call 3/14 (after exploring again) ...
+  re-proposal failed: claude -p failed (1): API Error: Connection closed mid-response. The response above may be incomplete.
+
+  stopping: L0 not cleared
+
+done: 0 level(s) cleared this run, 0 total; 103 engine steps; 2146s elapsed
