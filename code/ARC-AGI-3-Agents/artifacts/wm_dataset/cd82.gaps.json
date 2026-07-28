@@ -38,12 +38,6 @@
    "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
   },
   {
-   "type": "repair",
-   "level": 0,
-   "seq": 142,
-   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
-  },
-  {
    "type": "analyse",
    "level": 0,
    "seq": 146,

@@ -28,7 +28,7 @@ BLURB = {
             "됩니다.",
 }
 
-REPAIR = """  <h3>repair <span class="tag none">아직 실물 없음</span></h3>
+REPAIR_NONE = """  <h3>repair <span class="tag none">아직 실물 없음</span></h3>
   <p>보여드릴 실물이 <b>아직 없습니다.</b> 그리고 없다는 사실 자체가 지금 이
   프로젝트에서 가장 중요한 문제라, 빈칸으로 넘기지 않고 적어둡니다.</p>
   <p>이 타입은 모델을 <i>쓰는</i> 법을 가르치는 유일한 종류인데, 한 쌍이 되려면
@@ -172,6 +172,57 @@ def section(t, e):
     return "\n".join(parts)
 
 
+def pick_repair():
+    """A repair pair, preferring one whose counterexample is a status mismatch.
+
+    Those are the sharpest: no cell is wrong, so the model has the dynamics
+    right and only its idea of winning is wrong.
+    """
+    import glob
+    best = None
+    for f in sorted(glob.glob(str(ROOT / "artifacts/wm_dataset/*.jsonl"))):
+        for line in open(f):
+            try:
+                e = json.loads(line)
+            except Exception:
+                continue
+            if e.get("type") != "repair":
+                continue
+            bug = (e.get("input") or {}).get("bug") or ""
+            score = ("status predicted" in bug, -len(json.dumps(e)))
+            if best is None or score > best[0]:
+                best = (score, e)
+    return best[1] if best else None
+
+
+def repair_section(e):
+    i, t = e.get("input") or {}, e.get("target") or {}
+    before, after = i.get("model_source_before", ""), t.get("model_source_after", "")
+    status_only = "status predicted" in (i.get("bug") or "")
+    why = ("셀은 하나도 틀리지 않았습니다. 동역학은 맞고 <b>무엇이 승리인지</b>에 "
+           "대한 판단만 틀린 경우이고, 이것이 루프가 만드는 반례 중 가장 날카로운 "
+           "종류입니다." if status_only else
+           "검증기가 어느 칸이 어떻게 틀렸는지 정확히 짚어 돌려준 경우입니다.")
+    return "\n".join([
+        '  <h3>repair <span class="tag">가장 희소함</span></h3>',
+        "  <p>모델을 <i>쓰는</i> 법을 가르치는 유일한 타입입니다. 한 쌍이 되려면 "
+        "거절당하거나 반증당한 소스, 검증기가 짚은 지점, 그리고 그 지적을 받아 "
+        "고쳐 쓴 소스가 모두 있어야 합니다.</p>",
+        f'  <p class="src">{html.escape(str(e.get("source","")))} · '
+        f'레벨 {e.get("level")}</p>',
+        "  " + io_rows([
+            ("반례", html.escape(i.get("bug", "")[:160])),
+            ("짚힌 칸", f"{len(i.get('cells') or [])}개"),
+            ("고치기 전", f"{len(before):,}자"),
+            ("고친 뒤", f"{len(after):,}자"),
+        ]),
+        f"  <p class='src'>{why}</p>",
+        "  <p>입력과 목표가 둘 다 파이썬 소스라는 점에서 다른 네 타입과 다릅니다. "
+        "모델이 배워야 하는 것은 프레임을 읽는 법이 아니라 <b>지적을 받아 자기 "
+        "이론을 고치는 법</b>입니다.</p>",
+    ])
+
+
 def build():
     parts = ['  <h2 id="examples">실제 예시 데이터</h2>',
              '  <p>설명을 위해 지어낸 것이 아니라 '
@@ -183,5 +234,6 @@ def build():
         got = pick(t)
         if got:
             parts.append(section(t, got[2]))
-    parts.append(REPAIR)
+    got = pick_repair()
+    parts.append(repair_section(got) if got else REPAIR_NONE)
     return "\n".join(parts)

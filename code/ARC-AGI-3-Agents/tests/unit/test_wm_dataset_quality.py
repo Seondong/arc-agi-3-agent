@@ -124,3 +124,29 @@ def test_pointed_cells_is_empty_when_a_frame_is_missing():
     import execute_gated as eg
     assert eg.pointed_cells(None, [[1]]) == []
     assert eg.pointed_cells([[1]], None) == []
+
+
+def test_a_status_only_refutation_is_trainable():
+    """The model said it had won and it had not. No cell is wrong, so `cells` is
+    correctly empty -- and the quality gate threw all four of KA59's away.
+
+    This is the most informative counterexample the loop produces: it means the
+    dynamics are right and is_goal is wrong, which is a much sharper instruction
+    than "some cells differ". Requiring pointed cells was right for a frame
+    mismatch and wrong for this."""
+    good = {"type": "repair",
+            "input": {"bug": "gated execution stopped at step 9 after ACTION3: "
+                             "status predicted=LEVEL_COMPLETED actual=RUNNING",
+                      "cells": [], "model_source_before": "x" * 200},
+            "target": {"model_source_after": "y" * 200,
+                       "changed": "is_goal fired on a state that is not a win"}}
+    assert ex.is_trainable(good)
+
+
+def test_a_repair_with_neither_cells_nor_a_status_mismatch_is_not_trainable():
+    """A complaint with nothing pointed in it is still not a counterexample."""
+    bad = {"type": "repair",
+           "input": {"bug": "the model did not work", "cells": [],
+                     "model_source_before": "x" * 200},
+           "target": {"model_source_after": "y" * 200, "changed": "rewrote it"}}
+    assert not ex.is_trainable(bad)

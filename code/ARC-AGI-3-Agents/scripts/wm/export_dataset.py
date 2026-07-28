@@ -84,8 +84,16 @@ def is_trainable(ex):
     if t == "analyse":
         return bool(tgt.get("entities"))
     if t == "repair":
-        if not inp.get("cells"):
-            return False          # the pointed cells ARE the counterexample
+        # A counterexample has to POINT at something, but there are two ways to
+        # point. A frame mismatch points at cells. A status mismatch points at
+        # is_goal: the model said the level was won and it was not, so no cell
+        # is wrong and `cells` is correctly empty. Requiring cells threw away
+        # four of KA59's six refutations -- and those four are the sharpest
+        # signal the loop makes, because they say the dynamics are right and
+        # only the win condition is wrong.
+        pointed = bool(inp.get("cells")) or "status predicted" in (inp.get("bug") or "")
+        if not pointed:
+            return False
         if not (inp.get("model_source_before") and tgt.get("model_source_after")):
             return False
         changed = (tgt.get("changed") or "").strip().lower()

@@ -1,0 +1,41 @@
+{
+ "game": "ka59",
+ "gaps": [
+  {
+   "type": "repair",
+   "level": 0,
+   "seq": 215,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 1,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 4,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 47,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 50,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "duplicate",
+   "level": null,
+   "seq": null,
+   "why": "131 identical pair(s) collapsed"
+  }
+ ]
+}
