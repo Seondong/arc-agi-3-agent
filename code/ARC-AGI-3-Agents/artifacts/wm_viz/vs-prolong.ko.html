@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRO-LONG과의 비교 — 같은 루프, 다른 매체</title>
+<link rel="stylesheet" href="./shared/style.css">
+<style>
+  body{word-break:keep-all}
+  p{line-height:1.9}
+  .lede{font-size:17px;line-height:1.8}
+  .fn{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    word-break:break-all}
+  pre,.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    line-height:1.6;background:var(--panel);border:1px solid var(--rule);
+    border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:pre;
+    word-break:normal;margin:14px 0}
+  .aside{background:var(--panel);border:1px solid var(--rule);border-radius:12px;
+    padding:16px 20px;margin:22px 0}
+  .aside p:last-child{margin-bottom:0}
+  .win{border-left:3px solid #2ECC40;padding-left:14px;margin:16px 0}
+  .lose{border-left:3px solid #FF4136;padding-left:14px;margin:16px 0}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  .two>div{background:var(--panel);border:1px solid var(--rule);border-radius:12px;
+    padding:14px 18px}
+  .two h4{margin:0 0 8px;font-size:14px;font-weight:600;letter-spacing:.01em}
+  .two p{font-size:14px;line-height:1.75;margin:0 0 8px}
+  .two p:last-child{margin-bottom:0}
+  @media(max-width:720px){.two{grid-template-columns:1fr}}
+  h3{font-size:19px;margin:32px 0 10px;font-weight:600}
+  .num{font-variant-numeric:tabular-nums}
+  table td.num,table th.num{text-align:right}
+  .src{font-size:12.5px;color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="./index.html">← method</a> ·
+      <a href="./loop.ko.html">이 솔버는 어떻게 도는가</a></div>
+    <h1>PRO-LONG과의 비교</h1>
+    <div class="byline">같은 벤치마크에서 거의 만점을 받은 하네스를 클론해 코드까지
+      읽고, 우리 접근과 나란히 놓았습니다. 결론부터 말하면 지금 우리가 크게 지고
+      있고, 지는 이유가 생각보다 단순합니다.</div>
+  </div>
+</header>
+
+<main>
+<div class="col">
+
+  <h2 id="why">이 비교를 하게 된 계기</h2>
+  <p class="lede">KA59에서 우리는 L0조차 깨지 못했습니다. PRO-LONG은 같은 게임을
+  <b>100%</b>로 끝냈습니다.</p>
+
+  <p>실패한 원인 자체는 깨끗하게 파악돼 있었습니다. 동역학 모델은 잘 돌아갔습니다 —
+  채택된 모델들이 기록을 47/47, 53/53, 59/59, 68/68, 74/74 스텝까지 셀 하나 틀리지
+  않고 재현했습니다. 게이트가 네 번 멈춰 세웠는데 매번 같은 문장이었습니다.
+  <span class="fn">status predicted=LEVEL_COMPLETED actual=RUNNING</span>. 판은
+  완벽하게 예측하면서 무엇이 이기는 것인지를 끝내 못 찾았습니다.</p>
+
+  <p>그런데 "우리 접근의 한계"라고 결론짓기 전에 확인해야 할 것이 있었습니다.
+  같은 게임을 실제로 푸는 하네스가 <b>무엇을 다르게 하는가</b>입니다. 그래서
+  <span class="fn">alexisfox7/PRO-LONG</span>을 클론해 코드를 읽었습니다.
+  파이썬 4,163줄, 커밋 23개, 2026년 7월 25일자입니다.</p>
+
+  <div class="aside">
+    <p>클론한 저장소에도 <span class="fn">environment_files/</span> 즉 게임 소스가
+    들어 있습니다. 다른 저장소에 있어도 같은 게임의 내부이므로 이 분석에서는 열지
+    않았습니다. 아래 내용은 전부 하네스 코드, 공개 로그, 공개 스코어카드에서만
+    나왔습니다.</p>
+  </div>
+
+  <h2 id="what">PRO-LONG은 무엇을 하는가</h2>
+  <p>한 문장으로 요약하면 이렇습니다. <b>게임을 모델링하지 않습니다. 대신 일어난
+  모든 일을 한 파일에 그대로 적어두고, 코딩 에이전트가 그 파일을 grep하고 파이썬으로
+  파싱해서 다음에 누를 액션 목록을 내놓습니다.</b></p>
+
+  <p>구조는 놀랄 만큼 단순합니다. 관측·액션·결과가 전부
+  <span class="fn">logs.txt</span> 하나에 append되고, 분석기 에이전트(Codex CLI 또는
+  Claude Code CLI)가 도커 샌드박스 안에서 그 파일을 읽습니다. 에이전트는
+  <span class="fn">/workspace/actions.json</span>에 액션 1~20개짜리 계획을 씁니다.
+  액션 큐가 그걸 한 개씩 빼서 실행하는데, <b>이 구간에서는 LLM 호출이 전혀
+  없습니다.</b> 큐가 비거나 점수가 바뀌면 그때 분석기를 다시 부릅니다.</p>
+
+  <p>점수가 바뀌면 큐를 비우는 부분이 작지만 영리합니다. 레벨이 깨졌다는 것은
+  판이 완전히 달라졌다는 뜻이고, 그 전에 세운 계획의 나머지는 이제 무의미하니까요.</p>
+
+  <div class="code">ka59 실측 — 분석기 호출 <b>50번</b>으로 액션 <b>477개</b>를 실행
+호출 한 번이 평균 9.5액션을 만들어냅니다. 그 사이에는 LLM이 돌지 않습니다.
+분석기 한 번당 Bash 3.3회, 파일 쓰기 0.6회 — 로그를 실제로 프로그램으로 뒤집니다.</div>
+
+  <h2 id="numbers">숫자부터</h2>
+  <p>Fable 5로 돌린 공개 25게임 온라인 스코어카드가 저장소에 들어 있고, 각 줄에
+  arcprize.org 검증 링크가 붙어 있습니다. 19게임이 100%이고 평균이
+  <b>94.7%</b>입니다. 우리가 손댄 게임들만 뽑아 나란히 놓으면 이렇습니다.</p>
+
+  <table>
+    <tr><th>게임</th><th class="num">PRO-LONG</th><th class="num">그들의 액션</th>
+        <th class="num">우리가 깬 레벨</th><th class="num">우리 액션</th></tr>
+    <tr><td>tu93</td><td class="num">100.0%</td><td class="num">227</td>
+        <td class="num">9 (전부)</td><td class="num"><b>185</b></td></tr>
+    <tr><td>m0r0</td><td class="num">100.0%</td><td class="num">272</td>
+        <td class="num">2</td><td class="num">38</td></tr>
+    <tr><td>vc33</td><td class="num">100.0%</td><td class="num">272</td>
+        <td class="num">2</td><td class="num">10</td></tr>
+    <tr><td>ft09</td><td class="num">100.0%</td><td class="num">82</td>
+        <td class="num">1</td><td class="num">4</td></tr>
+    <tr><td>sk48</td><td class="num">100.0%</td><td class="num">650</td>
+        <td class="num">1</td><td class="num">14</td></tr>
+    <tr><td>ls20</td><td class="num">100.0%</td><td class="num">544</td>
+        <td class="num">0</td><td class="num">—</td></tr>
+    <tr><td>ka59</td><td class="num">100.0%</td><td class="num">477</td>
+        <td class="num">0</td><td class="num">—</td></tr>
+    <tr><td>cd82</td><td class="num">97.4%</td><td class="num">165</td>
+        <td class="num">0</td><td class="num">—</td></tr>
+    <tr><td>bp35</td><td class="num">74.8%</td><td class="num">1,038</td>
+        <td class="num">0</td><td class="num">—</td></tr>
+  </table>
+
+  <p class="src">PRO-LONG 액션 수는 공개 로그의
+  <span class="fn">[POST-ACTION BOARD STATE]</span> 마커를 세어 얻었습니다.
+  우리 액션 수는 <span class="fn">artifacts/wm_journal/&lt;게임&gt;/solutions.json</span>
+  에 저장된 해답 길이의 합입니다.</p>
+
+  <div class="lose">
+    <b>커버리지에서 완패입니다.</b> 그들은 사실상 전부 풉니다. 우리는 아홉 게임 중
+    하나를 끝냈고, 넷은 부분적으로, 넷은 아예 못 풀었습니다. ARC-AGI-3의 점수는
+    못 푼 레벨에 0을 주고 뒤 레벨일수록 가중치가 크므로, 이 차이는 그대로 점수
+    차이가 됩니다.
+  </div>
+
+  <div class="win">
+    <b>다만 한 곳에서는 우리가 이깁니다.</b> tu93은 양쪽 다 전 레벨을 클리어한
+    유일한 게임입니다. 그들이 227액션, 우리가 <b>185액션</b> — 우리가 18% 적게
+    씁니다. 액션 효율이라는 축에서는 이 방식이 실제로 값을 합니다. 문제는 그 축에
+    도달하려면 먼저 풀어야 한다는 것입니다.
+  </div>
+
+  <h2 id="code">코드로 본 차이</h2>
+  <p>두 하네스가 같은 자리에 서로 다른 것을 놓았습니다. 가장 큰 차이는
+  <b>"게임에 대한 이해"가 어디에 저장되는가</b>입니다.</p>
+
+  <div class="two">
+    <div>
+      <h4>PRO-LONG</h4>
+      <p>이해가 <b>로그와 산문 노트</b>에 있습니다. 에이전트는 매번
+      <span class="fn">logs.txt</span>를 grep하고, 알아낸 것을
+      <span class="fn">notes.md</span>에 글로 적습니다.</p>
+      <p>검증 장치가 <b>없습니다.</b> 코드 전체에서 예측·재생·대조에 해당하는
+      것을 찾을 수 없습니다. 유일한 피드백은 <b>점수가 올랐는가</b>입니다.</p>
+      <p>계획은 액션 1~20개 목록이고, 틀리면 그냥 다음 호출에서 고칩니다.</p>
+    </div>
+    <div>
+      <h4>우리</h4>
+      <p>이해가 <b>실행 가능한 파이썬 모듈</b>에 있습니다. 여섯 개 메서드를 가진
+      객체이고, 게임의 이론 그 자체입니다.</p>
+      <p>검증이 <b>중심</b>입니다. 기록된 모든 전이를 재생해 셀 하나까지 일치해야
+      채택됩니다. 어긋나면 첫 지점이 반례로 돌아옵니다.</p>
+      <p>계획은 검증된 모델 <b>안에서</b> BFS로 찾고, 실행할 때 매 액션마다
+      예측과 대조합니다.</p>
+    </div>
+  </div>
+
+  <h3>주는 것과 알아내게 하는 것</h3>
+  <p>코드를 읽다가 가장 놀란 부분입니다. PRO-LONG은 프롬프트에서 액션의 의미를
+  <b>그냥 알려줍니다.</b></p>
+
+  <div class="code">ACTION_DESCRIPTIONS = {
+    "ACTION1": "ACTION1 — Up",
+    "ACTION2": "ACTION2 — Down",
+    "ACTION3": "ACTION3 — Left",
+    "ACTION4": "ACTION4 — Right",
+    "ACTION5": "ACTION5 — Spacebar / interact",
+    "ACTION6": "ACTION6(x,y) — Click at column x (0-63), row y (0-63)",
+    "ACTION7": "ACTION7 — Undo",
+}</div>
+
+  <p>색상표도 줍니다. 16진수 자리마다 White, Blue, Green 같은 이름을 붙여 넘깁니다.
+  "점수가 오르면 레벨을 깬 것", "대부분의 게임에 스텝 예산이나 타이머가 있다"
+  같은 게임 구조에 대한 힌트도 프롬프트에 들어 있습니다.</p>
+
+  <p>우리는 이 중 아무것도 주지 않습니다. 액션이 무엇을 하는지 프로브로 알아내고,
+  값은 16진수 그대로 넘기고, 승리 조건은 계약서에서 <b>절대 지어내지 말라</b>고
+  못박습니다.</p>
+
+  <h3>같은 루프, 다른 매체 — 이게 핵심입니다</h3>
+  <p>그들의 <span class="fn">notes.md</span>를 열어보고 나서 이 비교의 성격이
+  달라졌습니다. 44KB짜리 그 파일은 잡메모가 아니라 <b>가설과 반증의 기록</b>입니다.
+  ka59에서 실제로 이렇게 적혀 있습니다.</p>
+
+  <div class="code">## Hypothesis
+Comparison/choice puzzle: pick a button (white vs black).
+Test 1: click white button (19,31).
+
+## Action 1 result (click white button 19,31)
+- No panel change. Only row 63 last cell q-&gt;$ — likely step counter.
+- Buttons may be decorative/legend, not clickable answers.
+
+## Hypothesis v3
+Right panel = map of target position... Player at (19,28): one LEFT away.
+
+## Action 3 result (Left)
+- Player moved to (16,28). Score still 0 — hypothesis v3 wrong.
+
+## Hypothesis v4
+Counter penalizes moves away from goal...
+
+## Actions 4-6 (Right x3)
+- Counter = round(2n/3)... Just a step budget. NOT directional feedback — v4 wrong.
+## Facts
+- Player center positions: cols ≡ 1 mod 3, rows ≡ 1 mod 3.</div>
+
+  <p>가설을 세우고, 최소한의 액션으로 시험하고, 틀리면 <b>틀렸다고 적고</b>, 확정된
+  것만 <span class="fn">## Facts</span>로 옮깁니다. 우리가 하는 것과 <b>완전히 같은
+  인식 루프</b>입니다. 다른 것은 매체 하나뿐입니다. 그들은 이 이론을 한국어나
+  영어로 쓰고, 우리는 파이썬으로 씁니다.</p>
+
+  <p>그 차이가 만드는 결과는 이렇습니다.</p>
+
+  <table>
+    <tr><th></th><th>산문 이론</th><th>실행 가능한 이론</th></tr>
+    <tr><td>쓰는 비용</td><td>싸다. 문장 하나면 된다</td>
+        <td>비싸다. 모듈 전체가 돌아가야 한다</td></tr>
+    <tr><td>부분적으로 맞을 때</td><td><b>그대로 쓸 수 있다</b></td>
+        <td><b>통째로 거절된다</b></td></tr>
+    <tr><td>고치는 비용</td><td>한 줄 지우고 다시 쓴다</td>
+        <td>재작성 후 전 기록 재검증</td></tr>
+    <tr><td>안에서 탐색</td><td>불가능</td><td>가능. 액션 0으로 계획이 나온다</td></tr>
+    <tr><td>자동 검증</td><td>불가능</td><td>셀 단위로 가능</td></tr>
+    <tr><td>작은 모델에 넘기기</td><td>애매하다</td><td>소스가 곧 학습 목표다</td></tr>
+  </table>
+
+  <h2 id="why-they-win">왜 그들이 이기는가</h2>
+  <p>세 가지가 겹쳐 있고, 셋 다 우리 쪽 설계 선택에서 나옵니다.</p>
+
+  <h3>첫째, 우리 채택 기준이 너무 가혹합니다</h3>
+  <p>검증기는 <b>셀 하나까지</b> 일치를 요구합니다. 95% 맞는 모델도 거절됩니다.
+  그래서 진전이 이진적입니다 — 완벽해지기 전까지는 아무것도 못 합니다.</p>
+  <p>반면 산문 이론은 부분적으로 맞아도 즉시 쓸모가 있습니다. "플레이어는 흰
+  3x3 토큰이고 화살표로 움직인다"만 알아도 다음 액션을 정할 수 있습니다. 우리
+  루프에서는 나머지를 다 설명하기 전까지 그 지식으로 아무것도 못 합니다.</p>
+
+  <h3>둘째, 그들은 환경을 검증기로 씁니다</h3>
+  <p>우리는 예산의 대부분을 <b>행동하기 전에</b> 프로그램을 완벽하게 만드는 데
+  씁니다. 그들은 9.5액션짜리 계획을 던지고 결과를 봅니다. 액션이 비싼 벤치마크에서
+  직관에 반하는데, 실제로는 <b>모르는 상태로 오래 앉아 있는 비용</b>이 액션 몇 개보다
+  큽니다. bp35에서 그들이 1,038액션을 쓰고 74.8%를 받았습니다. 우리는 0액션을 쓰고
+  0%를 받았습니다.</p>
+
+  <h3>셋째, 우리는 스스로 족쇄를 채웠습니다</h3>
+  <p>액션 의미를 알려주지 않는 것 말입니다. 그런데 ARC-AGI-3 문서 자체가
+  ACTION1–4를 "방향(상/하/좌/우)"으로 규정합니다. 게임마다 달라지는 것은
+  ACTION5·6의 용법이지 방향키가 아닙니다. 즉 <b>PRO-LONG이 주는 힌트는 규칙 위반이
+  아니고, 우리가 그걸 숨기는 데에는 벤치마크상 근거가 없습니다.</b></p>
+  <p>우리는 매 게임 첫 단계에서 방향키 넷의 의미를 알아내는 데 액션과 브레인 콜을
+  쓰고 있습니다. 얻는 것 없이 내는 비용입니다.</p>
+
+  <h2 id="keep">그래도 지켜야 할 것</h2>
+  <p>비교 결과가 "저쪽 방식으로 갈아타자"는 아닙니다. 두 하네스의 <b>목적이
+  다르기</b> 때문입니다.</p>
+
+  <p>PRO-LONG의 산출물은 로그입니다. 177MB짜리, 게임당 평균 7.1MB. 그것으로 게임을
+  풉니다. 우리 산출물은 <b>검증된 실행 가능 모델과 타입이 붙은 학습쌍</b>입니다.
+  이 프로젝트의 목적이 7B 모델로의 전이라는 점에서, 그 차이는 부수적이지 않습니다.</p>
+
+  <p>특히 <span class="fn">repair</span> 타입 — 반증당한 소스와 검증기가 짚은
+  지점과 고쳐 쓴 소스의 삼중쌍 — 은 검증기가 있어야만 만들어집니다. 점수 변화만
+  피드백으로 쓰는 구조에서는 "이 소스의 이 규칙이 이 셀에서 틀렸다"는 문장이
+  나올 수가 없습니다.</p>
+
+  <p>그리고 tu93의 185 대 227은 작지만 진짜 신호입니다. 모델 안에서 최단 경로를
+  찾으면 실제로 액션을 덜 씁니다. 점수 공식이 액션 수를 제곱해서 벌하므로 이 축은
+  결국 중요해집니다 — 다만 <b>먼저 풀어야</b> 도달하는 축입니다.</p>
+
+  <h2 id="todo">가져올 것</h2>
+  <p>코드를 읽고 나서 우리 쪽에 바로 옮길 만하다고 판단한 것들입니다.</p>
+
+  <p><b>1. 액션 의미와 색 이름을 프롬프트에 넣기.</b> 벤치마크가 규정한 사실을
+  숨기는 데 값을 치를 이유가 없습니다. 가장 싸고 효과가 확실한 변경입니다.</p>
+
+  <p><b>2. 부분적으로 맞는 모델도 쓸 수 있게 하기.</b> 지금은 전부 맞거나 전부
+  거절입니다. 모델이 <span class="fn">ignore</span>로 "이 영역은 설명 못 한다"고
+  선언하고 나머지로 계획을 세우는 길이 이미 계약서에 있는데, 실제로는 거의 쓰이지
+  않습니다. 이 문을 넓히는 것이 커버리지 문제의 정면 해법으로 보입니다.</p>
+
+  <p><b>3. 승리 조건을 못 찾을 때 그냥 시도해보기.</b> KA59가 막힌 지점이 정확히
+  여기입니다. <span class="fn">is_goal</span>을 못 찾으면 계획이 안 나오고, 계획이
+  없으면 액션을 안 씁니다. 그들처럼 짧은 계획을 던져 환경에 물어보는 경로가
+  필요합니다.</p>
+
+  <p><b>4. 지속되는 작업 공간.</b> 그들의 에이전트는 호출 사이에
+  <span class="fn">notes.md</span>와 헬퍼 스크립트를 남깁니다. 우리 브레인은 매번
+  빈 임시 디렉터리에서 시작하고 기억이 없습니다. 격리라는 이점이 있지만, 대가가
+  무엇인지는 재본 적이 없습니다.</p>
+
+  <div class="aside">
+    <p>정직하게 덧붙이면, 이 비교는 <b>공정한 A/B가 아닙니다.</b> 그들의 숫자는
+    Fable 5로 돌린 공개 25게임 정규 실행이고, 우리 숫자는 여러 세션에 걸쳐 만들다
+    말다 한 결과입니다. 그리고 어제까지 우리 루프에는 예산을 쓰지도 못하고 포기하는
+    버그가 여섯 군데 있었습니다.</p>
+    <p>그래도 KA59 하나만 놓고 보면 변명의 여지가 적습니다. 같은 게임, 그들 100%,
+    우리 L0 미클리어입니다.</p>
+  </div>
+
+  <h2 id="repro">확인 방법</h2>
+  <pre>git clone --depth 50 https://github.com/alexisfox7/PRO-LONG.git external/PRO-LONG
+
+# 스코어카드는 arcprize.org 링크로 검증 가능
+cat external/PRO-LONG/scorecards/fable_online_scorecards.txt
+
+# 액션 수
+grep -c "\[POST-ACTION BOARD STATE\]" \
+  external/PRO-LONG/release_logs/fable5/fable_online/ka59/rep1/logs.txt
+
+# 분석기 호출 수
+grep -c "\[ACTIONS.JSON\]" \
+  external/PRO-LONG/release_logs/fable5/fable_online/ka59/rep1/logs_analyzer.txt</pre>
+
+</div>
+</main>
+
+<footer><div class="col">비교 대상 저장소는 읽기만 했고 실행하지 않았습니다.
+게임 소스(<span class="fn">environment_files/</span>)는 양쪽 모두 열지 않았습니다.
+이 페이지의 모든 수치는 위 명령으로 다시 확인할 수 있습니다.</div></footer>
+
+</body>
+</html>

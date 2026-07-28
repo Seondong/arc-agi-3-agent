@@ -97,3 +97,7 @@ code/environment_files/
 .agents/
 .claude/skills/
 skills-lock.json
+
+# Cloned third-party harnesses, kept next to the repo for comparison but not
+# vendored into it. See artifacts/wm_viz/vs-prolong.ko.html.
+external/
