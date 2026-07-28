@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the loop actually runs</title>
+<link rel="stylesheet" href="./shared/style.css">
+<style>
+  .flow{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
+    line-height:1.65;background:var(--panel);border:1px solid var(--rule);
+    border-radius:12px;padding:18px 20px;overflow-x:auto;white-space:pre}
+  .stop{border-left:3px solid var(--accent);padding-left:14px;margin:16px 0}
+  .stop b{font-weight:600}
+  .fn{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+  table.k td,table.k th{vertical-align:top}
+  .was{color:var(--dim);font-size:13.5px}
+  .num{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="./index.html">← method</a></div>
+    <h1>How the loop actually runs</h1>
+    <div class="byline">The control flow of <span class="fn">scripts/wm/autosolve.py</span>
+      as it stands, with every place it can stop and what each budget really buys.
+      Written from the source, not from memory: the line numbers below were
+      extracted from the file's AST.</div>
+  </div>
+</header>
+
+<main>
+<div class="col">
+
+  <h2 id="contract">The one thing a game-specific file must provide</h2>
+  <p>Everything in the pipeline is game-agnostic except one module per game,
+  <span class="fn">agents/wm/models/&lt;game&gt;.py</span>. That module returns an
+  object with six methods, and nothing else about it is constrained — it need not
+  be a dataclass, need not import anything from the project, and is usually
+  written by a language model rather than by hand.</p>
+
+  <table class="k">
+    <tr><th>method</th><th>returns</th><th>why it exists</th></tr>
+    <tr><td class="fn">reconstruct(frame)</td><td>state</td>
+        <td>the level's opening state, from one frame</td></tr>
+    <tr><td class="fn">step(state, action)</td><td>(state, status)</td>
+        <td>the dynamics — the actual theory of the game</td></tr>
+    <tr><td class="fn">render(state)</td><td>frame</td>
+        <td>so a prediction can be compared cell by cell</td></tr>
+    <tr><td class="fn">is_goal(state)</td><td>bool</td>
+        <td>the inferred win condition. False when unknown — never invented</td></tr>
+    <tr><td class="fn">fingerprint(state)</td><td>hashable</td>
+        <td>keys the planner's visited set</td></tr>
+    <tr><td class="fn">ignore(frame)</td><td>cells</td>
+        <td>cells excluded from checking. Every one is modelling debt</td></tr>
+  </table>
+
+  <h2 id="flow">One level, start to finish</h2>
+  <p>This is <span class="fn">solve_level()</span>, line 398. Read the right-hand
+  column as the cost: only two stages spend actions in the environment.</p>
+
+<div class="flow">gather_evidence()          L324   REAL ACTIONS — one per candidate action
+  │                                  coordinate games: one square per value region
+  │                                  all inert? sweep_candidates() L68 finds where
+  │                                  the game is listening at all
+  ▼
+carried model?                     if agents/wm/models/&lt;game&gt;.py exists, replay it
+  │                                  first. A refutation here is the best possible
+  │                                  starting point: a pointed bug, for free
+  ▼
+ask_brain()                L172   NO ACTIONS — claude -p returns SOURCE TEXT
+  │                                  never writes files, never reads the repo
+  ▼
+run_backtest()                     NO ACTIONS — replay every recorded transition,
+  │                                  demand cell-exactness. Fail → first divergence
+  │                                  goes back as a counterexample, costing a retry
+  ▼
+run_bfs()                          NO ACTIONS — search inside the accepted model.
+  │                                  Deaths here are imagined and therefore free
+  ▼
+  ├── no plan? ──────────────────► explore_and_repropose()  L230
+  │                                  REAL ACTIONS, bounded by --explore-budget
+  │                                  then propose again with what it found
+  ▼
+execute_gated()                    REAL ACTIONS — but predicted first. Every step:
+  │                                  predict → act → compare. Stop at the first
+  │                                  mismatch, which saves the rest of the plan
+  ▼
+  ├── cleared? ─► save_solution() + persist_model()  L109
+  │                                  the model becomes a repo file and registers
+  │                                  itself, so it outlives the process
+  └── not cleared? ─► repair: hand the mismatch back and re-plan</div>
+
+  <h2 id="three">Three different failures, three different prompts</h2>
+  <p>A plan that does not clear is not one event. The loop distinguishes them,
+  because the corrective information differs completely.</p>
+  <table class="k">
+    <tr><th>what happened</th><th>what it means</th><th>what the brain is told</th></tr>
+    <tr><td>a cell was mispredicted</td><td>the dynamics are wrong</td>
+        <td>fix the rule that made <i>that</i> prediction</td></tr>
+    <tr><td>the agent died, unpredicted</td><td>the model is missing whatever kills</td>
+        <td>the recorded run that ended in death</td></tr>
+    <tr><td>every step predicted, still no win</td><td><b>the dynamics are right and
+        <span class="fn">is_goal</span> is wrong</b></td>
+        <td>re-think the win condition</td></tr>
+  </table>
+
+  <h2 id="stops">Every place a level can stop</h2>
+  <p>This list is the useful part of the page. Each of these was, at some point,
+  a bug where the loop gave up with most of its budget unspent — and a run that
+  stops early reads exactly like a game that is hard. They are enumerated here so
+  the next one is easy to spot.</p>
+
+  <div class="stop"><b>L434 — out of wall-clock time before a model was accepted.</b>
+    Legitimate.</div>
+  <div class="stop"><b>L464 — brain budget exhausted without an accepted model.</b>
+    Legitimate. A failed call is <i>not</i> fatal: it carries its error into the
+    next prompt and continues.</div>
+  <div class="stop"><b>L501 — goal inference exhausted its budget without a plan.</b>
+    This is the normal path for a first proposal, not an error: the contract tells
+    the brain to leave <span class="fn">is_goal</span> False when it does not know
+    the win condition, and it obeys.</div>
+  <div class="stop"><b>L585 — still no plan after exploring.</b> The honest state of
+    a level whose win condition has not been found.</div>
+  <div class="stop"><b>L602 — action budget exceeded</b>
+    (<span class="fn">BudgetExceeded</span>, 5× the human baseline). Legitimate.</div>
+  <div class="stop"><b>L625 — a gated execution did not clear and the budget is
+    gone.</b> Otherwise it repairs and re-plans rather than stopping.</div>
+  <div class="stop"><b>L671, L696 — exploration after a failed repair produced
+    nothing.</b></div>
+
+  <p class="was">For scale: on 2026-07-27 four games each reported <i>stopping</i>
+  after using 1 of 8 brain calls and 12 of 70 minutes. None of it was the games.
+  Six separate give-up paths, a planner hardcoded to actions two of the games did
+  not have, and a rate-limit refusal being counted as a failed model.</p>
+
+  <h2 id="budgets">What each budget actually buys</h2>
+  <table class="k">
+    <tr><th>flag</th><th>bounds</th><th>note</th></tr>
+    <tr><td class="fn">--budget-x</td><td>real actions per level, as a multiple of
+        the human baseline</td><td>5 is the official leaderboard cutoff</td></tr>
+    <tr><td class="fn">--max-brain</td><td>brain calls per level</td>
+        <td>a capacity refusal costs none of these — it waits instead</td></tr>
+    <tr><td class="fn">--minutes</td><td>wall clock for the whole run</td>
+        <td>now reaches inside a single call, which is what a hung
+        <span class="fn">claude -p</span> used to defeat</td></tr>
+    <tr><td class="fn">--explore-budget</td><td>real actions per exploration round</td>
+        <td>spent only when there is no plan</td></tr>
+  </table>
+
+  <h2 id="cost">What "one action" costs</h2>
+  <p>The scoring formula squares the ratio of our actions to a human's, so an
+  action is the expensive resource and thinking is free. The pipeline is shaped
+  around that asymmetry: the backtest, the search, and every rejected proposal
+  cost zero actions. <span class="fn">ENGINE_STEPS</span> counts the true cost
+  including the replays needed to reach a level, because "36 probe actions" was
+  once close to a lie — each probe re-opened a session first, and the real figure
+  was 1,572.</p>
+
+  <h2 id="data">What the run leaves behind</h2>
+  <p>Two artefacts, and they are not the same thing. The <b>journal</b> is an
+  append-only audit trail written at the moment of discovery — it keeps failures,
+  empty searches and dead ends on purpose. The <b>dataset</b> is derived from it
+  and must not inherit that: an example whose target is an empty action list
+  teaches a model to do nothing.</p>
+
+  <table class="k">
+    <tr><th>type</th><th>input</th><th>target</th></tr>
+    <tr><td class="fn">predict</td><td>frame + action</td><td>the next frame as a cell diff</td></tr>
+    <tr><td class="fn">probe</td><td>frame + an open question</td><td>actions spent, and what came back</td></tr>
+    <tr><td class="fn">analyse</td><td>frame</td><td>the entities on screen</td></tr>
+    <tr><td class="fn">plan</td><td>frame</td><td>the action sequence that clears it</td></tr>
+    <tr><td class="fn">repair</td><td>model source + the pointed cells</td><td>the rewritten source, and why</td></tr>
+  </table>
+
+  <p><span class="fn">repair</span> is the only type that teaches a model to
+  <i>write</i> world models, and it is the scarcest. Every refused proposal makes
+  one for free — the verifier has just said, in cell-exact terms, why a specific
+  piece of source is wrong, and the next accepted proposal is the answer.</p>
+
+  <h2 id="now">Where this actually stands</h2>
+  <p>As of 2026-07-28, after the exporter was made to drop pairs that teach
+  nothing:</p>
+  <div class="flow"><span class="num">                analyse   plan   predict   probe   repair    total</span>
+<span class="num">claimed             59     47       251    1645        9     2011</span>
+<span class="num">actual              15     15       251     200        0      481</span></div>
+
+  <p><b>repair is zero.</b> All nine were missing the pointed cells that make a
+  refutation better than a vague complaint, and five paired a refutation with an
+  author entry whose description was generic boilerplate — the mispairing that
+  once taught that the fix for a bug is to do nothing. Everything dropped is
+  recorded in <span class="fn">&lt;game&gt;.gaps.json</span> with a reason, so the
+  number cannot quietly improve.</p>
+
+  <p>The loop now journals every rejected proposal together with its source,
+  which is what produces this type. KA59 is the first game run with that in
+  place.</p>
+
+  <h2 id="repro">Reproducing</h2>
+  <pre>cd code/ARC-AGI-3-Agents
+uv run python scripts/wm/autosolve.py --game ka59 --levels 5 --minutes 200 \
+    --max-brain 12 --budget-x 5 --brain-timeout 600
+uv run python scripts/wm/export_dataset.py --game ka59
+uv run pytest tests/unit/test_wm_autosolve_budget.py tests/unit/test_wm_dataset_quality.py</pre>
+
+</div>
+</main>
+
+<footer><div class="col">The dynamics are never read from the game's source. They
+come from stepping the engine and comparing frames, and every claim on this page
+is checked by a test or extracted from the file it describes.</div></footer>
+
+</body>
+</html>
