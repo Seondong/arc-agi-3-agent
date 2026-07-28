@@ -7,19 +7,70 @@ import glob
 import html
 import json
 import pathlib
+import re
 from collections import Counter
 
 ROOT = pathlib.Path("/Users/sundong/Documents/arc-agi-3/code/ARC-AGI-3-Agents")
 
+# The same sixteen colours the level pages paint grids with, so a reader who has
+# seen one page recognises the boards on this one.
+PAL = ["#0d1117", "#0074D9", "#FF4136", "#2ECC40", "#FFDC00", "#9AA6B2",
+       "#F012BE", "#FF851B", "#7FDBFF", "#B0344B", "#B10DC9", "#01FF70",
+       "#FF69B4", "#85144b", "#39D3C9", "#DDDDDD"]
+
+
+def svg_grid(frame, r0, r1, c0, c1, mark=None, cell=11, cls=""):
+    """A window of the board as inline SVG.
+
+    Inline because it must survive being served as a bare file from a CDN with
+    no JavaScript and no fetch: the level pages build their canvases from JSON
+    they load at runtime, which is fine there and would make this page blank
+    anywhere else.
+    """
+    w, h = (c1 - c0 + 1) * cell, (r1 - r0 + 1) * cell
+    out = [f'<svg class="grid {cls}" viewBox="0 0 {w} {h}" width="{w}" height="{h}" '
+           f'role="img" shape-rendering="crispEdges">']
+    for r in range(r0, r1 + 1):
+        for c in range(c0, c1 + 1):
+            v = frame[r][c]
+            out.append(f'<rect x="{(c - c0) * cell}" y="{(r - r0) * cell}" '
+                       f'width="{cell}" height="{cell}" fill="{PAL[v % 16]}"/>')
+    for (r, c) in (mark or []):
+        if r0 <= r <= r1 and c0 <= c <= c1:
+            out.append(f'<rect class="hit" x="{(c - c0) * cell + 0.5}" '
+                       f'y="{(r - r0) * cell + 0.5}" width="{cell - 1}" '
+                       f'height="{cell - 1}" fill="none" stroke="#fff" '
+                       f'stroke-width="1.4"/>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def bounds(frame, cells=None, pad=4, max_r=22, max_c=30):
+    if cells:
+        rs, cs = [c[0] for c in cells], [c[1] for c in cells]
+        r0, r1 = max(0, min(rs) - pad), min(len(frame) - 1, max(rs) + pad)
+        c0, c1 = max(0, min(cs) - pad), min(len(frame[0]) - 1, max(cs) + pad)
+    else:
+        r0, r1, c0, c1 = 0, len(frame) - 1, 0, len(frame[0]) - 1
+    if r1 - r0 > max_r:
+        r1 = r0 + max_r
+    if c1 - c0 > max_c:
+        c1 = c0 + max_c
+    return r0, r1, c0, c1
+
 
 def pick(t):
-    """The smallest example of this type WHOSE GRID CAN BE SHOWN.
+    """The example that SHOWS the most, not the one with the fewest bytes.
 
-    Picking purely by size chose a frame too wide to crop, so the page printed
-    "<64x64 grid>" — which is exactly the placeholder the reader is here to get
-    away from. A visible grid is worth more than a few bytes saved.
+    Choosing by size gave a probe example whose click was at (1,1) -- a 66x66
+    pixel corner in two colours -- and a plan example on a board that is almost
+    entirely background. Both were valid data and neither was worth looking at.
+    The board a reader sees has to have something in it, so candidates are
+    scored on how much distinct structure falls inside the window that will
+    actually be drawn.
     """
-    best = best_any = None
+    from collections import Counter
+    best = None
     for f in sorted(glob.glob(str(ROOT / "artifacts/wm_dataset/*.jsonl"))):
         for line in open(f):
             try:
@@ -28,13 +79,22 @@ def pick(t):
                 continue
             if e.get("type") != t:
                 continue
-            n = len(json.dumps(e))
-            if best_any is None or n < best_any[0]:
-                best_any = (n, pathlib.Path(f).name, e)
             fr = (e.get("input") or {}).get("frame")
-            if fr and (best is None or n < best[0]):
-                best = (n, pathlib.Path(f).name, e)
-    return best or best_any
+            if not fr:
+                continue
+            tgt = e.get("target") or {}
+            pts = tgt.get("cell_diff") or None
+            r0, r1, c0, c1 = bounds(fr, pts)
+            vals = Counter(fr[r][c] for r in range(r0, r1 + 1)
+                           for c in range(c0, c1 + 1))
+            cells = sum(vals.values())
+            # enough colours to read as a picture, enough cells to be worth the
+            # space, and not so dominated by one value that it looks blank
+            top = vals.most_common(1)[0][1] / max(1, cells)
+            score = (len(vals) >= 3, cells >= 150, round(1 - top, 2), len(vals))
+            if best is None or score > best[0]:
+                best = (score, pathlib.Path(f).name, e)
+    return best
 
 
 def window(frame, cells=None, pad=3, max_r=20, max_c=52):
@@ -81,34 +141,7 @@ def crop(frame, pad=1):
     return "\n".join(out)
 
 
-BLURB = {
-    "predict": "가장 흔하고 가장 깨끗한 타입입니다. 엔진이 결정적이라서 저장된 "
-               "해답만 있으면 공짜로 다시 만들어낼 수 있습니다. 목표가 프레임 "
-               "전체가 아니라 <b>바뀐 칸만</b>이라는 점이 중요합니다. 64×64를 "
-               "통째로 뱉게 하면 정작 배워야 할 것이 묽어집니다.",
-    "probe": "무엇을 모르는지 알아차리고, 그걸 알아내려고 액션을 쓰고, 무엇이 "
-             "돌아왔는지 적는 과정입니다. 정답이 아니라 <b>알아보는 행위</b> 자체를 "
-             "가르치는 타입입니다.",
-    "analyse": "화면을 보고 거기 무엇이 있는지 말하는 것입니다. 목표가 비어 있으면 "
-               "학습쌍으로 치지 않습니다. 예전에는 59개 중 38개가 개체 목록 없이 "
-               "로그 한 줄만 달고 있었습니다.",
-    "plan": "검증을 통과한 모델 안에서 BFS가 찾아낸, 그 레벨을 실제로 클리어한 액션 "
-            "열입니다. 액션이 비어 있으면 버립니다. 실패한 탐색을 그대로 학습시키면 "
-            "결국 이 화면에서는 아무것도 하지 말라고 가르치는 셈이 됩니다.",
-}
 
-REPAIR = """  <h3>repair</h3>
-  <p>보여드릴 실물이 <b>아직 없습니다.</b> 그리고 없다는 사실 자체가 지금 이
-  프로젝트에서 가장 중요한 문제라, 빈칸으로 넘기지 않고 적어둡니다.</p>
-  <p>이 타입은 모델을 <i>쓰는</i> 법을 가르치는 유일한 종류인데, 한 쌍이 되려면
-  세 조각이 다 있어야 합니다. 거절당한 소스, 검증기가 짚어준 칸들, 그리고 그
-  지적을 받아 고쳐 쓴 소스입니다. 그런데 지금까지 셋 중 둘이 기록되지 않고
-  있었습니다. 거절된 소스는 임시 디렉터리에 잠깐 쓰였다가 프로세스와 함께
-  사라졌고, <span class="fn">refute()</span>는 <span class="fn">diff</span>
-  인자를 처음부터 받도록 만들어져 있었는데 정작 그걸 넘겨주는 호출자가 하나도
-  없어서 "몇 개가 틀렸다"는 숫자만 남았습니다.</p>
-  <p>둘 다 오늘 고쳤고, KA59가 그 상태로 도는 첫 게임입니다. 쌍이 쌓이면 이
-  자리에 실물을 넣겠습니다.</p>"""
 
 
 def build():
@@ -156,13 +189,13 @@ def main():
         "  │                                  먼저 재생해 본다.",
         "agents/wm/models/&lt;게임&gt;.py 가 있으면\n"
         "  │                                  먼저 재생해 본다.")
-    if 'id="examples"' not in s:
-        s = s.replace('  <h2 id="now">지금 실제 상태</h2>',
-                      build() + '\n\n  <h2 id="now">지금 실제 상태</h2>')
-    s = s.replace("  .aside p:last-child{margin-bottom:0}",
-                  "  .aside p:last-child{margin-bottom:0}\n"
-                  "  h3{font-size:18px;margin:28px 0 8px;font-weight:600}\n"
-                  "  .src{font-size:13px;color:var(--dim);margin:0 0 10px}")
+    from gen_loop_examples_build import CSS, build
+    s = re.sub(r'  <h2 id="examples">.*?(?=  <h2 id="now">)', "", s, flags=re.S)
+    s = s.replace('  <h2 id="now">지금 실제 상태</h2>',
+                  build() + '\n\n  <h2 id="now">지금 실제 상태</h2>')
+    if ".boards{" not in s:
+        s = s.replace("  .aside p:last-child{margin-bottom:0}",
+                      "  .aside p:last-child{margin-bottom:0}" + CSS)
     p.write_text(s)
     print("examples section injected from the real corpus")
 

@@ -24,3 +24,57 @@ brain workdir: /var/folders/kw/lgjkyr1x1lxc8twp2pdqfjw80000gn/T/wmbrain-z4bzwl6h
 2026-07-28 12:43:11 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
   evidence: 16 run(s), 40 engine steps
   brain call 1/12 ...
+  accepted after 410s: replayed 23/23 recorded steps exactly
+2026-07-28 12:50:02 | INFO | Created new scorecard: 672bafeb-542c-40ac-8c43-2d31a83e5a48
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+  planner action set: 15 (15 of them known to do something)
+  NO PLAN — is_goal never true in 2812 reachable states; exploring for the win condition
+2026-07-28 12:50:02 | INFO | Created new scorecard: 0728a377-d520-4041-b9dc-b1e51c69b6bf
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: abf2db52-f255-47ee-93b1-dd2793825cd6
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: d8ea9bcd-28ba-4547-832d-5fe85c576377
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: bba3e901-a790-4c03-ba37-ae729a1513c6
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: b1e21321-94cb-4c97-83a6-36cf85dd61af
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: f91697fa-11db-4593-a979-9813feea3f7b
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: de40389a-2f6a-4cd3-9191-c6d7c71bf870
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: 93f97365-9502-436a-92e4-e2eb54f11689
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: a512c5d3-8bbd-4e27-9ae3-1ef5574a972d
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: fb9fe642-8c11-4308-857e-0cca9bd57195
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: b120ed78-fd19-4509-9d48-01077b4bc371
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: 12874c2c-af4b-4b3f-8d5e-46433563f982
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: 19432a1f-9824-42b8-b7d2-5fcef4f5174d
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: bcbb1c34-cf56-4c30-be6f-733f092fe3e9
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: 59f2df45-a2d3-4de3-8bbb-ac39b1e383cd
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: b8d8cbc3-3111-4fd8-997b-8a32c8db6953
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: 7d135219-7738-4787-847c-09b9b431ee03
+2026-07-28 12:50:02 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:02 | INFO | Created new scorecard: 04cb6b2b-86e8-49c2-93e3-02e1aff4979c
+2026-07-28 12:50:03 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+  round 1: explored 17 interaction(s) for 17 action(s); 17 of them did something
+2026-07-28 12:50:03 | INFO | Created new scorecard: 7f65fcac-bae7-41c8-b50c-a7b5242cb9e2
+2026-07-28 12:50:03 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:03 | INFO | Created new scorecard: 65ebde2a-212e-4ccc-b2bc-becd3c27f9d8
+2026-07-28 12:50:03 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:03 | INFO | Created new scorecard: 2de05e11-ac95-4dc2-af68-f17919e19eb8
+2026-07-28 12:50:03 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:03 | INFO | Created new scorecard: 7478a294-32db-40b0-b2e6-75697c3cd4fd
+2026-07-28 12:50:03 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:03 | INFO | Created new scorecard: 8ac4d857-7d05-4def-ae76-420545f19607
+2026-07-28 12:50:03 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
+2026-07-28 12:50:03 | INFO | Created new scorecard: b74b8373-c20c-48c9-95fa-01cf2702ab50
+2026-07-28 12:50:03 | INFO | Successfully loaded game class Ka59 from environment_files/ka59/9f096b4a/ka59.py
