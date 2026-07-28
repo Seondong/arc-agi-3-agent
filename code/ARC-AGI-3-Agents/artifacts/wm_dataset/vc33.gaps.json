@@ -2,6 +2,12 @@
  "game": "vc33",
  "gaps": [
   {
+   "type": "repair",
+   "level": 2,
+   "seq": 631,
+   "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
+  },
+  {
    "type": "analyse",
    "level": 0,
    "seq": 1,
@@ -125,6 +131,12 @@
    "type": "plan",
    "level": 2,
    "seq": 407,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 2,
+   "seq": 630,
    "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
   },
   {

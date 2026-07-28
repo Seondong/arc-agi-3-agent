@@ -150,3 +150,55 @@ def test_a_repair_with_neither_cells_nor_a_status_mismatch_is_not_trainable():
                      "model_source_before": "x" * 200},
            "target": {"model_source_after": "y" * 200, "changed": "rewrote it"}}
     assert not ex.is_trainable(bad)
+
+
+def test_a_rejection_becomes_a_repair_pair():
+    """A refused proposal is (source, exact verifier complaint) and the next
+    accepted proposal is the answer -- the same triple a refutation gives, from
+    a different place. Twelve of them sat unused in the journal while the corpus
+    had six repair pairs total."""
+    import export_dataset as ex
+    entries = [
+        {"kind": "note", "seq": 10, "run": "r1",
+         "text": "BRAIN REJECTED (attempt 1): ValueError: replay failed: backtest 0/1 "
+                 "then pointed bug at step 1 after ACTION3: 18 cell(s) mispredicted"
+                 "\n---REJECTED SOURCE---\ndef build(v=1):\n    return WRONG"},
+        {"kind": "note", "seq": 11, "run": "r1",
+         "text": "BRAIN SOURCE (accepted, 20 chars):\ndef build(v=1):\n    return RIGHT"},
+    ]
+    pairs = ex.rejection_pairs("ka59", 0, entries)
+    assert len(pairs) == 1, f"expected one pair, got {len(pairs)}"
+    p = pairs[0]
+    assert "18 cell(s) mispredicted" in p["input"]["bug"]
+    assert "WRONG" in p["input"]["model_source_before"]
+    assert "RIGHT" in p["target"]["model_source_after"]
+
+
+def test_a_rejection_with_no_following_acceptance_yields_nothing():
+    """Without the corrected source there is no pair, only half of one."""
+    import export_dataset as ex
+    entries = [{"kind": "note", "seq": 10, "run": "r1",
+                "text": "BRAIN REJECTED (attempt 1): boom\n---REJECTED SOURCE---\nx = 1"}]
+    assert ex.rejection_pairs("ka59", 0, entries) == []
+
+
+def test_a_verifier_error_that_names_a_step_is_pointed_enough():
+    """A rejection reports the failure as prose: 'backtest 0/1 then pointed bug
+    at step 1 after ACTION6(23,16): 38 cell(s) mispredicted'. It names the step,
+    the action and the count, so it points at something specific even though the
+    cell list is not carried. Requiring the list discarded all twelve."""
+    good = {"type": "repair", "source": "journal L0 seq 9 (rejected proposal)",
+            "input": {"bug": "ValueError: replay failed: backtest 0/1 then pointed bug "
+                             "at step 1 after ACTION6(23,16): 38 cell(s) mispredicted",
+                      "cells": [], "model_source_before": "x" * 200},
+            "target": {"model_source_after": "y" * 200,
+                       "changed": "the click rule was wrong"}}
+    assert ex.is_trainable(good)
+
+
+def test_a_bug_naming_no_step_is_still_not_pointed():
+    bad = {"type": "repair", "source": "journal L0 seq 9 (rejected proposal)",
+           "input": {"bug": "it did not work", "cells": [],
+                     "model_source_before": "x" * 200},
+           "target": {"model_source_after": "y" * 200, "changed": "rewrote"}}
+    assert not ex.is_trainable(bad)

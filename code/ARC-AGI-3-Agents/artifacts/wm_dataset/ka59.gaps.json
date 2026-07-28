@@ -4,7 +4,7 @@
   {
    "type": "repair",
    "level": 0,
-   "seq": 215,
+   "seq": 222,
    "why": "the author entry that answered this refutation stores no model source \u2014 it predates source capture, and the file today is a later version"
   },
   {
@@ -32,10 +32,28 @@
    "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
   },
   {
+   "type": "repair",
+   "level": 0,
+   "seq": 215,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 218,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 221,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
    "type": "duplicate",
    "level": null,
    "seq": null,
-   "why": "131 identical pair(s) collapsed"
+   "why": "135 identical pair(s) collapsed"
   }
  ]
 }

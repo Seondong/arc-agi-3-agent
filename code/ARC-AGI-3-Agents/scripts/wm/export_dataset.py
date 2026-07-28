@@ -33,7 +33,55 @@ from agents.wm.models import has_model, model_for, short_id
 
 OUT_ROOT = Path("artifacts/wm_dataset")
 
+import re as _re
+NOTE_PREFIX = _re.compile(r"^BRAIN SOURCE[^\n]*\n", _re.M)
 PLACEHOLDER_MAX = 80          # "proposed source stored with this entry" is 38
+
+
+REJECT_MARK = "---REJECTED SOURCE---"
+
+
+def rejection_pairs(game, level, entries):
+    """Mine refused proposals as repair pairs.
+
+    A refutation is not the only place a counterexample comes from. When the
+    verifier refuses a proposal it says exactly what was wrong with a specific
+    piece of source, and the next proposal that IS accepted is the answer. That
+    is the same triple, and the loop makes one every time it retries.
+
+    Twelve of these sat unused in the journal while the corpus held six repair
+    pairs in total -- because the exporter only ever looked at `refute` entries.
+    """
+    out = []
+    for i, e in enumerate(entries):
+        if e.get("kind") != "note" or REJECT_MARK not in (e.get("text") or ""):
+            continue
+        head, _, src = e["text"].partition(REJECT_MARK)
+        bug = head.split(":", 1)[-1].strip()
+        if not (src.strip() and bug):
+            continue
+        fixed = None
+        for nxt in entries[i + 1:]:
+            t = nxt.get("text") or ""
+            if nxt.get("kind") == "note" and "BRAIN SOURCE" in t:
+                fixed = NOTE_PREFIX.sub("", t, count=1).strip()
+                break
+            if nxt.get("kind") == "author" and model_text(nxt):
+                fixed = model_text(nxt)
+                break
+        if not fixed:
+            continue
+        out.append({
+            "type": "repair", "game": game, "level": level, "seq": e["seq"],
+            "source": f"journal L{level} seq {e['seq']} (rejected proposal)",
+            "input": {"bug": bug, "action": None, "step_index": None,
+                      "cells": [], "model_source_before": src.strip()},
+            "target": {"rules": ["rewritten after the verifier refused it"],
+                       "changed": bug[:200],
+                       "because": "the previous source did not replay",
+                       "model_source_after": fixed, "source_sha": None},
+        })
+    return out
 
 
 def model_text(entry):
@@ -91,7 +139,20 @@ def is_trainable(ex):
         # four of KA59's six refutations -- and those four are the sharpest
         # signal the loop makes, because they say the dynamics are right and
         # only the win condition is wrong.
-        pointed = bool(inp.get("cells")) or "status predicted" in (inp.get("bug") or "")
+        bug = inp.get("bug") or ""
+        # Three ways a counterexample can point: the cells it got wrong, a
+        # status mismatch (which points at is_goal), or a verifier message that
+        # names the step and action it failed on. The third is how a REFUSED
+        # proposal reports itself, and demanding the cell list threw all of
+        # those away.
+        # Three ways to point, and they are not interchangeable. A gated
+        # execution now RECORDS its cells, so one arriving without them is a
+        # defect. A refused proposal has no cell list by nature -- the verifier
+        # reports it in prose -- so it is judged on naming a step instead.
+        from_rejection = "rejected proposal" in (ex.get("source") or "")
+        pointed = (bool(inp.get("cells"))
+                   or "status predicted" in bug
+                   or (from_rejection and bool(_re.search(r"step \d+", bug))))
         if not pointed:
             return False
         if not (inp.get("model_source_before") and tgt.get("model_source_after")):
@@ -258,6 +319,9 @@ def export(game, out_dir):
     for level in sorted({int(p.stem[1:]) for p in
                          (JOURNAL_ROOT / game).glob("L*.jsonl")}):
         entries = load_journal(game, level)
+        # A refused proposal is a counterexample too, and the loop makes one
+        # every time it retries. These used to be ignored entirely.
+        examples.extend(rejection_pairs(game, level, entries))
         derived = reconstruct_keys(game, level, entries)
         # frames per (run, prefix) are replayed once and shared
         cache = {}
