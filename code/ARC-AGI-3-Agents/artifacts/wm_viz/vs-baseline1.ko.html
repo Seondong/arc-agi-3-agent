@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>baseline1 / ewma_sv 와의 비교 — 같은 아키텍처, 다른 결과</title>
+<link rel="stylesheet" href="./shared/style.css">
+<style>
+  body{word-break:keep-all}
+  p{line-height:1.9}
+  .lede{font-size:17px;line-height:1.8}
+  .fn{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    word-break:break-all}
+  pre,.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    line-height:1.6;background:var(--panel);border:1px solid var(--rule);
+    border-radius:10px;padding:14px 16px;overflow-x:auto;white-space:pre;
+    word-break:normal;margin:14px 0}
+  .aside{background:var(--panel);border:1px solid var(--rule);border-radius:12px;
+    padding:16px 20px;margin:22px 0}
+  .aside p:last-child{margin-bottom:0}
+  .win{border-left:3px solid #2ECC40;padding-left:14px;margin:16px 0}
+  .lose{border-left:3px solid #FF4136;padding-left:14px;margin:16px 0}
+  .key{border-left:3px solid #FFDC00;padding-left:14px;margin:16px 0}
+  h3{font-size:19px;margin:32px 0 10px;font-weight:600}
+  h4{font-size:15.5px;margin:22px 0 6px;font-weight:600}
+  .num{font-variant-numeric:tabular-nums}
+  table td.num,table th.num{text-align:right}
+  .src{font-size:12.5px;color:var(--dim)}
+  tr.hi td{background:rgba(255,220,0,.07)}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="./index.html">← method</a> ·
+      <a href="./loop.ko.html">이 솔버는 어떻게 도는가</a> ·
+      <a href="./vs-prolong.ko.html">PRO-LONG 비교</a></div>
+    <h1>baseline1 / ewma_sv 와의 비교</h1>
+    <div class="byline">우리와 <b>같은 아키텍처</b>를 논문 수준으로 구현한 저장소입니다.
+      그리고 그 논문의 제목이 우리 전제에 대한 질문 그 자체입니다 —
+      「코딩 에이전트가 ARC-AGI-3를 풀려면 실행 가능 월드모델과 단순화와 검증이
+      필요한가?」. 저자들이 그 질문에 실험으로 답해 놓았습니다.</div>
+  </div>
+</header>
+
+<main>
+<div class="col">
+
+  <h2 id="why">왜 이 비교가 앞의 것보다 아픈가</h2>
+  <p class="lede">PRO-LONG은 다른 길을 갔습니다. 이쪽은 <b>우리와 같은 길을 갔고,
+  훨씬 멀리 갔습니다.</b></p>
+
+  <p>사실 이 이름은 우리 코드에 이미 적혀 있었습니다.
+  <span class="fn">agents/wm/backtest.py</span>의 첫 문단이 이 계약을 두고
+  "Schema <span class="fn">run_backtest</span> / Baseline1
+  <span class="fn">verify_world_model</span> contract"라고 말합니다. 논문을 읽고
+  개념을 가져다 쓴 적은 있지만, <b>구현을 직접 열어본 적은 없었습니다.</b></p>
+
+  <p>저장소는 논문 두 편의 자료를 담고 있습니다. paper01이
+  <span class="fn">arXiv:2605.05138</span>, paper02가
+  <span class="fn">arXiv:2607.15439</span> — 이 프로젝트에서 이미 읽고 모듈 몇 개를
+  가져왔던 그 논문입니다. 파이썬 234개 파일, 47,154줄입니다.</p>
+
+  <h2 id="same">얼마나 같은가</h2>
+  <p>그들의 <span class="fn">ewma_sv</span> 계열은 우리와 부품 단위로 대응됩니다.
+  독립적으로 도달한 결과인데 인터페이스가 거의 겹칩니다.</p>
+
+  <table>
+    <tr><th>ewma_sv_v1.6</th><th>우리</th><th>역할</th></tr>
+    <tr><td class="fn">world_model_engine(state, action)</td><td class="fn">step</td>
+        <td>동역학</td></tr>
+    <tr><td class="fn">initial_state_reconstruction(...)</td><td class="fn">reconstruct</td>
+        <td>프레임 → 상태</td></tr>
+    <tr><td class="fn">state_renderer(state)</td><td class="fn">render</td>
+        <td>상태 → 프레임</td></tr>
+    <tr><td class="fn">apply_render_overrides(...)</td><td class="fn">ignore</td>
+        <td>설명 못 한 부분의 처리</td></tr>
+    <tr><td class="fn">world_model_main_planner.py</td><td class="fn">run_bfs</td>
+        <td>모델 안에서 계획</td></tr>
+    <tr><td class="fn">verify_world_model.py</td><td class="fn">run_backtest</td>
+        <td>기록 전체 재생 검증</td></tr>
+  </table>
+
+  <p>철학도 같은 문장으로 적혀 있습니다. 그들의 프롬프트 첫머리입니다.</p>
+  <div class="code">Actions taken in the real game are costly because each move consumes
+a limited step budget. Simulation inside the world model is free.</div>
+  <p>액션은 비싸고 시뮬레이션은 공짜다 — 우리가 <a href="./loop.ko.html">루프
+  페이지</a> 첫 절에 쓴 것과 같은 말입니다.</p>
+
+  <h2 id="ablation">그 논문이 던진 질문과, 저자들이 낸 답</h2>
+  <p>논문 제목이 질문입니다. 실행 가능 월드모델이 정말 필요한가? 저자들은 네 가지
+  처방을 만들어 25개 공개 게임에 전부 돌렸습니다.</p>
+
+  <table>
+    <tr><th>에이전트</th><th>월드모델</th><th>단순화</th><th>검증</th></tr>
+    <tr><td class="fn">twma</td><td><b>텍스트</b></td><td>없음</td><td>없음</td></tr>
+    <tr><td class="fn">ewma</td><td>실행 가능</td><td>없음</td><td>없음</td></tr>
+    <tr><td class="fn">ewma_s</td><td>실행 가능</td><td><b>있음</b></td><td>없음</td></tr>
+    <tr><td class="fn">ewma_sv</td><td>실행 가능</td><td>있음</td><td><b>정확 재생</b></td></tr>
+  </table>
+
+  <p>결과입니다. 같은 모델·같은 노력 수준에서 비교해야 의미가 있으므로 두 구간만
+  뽑았습니다.</p>
+
+  <h4>GPT-5.5, xhigh — 네 처방이 나란히 놓인 유일한 구간</h4>
+  <table>
+    <tr><th>에이전트</th><th class="num">전부 푼 게임</th><th class="num">평균 점수</th>
+        <th class="num">총 토큰</th></tr>
+    <tr><td class="fn">twma_v1.2 (텍스트)</td><td class="num">19/25</td>
+        <td class="num">72.5%</td><td class="num"><b>68.2M</b></td></tr>
+    <tr><td class="fn">ewma_v1.2</td><td class="num">16/25</td>
+        <td class="num">69.7%</td><td class="num">74.0M</td></tr>
+    <tr><td class="fn">ewma_s_v1.2</td><td class="num">19/25</td>
+        <td class="num">73.1%</td><td class="num">163.5M</td></tr>
+    <tr class="hi"><td class="fn">ewma_sv_v1.2 (우리 방식)</td><td class="num">20/25</td>
+        <td class="num">74.8%</td><td class="num">222.1M</td></tr>
+  </table>
+
+  <div class="key">
+    <b>텍스트 모델이 실행 가능 모델을 이깁니다.</b> 검증까지 붙인 전체 처방이 텍스트
+    대비 게임 하나와 2.3점을 더 얻는 대가로 <b>토큰을 3.3배</b> 씁니다. 단순화 없는
+    실행 가능 모델은 텍스트보다 <b>나쁩니다</b>(16 대 19).
+  </div>
+
+  <h4>GPT-5.6-sol — 최신 모델에서</h4>
+  <table>
+    <tr><th>에이전트</th><th class="num">전부 푼 게임</th><th class="num">평균 점수</th>
+        <th class="num">총 토큰</th></tr>
+    <tr><td class="fn">twma_v1.6 max (텍스트)</td><td class="num">25/25</td>
+        <td class="num">96.0%</td><td class="num"><b>30.6M</b></td></tr>
+    <tr class="hi"><td class="fn">ewma_sv_v1.6 xhigh</td><td class="num">25/25</td>
+        <td class="num"><b>99.0%</b></td><td class="num">90.8M</td></tr>
+    <tr><td class="fn">ewma_sv_v1.6 max</td><td class="num">25/25</td>
+        <td class="num">98.8%</td><td class="num">103.5M</td></tr>
+  </table>
+
+  <p>실행 가능 + 검증이 이깁니다. 96.0 대 99.0. 다만 <b>토큰이 3배</b>이고, 텍스트
+  쪽도 25게임을 전부 풉니다. 저자들 자신도 이걸 "공개 세트의 포화"라고 부르지
+  ARC-AGI-3가 풀렸다는 뜻은 아니라고 못박아 두었습니다.</p>
+
+  <div class="lose">
+    <b>우리 전제에 대한 솔직한 평가:</b> 실행 가능 월드모델과 검증은 <b>값을
+    합니다. 다만 완만하게, 그리고 세 배의 비용으로.</b> "이 방식이어야 풀린다"는
+    주장은 발표된 증거로 지지되지 않습니다. 텍스트 모델도 풉니다. 앞선
+    <a href="./vs-prolong.ko.html">PRO-LONG 비교</a>가 같은 방향을 가리켰는데,
+    이쪽은 통제된 ablation으로 그걸 보여줍니다.
+  </div>
+
+  <h2 id="diff">그러면 왜 그들은 99%이고 우리는 0인가</h2>
+  <p>아키텍처가 같은데 결과가 다르다면, 차이는 아키텍처가 아니라 그 안을 채우는
+  방식에 있습니다. 코드를 읽고 찾은 것이 일곱 가지입니다.</p>
+
+  <h3>1. 그들은 코드와 산문을 <b>둘 다</b> 유지합니다</h3>
+  <p>이게 가장 컸습니다. 레벨마다 요구되는 산출물 목록에 코드만 있는 게 아닙니다.</p>
+  <div class="code">world_model.md            — 현재 월드모델의 간결한 서술
+world_model_engine.py     — 동역학
+world_model_state_io.py   — 재구성과 렌더러
+world_model_main_planner.py
+level_N_reasoning_log.md  — 가설, 증거, 관찰, 모델 갱신의 기록
+level_N_report.md         — 레벨을 푼 뒤의 보고서: 헛짚은 가설까지 포함</div>
+  <p>즉 <b>확정된 것은 코드로, 아직 확정되지 않은 것은 산문으로</b> 갑니다. 프롬프트가
+  <span class="fn">world_model.md</span>에 "무엇이 아직 해결되지 않은 관찰인지"까지
+  적으라고 요구합니다.</p>
+  <p>우리에게는 이 층이 없습니다. 우리 브레인은 매 호출마다 빈 임시 디렉터리에서
+  시작하고, 가설은 저장되지 않으며, 확정 전의 생각은 어디에도 남지 않습니다.
+  <a href="./vs-prolong.ko.html">PRO-LONG 비교</a>에서 "산문 이론은 부분적으로
+  맞아도 쓸 수 있다"고 적었는데, 여기서는 그 산문 층이 실행 가능 모델과
+  <b>공존</b>합니다. 둘 중 하나를 고르는 문제가 아니었습니다.</p>
+
+  <h3>2. 불일치를 그림으로 보여줍니다</h3>
+  <p>검증이 실패하면 그들은 PNG를 씁니다. 틀린 픽셀을 마젠타로 칠한 전체 프레임
+  하나, 그리고 불일치가 몰린 국소 영역 하나입니다. 멀티모달 에이전트가 그걸
+  <b>봅니다.</b></p>
+  <p>우리는 <span class="fn">[행, 열, 예측, 실제]</span> 숫자 목록을 넘깁니다.
+  공교롭게도 우리는 오늘 같은 것을 독립적으로 배웠습니다 — 증거를 좌표 목록 대신
+  before/after 크롭으로 바꾸자 vc33이 전날 못 풀던 두 레벨을 바로 풀었습니다.
+  같은 교훈을 그들은 검증 실패 쪽에도 적용해 두었습니다.</p>
+
+  <h3>3. 부분적으로 틀린 모델도 통과시킬 문이 있습니다</h3>
+  <p><span class="fn">apply_render_overrides</span>는 렌더링 단계의 탈출구입니다.
+  아직 설명 못 하는 프레임 차이를 시각적으로 덮어 검증을 통과시키되, 함수의
+  독스트링이 이렇게 말합니다.</p>
+  <div class="code">Keep this temporary, narrow, and purely visual. Every override here should
+be treated as evidence that the actual model is still missing a mechanic
+or observation rule.</div>
+  <p>게다가 검증기가 이 함수를 쓴 레벨에 대해 <b>경고를 찍습니다.</b> 빚을 지되
+  빚이라고 소리내어 말하는 구조입니다.</p>
+  <p>우리에게도 <span class="fn">ignore</span>가 있지만 셀 마스크이고 거의 쓰이지
+  않습니다. 결과적으로 우리 채택 기준은 사실상 <b>전부 맞거나 전부 거절</b>입니다.
+  95% 맞는 모델이 통째로 버려집니다.</p>
+
+  <h3>4. 검증을 강제하지 않습니다</h3>
+  <p>그들의 아키텍처 문서에 이렇게 적혀 있습니다. "Verifier use remains prompted and
+  tool-supported rather than silently enforced by the controller." 검증기는 도구로
+  주어지고 프롬프트가 쓰라고 권할 뿐, 컨트롤러가 막지는 않습니다.</p>
+  <p>우리는 정반대입니다. 백테스트가 초록이 아니면 계획 단계로 <b>넘어가지
+  못합니다.</b> 안전하지만, 모델이 완벽해질 때까지 아무것도 못 하게 만드는 구조이기도
+  합니다.</p>
+
+  <h3>5. 레벨 하나에 여러 번의 시도가 있습니다</h3>
+  <p>게임이 결정적이라는 사실을 프롬프트가 명시하고, <span class="fn">GAME_OVER</span>가
+  나면 같은 레벨에 새 시도를 줍니다. "이전 실패한 시도들을 분석하고 <b>다른</b>
+  접근을 하라"고 요구합니다. 실패한 시도가 버려지는 게 아니라 다음 시도의 재료입니다.</p>
+
+  <h3>6. 레벨 간 이월을 명시적으로 기대합니다</h3>
+  <div class="code">Later levels usually extend earlier mechanics rather than replacing them,
+so a useful model may carry ideas forward across levels.</div>
+  <p>우리도 모델을 이월하지만(오늘 ft09·vc33이 저장된 모델을 들고 시작했습니다),
+  프롬프트에서 그걸 기대하라고 말해준 적은 없습니다.</p>
+
+  <h3>7. 계산량의 자릿수가 다릅니다</h3>
+  <p>25게임에 90~220M 토큰입니다. 저장소 문서가 "변형에 따라 ChatGPT Pro 구독
+  4~5개가 필요할 수 있다"고 적어둘 정도입니다. 우리 KA59 실행은 브레인 콜 12번이었고
+  그중 상당수가 사용량 한도에 걸렸습니다.</p>
+
+  <div class="aside">
+    <p>공정하게 말하면 이건 비교라기보다 <b>규모의 차이</b>입니다. 그들은 25게임을
+    정규 실험으로 여러 모델·여러 노력 수준에서 돌렸고, 우리는 아홉 게임을 세션
+    사이사이에 만들다 말다 했습니다. 어제까지 우리 루프에는 예산을 쓰지도 못하고
+    포기하는 버그가 여섯 군데 있었습니다.</p>
+  </div>
+
+  <h2 id="mean">우리가 지켜야 할 것 — 목적이 다릅니다</h2>
+  <p>ablation이 "실행 가능 모델은 비싸고 이득이 작다"고 말한다면, 우리가 그 길을
+  고집할 이유가 남아 있는가? 남아 있습니다. 다만 그들과는 다른 이유입니다.</p>
+
+  <p><b>그들의 목적은 푸는 것이고, 우리 목적은 넘겨주는 것입니다.</b> 이 프로젝트는
+  프론티어 하네스의 결과물을 7B 모델에 distill하는 것을 목표로 합니다. 그 목적에서
+  산출물의 성격이 결정적입니다.</p>
+
+  <table>
+    <tr><th></th><th>텍스트 모델</th><th>실행 가능 모델 + 검증</th></tr>
+    <tr><td>산출물</td><td>산문 노트</td><td>검증된 파이썬 소스</td></tr>
+    <tr><td>학습 목표로 쓸 수 있나</td><td>애매하다. 옳고 그름을 기계가 못 판정한다</td>
+        <td>가능하다. 소스가 곧 목표이고 검증기가 채점한다</td></tr>
+    <tr><td><span class="fn">repair</span> 쌍</td><td>만들 수 없다</td>
+        <td>반증 하나당 하나씩 공짜로 나온다</td></tr>
+  </table>
+
+  <p>특히 마지막 줄입니다. 반증당한 소스 + 검증기가 짚은 지점 + 고쳐 쓴 소스라는
+  삼중쌍은 <b>검증기가 있어야만 존재합니다.</b> 점수 변화만 피드백으로 쓰는 구조에서는
+  "이 소스의 이 규칙이 이 셀에서 틀렸다"는 문장이 나올 수 없습니다. 작은 모델에게
+  월드모델을 <i>쓰는</i> 법을 가르치려면 그 문장이 필요합니다.</p>
+
+  <div class="win">
+    그리고 실제로 효율 축에서는 이 방식이 값을 합니다. tu93은 우리와 PRO-LONG이
+    모두 전 레벨을 깬 유일한 게임인데, 그들 227액션 대 우리 185액션이었습니다.
+    모델 안에서 최단 경로를 찾으면 액션을 덜 씁니다.
+  </div>
+
+  <h2 id="todo">가져올 것</h2>
+  <p>앞선 PRO-LONG 분석에서 넷을 뽑았는데, 이번 저장소는 그중 셋을 <b>같은 방향으로
+  다시 가리킵니다.</b> 두 개의 독립적인 구현이 같은 것을 말하면 그건 신호입니다.</p>
+
+  <p><b>1. 산문 층을 만들 것.</b> 확정된 것은 코드로, 확정되지 않은 것은
+  <span class="fn">world_model.md</span>와 추론 로그로. 우리 브레인은 지금 호출
+  사이에 아무 기억이 없습니다. 이게 단일 최대 격차로 보입니다.</p>
+
+  <p><b>2. 불일치를 그림으로 넘길 것.</b> 우리는 증거 쪽에서 이미 효과를 확인했고,
+  검증 실패 쪽에는 아직 적용하지 않았습니다. 마젠타 오버레이는 그대로 따라 할 수
+  있습니다.</p>
+
+  <p><b>3. 부분적으로 맞는 모델에 문을 열 것.</b> 그들의
+  <span class="fn">apply_render_overrides</span>가 우리
+  <span class="fn">ignore</span>보다 훨씬 넓고, 대신 쓸 때마다 경고를 찍습니다.
+  빚을 금지하는 대신 <b>빚을 계측</b>합니다.</p>
+
+  <p><b>4. 레벨당 여러 시도.</b> 게임은 결정적이므로 실패한 시도는 그대로 다음
+  시도의 증거입니다. 우리는 지금 한 레벨을 하나의 연속된 흐름으로 다룹니다.</p>
+
+  <h2 id="repro">확인 방법</h2>
+  <pre>git clone --depth 50 https://github.com/astroseger/arc-3-agents-baseline1.git \
+  external/baseline1
+
+# ablation 집계 (아래 표의 출처)
+ls external/baseline1/papers/paper02/results/*_table.md
+
+# 우리와 대응되는 계약
+cat external/baseline1/papers/paper02/agents/ewma_sv_v1.6/src/agent/\
+workspace_init/world_model_engine.py
+
+# 검증기와 불일치 이미지 생성
+sed -n '1,80p' external/baseline1/papers/paper02/agents/ewma_sv_v1.6/src/agent/\
+workspace_init/verify_world_model.py</pre>
+
+</div>
+</main>
+
+<footer><div class="col">저장소는 읽기만 했고 실행하지 않았습니다. 게임
+소스(<span class="fn">environment_files/</span>)는 열지 않았습니다. 표의 수치는
+저장소에 포함된 게임별 결과표를 집계한 것이며 위 경로에서 다시 계산할 수
+있습니다.</div></footer>
+
+</body>
+</html>
