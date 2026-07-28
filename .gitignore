@@ -30,6 +30,12 @@ recordings_*/
 
 # Large training data & generated artifacts (regenerable / downloaded)
 data/
+# ...but the site's per-game data is what the pages fetch. This rule was
+# written for datasets and it silently took artifacts/wm_viz/<game>/data/
+# with it, so every page except tu93's -- which predates the rule --
+# published as an empty shell: the HTML loaded and its fetch 404'd.
+!**/artifacts/wm_viz/**/data/
+!**/artifacts/wm_viz/**/data/**
 # Run artifacts are huge (~1.8G) and regenerable — except the world-model
 # journals and write-up, which are the durable record of the work.
 # (a pattern with a slash in the middle is anchored to the repo root, so these
