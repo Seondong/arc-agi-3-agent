@@ -22,3 +22,7 @@ brain workdir: /var/folders/kw/lgjkyr1x1lxc8twp2pdqfjw80000gn/T/wmbrain-u2e6kxfz
   evidence: 13 run(s), 174 engine steps
   carried model refuted: backtest 0/1 then pointed bug at step 1 after ACTION6(13,56): 35 cell(s) mispredicted
   brain call 1/14 ...
+  brain failed after 1040s: no acceptable model after 4 attempt(s); last failure: ValueError: replay failed: backtest 0/1 then pointed bug at step 1 after ACTION6(32,0): 1 cell(s) mispredicted
+Traceback (most recent call last):
+
+  brain call 2/14 ...

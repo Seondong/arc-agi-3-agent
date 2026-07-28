@@ -46,6 +46,33 @@ def load_module(source):
     return mod.build(1)
 
 
+def evidence_timelines(game, level=0):
+    """One recorded step per available action, gathered fresh.
+
+    Solutions only exist for games we have solved, and the games that produce
+    the most repair pairs are exactly the ones we have NOT solved -- cd82 has
+    thirteen refutations and no cleared level. Probing each action once from the
+    opening frame gives a replayable, deterministic history for any game.
+    """
+    from agents.wm.core import Action, Status, Timeline, Transition
+    from agents.wm.harness import Session
+    import sys as _sys
+    _sys.path.insert(0, "scripts/wm")
+    from autosolve import action_set
+    s = Session.open(game, level)
+    out = []
+    for act in action_set(s.grid, s.raw.available_actions)[:12]:
+        s.reset_to(level)
+        init = s.grid
+        tl = Timeline(init)
+        s.act(act.name, x=act.x, y=act.y)
+        tl.record(Transition(step_index=1, action=act, before_frame=init,
+                             after_frame=None if s.dead else s.grid,
+                             status=(Status.GAME_OVER if s.dead else Status.RUNNING)))
+        out.append(tl)
+    return out
+
+
 def timelines_for(game):
     """Recorded evidence to replay against: the game's own saved solutions."""
     from agents.wm.core import Action, Status, Timeline, Transition
@@ -77,6 +104,8 @@ def timelines_for(game):
             prev = s.grid
         if len(tl):
             out.append(tl)
+    if not out:
+        out = evidence_timelines(game)
     return out
 
 
@@ -126,9 +155,16 @@ def main():
     cache, rows = {}, []
     for i, t in enumerate(tasks, start=1):
         sysmsg, user = build_prompt(t, system)
-        prompt = tok.apply_chat_template(
-            [{"role": "system", "content": sysmsg}, {"role": "user", "content": user}],
-            add_generation_prompt=True, tokenize=False)
+        # Thinking burns the whole budget before any code appears: the first
+        # measured run hit a 3000-token cap with the reply still mid-reasoning.
+        # The task is to emit a module, not to narrate.
+        msgs = [{"role": "system", "content": sysmsg}, {"role": "user", "content": user}]
+        try:
+            prompt = tok.apply_chat_template(msgs, add_generation_prompt=True,
+                                             tokenize=False, enable_thinking=False)
+        except TypeError:
+            prompt = tok.apply_chat_template(msgs, add_generation_prompt=True,
+                                             tokenize=False)
         t0 = time.time()
         out = generate(model, tok, prompt=prompt, max_tokens=a.max_tokens, verbose=False)
         dt = time.time() - t0
