@@ -94,3 +94,33 @@ def test_identical_probes_collapse_to_one():
              "target": {"actions": ["ACTION3"], "observed": "0 cells", "died": False}}
     kept = ex.dedupe([p, same, other])
     assert len(kept) == 2, f"expected the duplicate to collapse, got {len(kept)}"
+
+
+# ---------------------------------------------------------------------------
+# The pointed cells have to reach the journal, or no repair pair can ever pass.
+# ---------------------------------------------------------------------------
+
+def test_pointed_cells_are_computed_from_two_frames():
+    """Every repair pair failed the `cells` check because the journal held none.
+    refute() has always accepted a `diff`, and no caller ever passed one, so the
+    single most useful part of a counterexample -- which cells, predicted what,
+    actually what -- was computed and dropped."""
+    import execute_gated as eg
+    predicted = [[1, 2], [3, 4]]
+    actual = [[1, 9], [3, 4]]
+    assert eg.pointed_cells(predicted, actual) == [[0, 1, 2, 9]]
+
+
+def test_pointed_cells_respects_the_ignore_mask():
+    """A cell the model declared unpredictable is debt, not a counterexample."""
+    import execute_gated as eg
+    predicted = [[1, 2], [3, 4]]
+    actual = [[1, 9], [3, 8]]
+    assert eg.pointed_cells(predicted, actual, ignore={(0, 1)}) == [[1, 1, 4, 8]]
+
+
+def test_pointed_cells_is_empty_when_a_frame_is_missing():
+    """A death often returns no frame; there is nothing to point at."""
+    import execute_gated as eg
+    assert eg.pointed_cells(None, [[1]]) == []
+    assert eg.pointed_cells([[1]], None) == []

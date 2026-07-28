@@ -37,7 +37,7 @@ from agents.wm.harness import (BudgetExceeded, Session, engine_steps,
 from agents.wm.journal import Journal, summary
 from agents.wm.models import has_model, model_for, short_id
 from agents.wm.planner import run_bfs
-from execute_gated import execute_gated
+from execute_gated import execute_gated, pointed_cells
 from explore_level import explore, signature
 
 DIRECTIONAL = ["ACTION1", "ACTION2", "ACTION3", "ACTION4", "ACTION5", "ACTION7"]
@@ -418,10 +418,16 @@ def solve_level(game, level, brain, J, args, deadline):
                 print("  carried model already reproduces the evidence")
             else:
                 print(f"  carried model refuted: {bad.summary()}")
+                m = bad.first_mismatch
                 J.refute(version="carried", bug=bad.summary(),
-                         step_index=getattr(bad.first_mismatch, "step_index", 0),
-                         action=str(getattr(bad.first_mismatch, "action", "")),
-                         cells_off=getattr(bad.first_mismatch, "changed_cells", 0))
+                         step_index=getattr(m, "step_index", 0),
+                         action=str(getattr(m, "action", "")),
+                         cells_off=getattr(m, "changed_cells", 0),
+                         # A carried model refuted on a new level is the single
+                         # best repair input there is, and the cells are what
+                         # make it one.
+                         diff=pointed_cells(getattr(m, "predicted_frame", None),
+                                            getattr(m, "actual_frame", None)))
                 model = None
         except Exception:                                  # noqa: BLE001
             model = None

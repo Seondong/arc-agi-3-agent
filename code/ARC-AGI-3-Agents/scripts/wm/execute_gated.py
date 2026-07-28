@@ -26,6 +26,23 @@ from agents.wm.journal import Journal
 from agents.wm.models import model_for
 
 
+def pointed_cells(predicted, actual, ignore=None):
+    """[[row, col, predicted, actual], ...] — the counterexample, as cells.
+
+    `refute()` has always accepted this and no caller ever passed it, so every
+    refutation reached the journal saying only HOW MANY cells were wrong. That
+    is the difference between a pointed bug and a vague complaint, and it is why
+    all nine repair pairs in the corpus failed their quality check.
+    """
+    if predicted is None or actual is None:
+        return []
+    ig = ignore or set()
+    return [[r, c, predicted[r][c], actual[r][c]]
+            for r in range(len(actual))
+            for c in range(len(actual[0]))
+            if (r, c) not in ig and predicted[r][c] != actual[r][c]]
+
+
 def execute_gated(session, model, state, actions, *, journal=None, version="v0",
                   verbose=True):
     """Run `actions`, stopping at the first step the model gets wrong.
@@ -77,7 +94,8 @@ def execute_gated(session, model, state, actions, *, journal=None, version="v0",
                 print(f"  {len(actions) - i} action(s) not spent")
             if journal:
                 journal.refute(version=version, bug=bug, step_index=i, action=name,
-                               cells_off=off or 0, at=at)
+                               cells_off=off or 0, at=at,
+                               diff=pointed_cells(pred_frame, session.grid, hud))
             return {"taken": taken, "aborted_at": i, "bug": bug, "cleared": False,
                     "died": died, "checked": "frame+status" if renders else "status",
                     "saved": len(actions) - i}
