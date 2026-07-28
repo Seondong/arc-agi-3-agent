@@ -1,4 +1,101 @@
 {
  "game": "cd82",
- "gaps": []
+ "gaps": [
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 1,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 2,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 3,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 26,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 119,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 122,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "repair",
+   "level": 0,
+   "seq": 142,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 146,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 149,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "repair",
+   "level": 0,
+   "seq": 150,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 159,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 162,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 352,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 0,
+   "seq": 357,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 372,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "duplicate",
+   "level": null,
+   "seq": null,
+   "why": "264 identical pair(s) collapsed"
+  }
+ ]
 }

@@ -1,4 +1,65 @@
 {
  "game": "m0r0",
- "gaps": []
+ "gaps": [
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 12,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 1,
+   "seq": 16,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 2,
+   "seq": 5,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 2,
+   "seq": 18,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 2,
+   "seq": 46,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 2,
+   "seq": 49,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 2,
+   "seq": 50,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 2,
+   "seq": 52,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 2,
+   "seq": 53,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "duplicate",
+   "level": null,
+   "seq": null,
+   "why": "20 identical pair(s) collapsed"
+  }
+ ]
 }

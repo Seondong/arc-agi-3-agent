@@ -1,4 +1,41 @@
 {
  "game": "sk48",
- "gaps": []
+ "gaps": [
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 10,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "repair",
+   "level": 0,
+   "seq": 14,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 0,
+   "seq": 17,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "analyse",
+   "level": 1,
+   "seq": 1,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "plan",
+   "level": 1,
+   "seq": 3,
+   "why": "not trainable: empty or boilerplate target, or a refutation paired with an unrelated author"
+  },
+  {
+   "type": "duplicate",
+   "level": null,
+   "seq": null,
+   "why": "1 identical pair(s) collapsed"
+  }
+ ]
 }

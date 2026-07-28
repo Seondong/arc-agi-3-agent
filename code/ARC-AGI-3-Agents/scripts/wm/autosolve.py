@@ -145,6 +145,30 @@ def persist_model(game, level, source, note):
     return out
 
 
+REJECT_MARK = "---REJECTED SOURCE---"
+
+
+def journal_rejections(J, brain, limit):
+    """Write every refused proposal, WITH the source that was refused.
+
+    A rejection is the richest thing this loop makes: the verifier has just
+    said, in cell-exact terms, why a specific piece of source is wrong, and the
+    next accepted proposal is the answer. That is a complete repair pair and it
+    costs nothing extra to keep.
+
+    It was keeping only the complaint. 27 rejections across the games became 27
+    notes averaging 150 characters, and not one trainable pair, while the source
+    sat in brain.log and in a temp file that is deleted with the process.
+    """
+    for pr in list(getattr(brain, "log", []))[-limit:]:
+        if pr.accepted or not pr.error:
+            continue
+        text = f"BRAIN REJECTED (attempt {pr.attempt}): {pr.error[:600]}"
+        if pr.source:
+            text += f"\n{REJECT_MARK}\n{pr.source}"
+        J.note(text=text)
+
+
 def ask_brain(brain, tls, source, report, extra, args, deadline, J, level):
     """propose(), waiting out a capacity limit instead of spending budget on it.
 
@@ -157,10 +181,30 @@ def ask_brain(brain, tls, source, report, extra, args, deadline, J, level):
     The wait is bounded by the run's own deadline, so an overnight run sleeps
     through a reset and a short one gives up and says why.
     """
+    last_limit = None
     while True:
+        # The deadline has to reach INSIDE a call, not only between calls. A
+        # hung `claude -p` costs its full timeout, four attempts make a 2400s
+        # call, and twelve calls make eight hours no matter what --minutes said.
+        # bp35 and cd82 each measured ~28,690s against a 120-minute budget.
+        left = deadline - time.time()
+        if left <= 0:
+            # Say WHY the run ended. "Out of time" and "out of time because the
+            # account had no capacity and we waited for it" call for different
+            # responses from whoever reads the log.
+            if last_limit is not None:
+                raise last_limit
+            raise TimeoutError("out of wall-clock time before the call started")
+        attempts = max(1, getattr(brain, "max_attempts", 1))
+        was = getattr(brain, "timeout_s", None)
+        if was is not None:
+            brain.timeout_s = max(30, min(was, int(left // attempts)))
         try:
             return brain.propose(tls, source, report, extra=extra)
         except RateLimited as rl:
+            last_limit = rl
+            if was is not None:
+                brain.timeout_s = was
             at = rl.reset_epoch()
             wait = (at - time.time()) if at else 900
             # Capped low on purpose: a retry while still limited costs
@@ -178,6 +222,9 @@ def ask_brain(brain, tls, source, report, extra, args, deadline, J, level):
             J.note(text=f"L{level}: rate limited, waiting {wait:.0f}s. "
                         f"{rl.message[:200]}")
             time.sleep(wait)
+        finally:
+            if was is not None:
+                brain.timeout_s = was
 
 
 def explore_and_repropose(game, level, tls, seen, J, args, brain, source, acts2,
@@ -226,6 +273,7 @@ def explore_and_repropose(game, level, tls, seen, J, args, brain, source, acts2,
     except Exception as exc:                              # noqa: BLE001
         print(f"  re-proposal failed: {str(exc)[:200]}")
         J.note(text=f"L{level}: re-proposal at call {calls} failed: {str(exc)[:400]}")
+        journal_rejections(J, brain, args.max_brain)
         return tls, None, source, None, [], calls
     st = model.reconstruct(Session.open(game, level).grid)
     plan = run_bfs(model, st, acts2, max_depth=args.max_depth)
@@ -405,10 +453,7 @@ def solve_level(game, level, brain, J, args, deadline):
         except Exception as exc:                           # noqa: BLE001
             print(f"  brain failed after {time.time() - t0:.0f}s: "
                   f"{str(exc)[:200]}")
-            for pr in brain.log[-args.max_brain:]:
-                if not pr.accepted and pr.error:
-                    J.note(text=f"BRAIN REJECTED (attempt {pr.attempt}): "
-                                f"{pr.error[:600]}")
+            journal_rejections(J, brain, args.max_brain)
             # Not fatal. A failed call used to abandon the level with the rest of
             # the brain budget and most of the wall clock unspent; the next call
             # is told what went wrong and asked to try differently.
@@ -524,6 +569,7 @@ def solve_level(game, level, brain, J, args, deadline):
                 print(f"  brain failed: {str(exc)[:200]}")
                 J.note(text=f"L{level}: brain failed in goal round {round_no}: "
                             f"{str(exc)[:400]}")
+                journal_rejections(J, brain, args.max_brain)
                 continue
             st0 = model.reconstruct(Session.open(game, level).grid)
             plan = run_bfs(model, st0, acts2, max_depth=args.max_depth)
@@ -615,6 +661,7 @@ def solve_level(game, level, brain, J, args, deadline):
             # gets fresh evidence and another turn, not the end of the game.
             print(f"  repair failed: {str(exc)[:200]}")
             J.note(text=f"L{level}: repair call {calls} failed: {str(exc)[:400]}")
+            journal_rejections(J, brain, args.max_brain)
             tls, model, source, note, names, calls = explore_and_repropose(
                 game, level, tls, seen, J, args, brain, source, acts2, calls,
                 deadline, why)

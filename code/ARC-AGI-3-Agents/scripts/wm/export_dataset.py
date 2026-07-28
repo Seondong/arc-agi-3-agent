@@ -57,6 +57,62 @@ def model_text(entry):
     return code if len(code) > PLACEHOLDER_MAX else None
 
 
+# An author entry written by the generic proposal path says this; it is not a
+# description of any particular fix, so a refutation paired with it is not a
+# repair pair.
+GENERIC_CHANGED = ("model proposed from", "re-proposed", "proposed by",
+                   "carried", "none")
+
+
+def is_trainable(ex):
+    """Does this pair teach anything, and does it teach the right thing?
+
+    The journal keeps failures on purpose — a search that found nothing and an
+    exploration that changed nothing are both worth recording. The dataset must
+    not inherit that: an example whose target is an empty action list teaches
+    "given this frame, do nothing", and a refutation paired with an unrelated
+    author entry teaches that the answer to a pointed bug is boilerplate.
+
+    Measured before this existed: 26 of 47 plan pairs had no actions, 20 had no
+    input frame, 38 of 59 analyse targets were a log line, all 9 repair pairs
+    were missing the pointed cells and 5 of the 9 were mispaired.
+    """
+    t = ex.get("type")
+    inp, tgt = ex.get("input") or {}, ex.get("target") or {}
+    if t == "plan":
+        return bool(tgt.get("actions")) and inp.get("frame") is not None
+    if t == "analyse":
+        return bool(tgt.get("entities"))
+    if t == "repair":
+        if not inp.get("cells"):
+            return False          # the pointed cells ARE the counterexample
+        if not (inp.get("model_source_before") and tgt.get("model_source_after")):
+            return False
+        changed = (tgt.get("changed") or "").strip().lower()
+        return bool(changed) and not changed.startswith(GENERIC_CHANGED)
+    if t == "predict":
+        return inp.get("frame") is not None and bool(tgt.get("cell_diff"))
+    return True
+
+
+def dedupe(examples):
+    """Collapse pairs that ask the same question of the same frame.
+
+    1,645 probe pairs came from 35 distinct questions, the commonest repeated
+    267 times. That is not 1,645 examples; it is 35 examples with a very uneven
+    loss weight.
+    """
+    seen, out = set(), []
+    for ex in examples:
+        key = json.dumps([ex.get("type"), ex.get("input"), ex.get("target")],
+                         sort_keys=True, default=str)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(ex)
+    return out
+
+
 def grid_diff(a, b):
     return [[r, c, b[r][c]] for r in range(len(a)) for c in range(len(a[0]))
             if a[r][c] != b[r][c]]
@@ -297,6 +353,25 @@ def export(game, out_dir):
                     "target": {"actions": e.get("actions", []),
                                "stats": e.get("stats", {})},
                 })
+
+    # The journal keeps everything on purpose; the dataset must not inherit that.
+    # Dropped examples are reported as gaps so the loss is visible rather than
+    # silently improving the counts.
+    kept = []
+    for ex in examples:
+        if is_trainable(ex):
+            kept.append(ex)
+        else:
+            gaps.append({"type": ex.get("type"), "level": ex.get("level"),
+                         "seq": ex.get("seq"),
+                         "why": "not trainable: empty or boilerplate target, or "
+                                "a refutation paired with an unrelated author"})
+    before = len(kept)
+    kept = dedupe(kept)
+    if before != len(kept):
+        gaps.append({"type": "duplicate", "level": None, "seq": None,
+                     "why": f"{before - len(kept)} identical pair(s) collapsed"})
+    examples = kept
 
     out_dir.mkdir(parents=True, exist_ok=True)
     path = out_dir / f"{game}.jsonl"
