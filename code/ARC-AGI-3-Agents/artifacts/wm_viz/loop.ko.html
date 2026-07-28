@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이 솔버는 어떻게 도는가</title>
+<link rel="stylesheet" href="./shared/style.css">
+<style>
+  body{word-break:keep-all}
+  .flow{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;
+    line-height:1.65;background:var(--panel);border:1px solid var(--rule);
+    border-radius:12px;padding:18px 20px;overflow-x:auto;white-space:pre;
+    word-break:normal}
+  .stop{border-left:3px solid var(--accent);padding-left:14px;margin:14px 0}
+  .fn{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;
+    word-break:break-all}
+  .lede{font-size:17px;line-height:1.75}
+  p{line-height:1.85}
+  .num{font-variant-numeric:tabular-nums}
+  .aside{background:var(--panel);border:1px solid var(--rule);border-radius:12px;
+    padding:16px 20px;margin:20px 0}
+  .aside p:last-child{margin-bottom:0}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="col">
+    <div class="back"><a href="./index.html">← method</a> ·
+      <a href="./loop.html">English</a></div>
+    <h1>이 솔버는 어떻게 도는가</h1>
+    <div class="byline">무인 실행기 <span class="fn">scripts/wm/autosolve.py</span>의
+      현재 제어 흐름. 멈출 수 있는 자리를 하나도 빼지 않고 적었고, 각 예산이
+      실제로 무엇을 한정하는지도 함께 적었습니다. 기억이 아니라 소스에서
+      뽑았습니다 — 아래 줄번호는 파일의 AST에서 추출해 대조한 값입니다.</div>
+  </div>
+</header>
+
+<main>
+<div class="col">
+
+  <h2 id="why">왜 이런 모양인가</h2>
+  <p class="lede">이 솔버는 정책을 학습하지 않습니다. 게임의 규칙을 파이썬 코드로
+  써서, 그 코드가 지금까지 관찰한 모든 것을 재현하는지 검증하고, 검증을 통과한
+  코드 <i>안에서만</i> 계획을 세웁니다.</p>
+
+  <p>이 구조는 취향이 아니라 점수 공식에서 강제된 것입니다. 레벨 점수는
+  <span class="fn">min(1, 사람_액션수 / 우리_액션수)</span>를 <b>제곱</b>합니다.
+  사람의 두 배를 쓰면 25%, 열 배를 쓰면 1%가 됩니다. 환경에 액션 하나를 보내는
+  일이 극도로 비싸다는 뜻입니다.</p>
+
+  <p>반대로 <b>생각은 공짜입니다.</b> 내부 추론도, 도구 호출도, 모델을 몇 번을
+  다시 쓰든 액션으로 세지 않습니다. 그러니 답은 자명해집니다. 모든 탐색을
+  머릿속에서 — 즉 모델 안에서 — 끝내고, 확신이 선 것만 실제로 누른다.</p>
+
+  <p>여기서 검증기가 왜 중심에 오는지도 따라 나옵니다. 그럴듯해 보이는 모델을
+  믿고 계획을 세우면 액션을 낭비합니다. 그래서 모델은 <b>그럴듯해서가 아니라
+  지금까지 본 모든 전이를 셀 하나까지 정확히 재현해서</b> 채택됩니다. 틀린 모델은
+  액션이 아니라 재시도 한 번을 소모할 뿐입니다.</p>
+
+  <h2 id="contract">게임마다 다른 것은 딱 하나</h2>
+  <p>파이프라인 전체가 게임과 무관합니다. 게임에 종속된 것은
+  <span class="fn">agents/wm/models/&lt;게임&gt;.py</span> 하나뿐이고, 이 모듈은
+  여섯 개의 메서드를 가진 객체를 돌려주기만 하면 됩니다. dataclass일 필요도,
+  프로젝트의 무언가를 import할 필요도 없습니다. 요즘은 사람이 아니라 언어모델이
+  씁니다.</p>
+
+  <table>
+    <tr><th>메서드</th><th>반환</th><th>왜 필요한가</th></tr>
+    <tr><td class="fn">reconstruct(frame)</td><td>state</td>
+        <td>프레임 하나에서 그 레벨의 시작 상태를 만든다</td></tr>
+    <tr><td class="fn">step(state, action)</td><td>(state, status)</td>
+        <td>동역학. 사실상 이것이 <b>게임에 대한 이론</b>이다</td></tr>
+    <tr><td class="fn">render(state)</td><td>frame</td>
+        <td>예측을 셀 단위로 대조할 수 있게 한다</td></tr>
+    <tr><td class="fn">is_goal(state)</td><td>bool</td>
+        <td>추론된 승리 조건. <b>모르면 False</b>이며, 절대 지어내지 않는다</td></tr>
+    <tr><td class="fn">fingerprint(state)</td><td>hashable</td>
+        <td>탐색기의 방문 집합 키</td></tr>
+    <tr><td class="fn">ignore(frame)</td><td>cells</td>
+        <td>검증에서 제외할 칸. 제외한 칸은 전부 <b>빚</b>이다</td></tr>
+  </table>
+
+  <h2 id="flow">한 레벨이 풀리기까지</h2>
+  <p>아래가 <span class="fn">solve_level()</span>, 398번째 줄입니다. 오른쪽 열을
+  <b>비용</b>으로 읽으십시오. 실제 액션을 쓰는 단계는 셋뿐이고 나머지는 전부
+  공짜입니다.</p>
+
+<div class="flow">gather_evidence()          L324   실제 액션 — 후보 액션마다 한 번씩
+  │                                  좌표 게임이면 값-영역당 대표 칸 하나씩
+  │                                  전부 무반응이면 sweep_candidates() L68 이
+  │                                  "이 게임이 대체 어디를 듣고 있나"를 찾는다
+  ▼
+이어받을 모델이 있나?                agents/wm/models/&lt;게임&gt;.py 가 있으면 먼저
+  │                                  재생해 본다. 여기서 반증이 나오면 최고의
+  │                                  출발점이다 — 짚힌 버그를 공짜로 얻는다
+  ▼
+ask_brain()                L172   액션 0 — claude -p 가 소스 텍스트를 반환
+  │                                  파일을 쓰지도, 레포를 읽지도 않는다
+  ▼
+run_backtest()                     액션 0 — 기록된 모든 전이를 재생하고
+  │                                  셀 단위 일치를 요구. 실패하면 첫 어긋남이
+  │                                  반례로 돌아가고, 비용은 재시도 한 번
+  ▼
+run_bfs()                          액션 0 — 채택된 모델 안에서 탐색.
+  │                                  여기서의 죽음은 상상이므로 공짜다
+  ▼
+  ├── 계획이 없으면 ─────────────► explore_and_repropose()  L230
+  │                                  실제 액션, --explore-budget 만큼만
+  │                                  그리고 찾은 것을 붙여 다시 제안
+  ▼
+execute_gated()                    실제 액션 — 단, 매번 먼저 예측한다.
+  │                                  예측 → 행동 → 대조. 첫 불일치에서 중단하며
+  │                                  그 덕분에 계획의 나머지가 절약된다
+  ▼
+  ├── 클리어? ─► save_solution() + persist_model()  L109
+  │                                  모델이 레포 파일이 되고 스스로 등록한다.
+  │                                  프로세스보다 오래 살아남는다
+  └── 아니면 ─► 수리: 불일치를 되먹이고 다시 계획한다</div>
+
+  <h2 id="three">계획이 실패하는 세 가지 방식</h2>
+  <p>계획이 클리어에 실패했다는 것은 한 가지 사건이 아닙니다. 루프는 이 셋을
+  구분하는데, 각각에서 얻을 수 있는 교정 정보가 완전히 다르기 때문입니다.</p>
+
+  <p><b>첫째, 셀을 잘못 예측한 경우.</b> 동역학이 틀렸습니다. 브레인에게는
+  "그 예측을 만들어낸 규칙을 고쳐라"라고 말합니다. 어느 스텝의 어느 액션에서
+  몇 개의 셀이 어떻게 틀렸는지가 함께 갑니다.</p>
+
+  <p><b>둘째, 예측하지 못한 죽음.</b> 모델에 "무엇이 죽이는가"가 아예 없습니다.
+  죽음으로 끝난 그 실행 기록을 통째로 넘깁니다.</p>
+
+  <p><b>셋째, 모든 스텝을 정확히 맞췄는데 이기지 못한 경우.</b> 이게 가장 유익한
+  실패입니다. 동역학은 맞다는 뜻이고, 따라서 틀린 것은
+  <span class="fn">is_goal</span> 하나입니다. 승리 조건을 다시 생각하라고
+  요구합니다.</p>
+
+  <h2 id="stops">멈출 수 있는 자리 — 그리고 그것들이 전부 버그였던 이야기</h2>
+  <p>이 페이지에서 가장 쓸모 있는 부분입니다. 아래 여덟 자리는 하나씩 전부
+  <b>루프가 예산을 거의 쓰지 않고 포기하던 버그의 자리</b>였습니다.</p>
+
+  <div class="aside">
+    <p>왜 이걸 굳이 문서에 박아두느냐면, <b>일찍 끝난 실행은 어려운 게임과
+    구별이 안 되기 때문입니다.</b> 로그에는 똑같이 <span class="fn">stopping</span>
+    이라고 찍힙니다.</p>
+    <p>2026년 7월 27일, 네 게임이 전부 그렇게 끝났습니다. 나중에 세어 보니
+    브레인 콜 8개 중 <b>1개</b>, 70분 중 <b>12분</b>만 쓴 상태였습니다. 게임
+    난이도와는 아무 상관이 없었습니다. 포기 지점이 여섯 군데였고, 플래너는 두
+    게임에는 존재하지도 않는 액션에 하드코딩돼 있었으며, 사용량 한도 거절을
+    "모델을 잘못 썼다"와 같은 것으로 취급하고 있었습니다.</p>
+  </div>
+
+  <div class="stop"><b>L434 — 모델을 채택하기 전에 시간이 다함.</b> 정당합니다.</div>
+  <div class="stop"><b>L464 — 브레인 예산을 다 쓰고도 채택된 모델이 없음.</b>
+    정당합니다. 다만 콜 하나의 실패는 <i>치명적이지 않습니다</i> — 그 에러를
+    다음 프롬프트에 실어 계속합니다.</div>
+  <div class="stop"><b>L501 — 목표 추론이 예산을 다 쓰고도 계획을 못 냄.</b>
+    이건 첫 제안의 <b>정상 경로</b>이지 오류가 아닙니다. 계약이 브레인에게
+    "승리 조건을 모르면 <span class="fn">is_goal</span>을 False로 두라"고
+    명시하고, 브레인은 그걸 지킵니다.</div>
+  <div class="stop"><b>L585 — 탐색을 하고도 여전히 계획이 없음.</b> 승리 조건을
+    아직 못 찾은 레벨의 정직한 상태입니다.</div>
+  <div class="stop"><b>L602 — 액션 예산 초과</b>
+    (<span class="fn">BudgetExceeded</span>, 사람 기준선의 5배). 정당합니다.</div>
+  <div class="stop"><b>L625 — 게이트 실행이 클리어에 실패했고 예산도 소진.</b>
+    예산이 남아 있으면 멈추지 않고 수리 후 재계획합니다.</div>
+  <div class="stop"><b>L671, L696 — 수리 실패 후의 탐색도 아무것도 못 건짐.</b></div>
+
+  <h2 id="budgets">각 예산이 실제로 사는 것</h2>
+  <table>
+    <tr><th>플래그</th><th>무엇을 한정하나</th><th>메모</th></tr>
+    <tr><td class="fn">--budget-x</td><td>레벨당 실제 액션 수, 사람 기준선의 배수</td>
+        <td>5가 공식 리더보드 컷오프</td></tr>
+    <tr><td class="fn">--max-brain</td><td>레벨당 브레인 콜 수</td>
+        <td>사용량 한도 거절은 <b>이걸 소비하지 않습니다</b> — 기다렸다 재시도</td></tr>
+    <tr><td class="fn">--minutes</td><td>실행 전체의 벽시계 시간</td>
+        <td>이제 <b>콜 하나 안까지</b> 닿습니다. 행(hang)에 걸린
+        <span class="fn">claude -p</span>가 이걸 무력화하곤 했습니다</td></tr>
+    <tr><td class="fn">--explore-budget</td><td>탐색 라운드당 실제 액션 수</td>
+        <td>계획이 없을 때만 쓰입니다</td></tr>
+  </table>
+
+  <p>비용을 세는 방식도 짚어둘 필요가 있습니다.
+  <span class="fn">ENGINE_STEPS</span>는 특정 레벨에 도달하기 위한 재생까지
+  포함한 <b>진짜 비용</b>을 셉니다. 예전에 "프로브 액션 36회"라고 적었던 것은
+  거짓말에 가까웠습니다. 프로브마다 세션을 다시 열고 있었고, 실제 비용은
+  1,572였습니다.</p>
+
+  <h2 id="data">실행이 남기는 것 — 저널과 데이터셋은 다르다</h2>
+  <p>두 개의 산출물이 있고, 이 둘은 같은 것이 아닙니다.</p>
+
+  <p><b>저널</b>은 append-only 감사 기록이며 <b>발견하는 순간에</b> 쓰입니다.
+  실패도, 빈 탐색도, 막다른 길도 <b>일부러</b> 담습니다. 예전에 시각화 페이지들이
+  대화 맥락에서 사후에 서사를 재구성한 적이 있는데, 맥락이 사라지자 그 서사도
+  같이 사라졌습니다. 그래서 지금은 사후 재구성을 하지 않습니다.</p>
+
+  <p><b>데이터셋</b>은 저널에서 파생되지만 그 성질을 물려받으면 안 됩니다.
+  목표가 빈 액션 리스트인 예시는 모델에게 "이 화면에서는 아무것도 하지 마라"를
+  가르칩니다. 실패는 기록되어야 하지만, 학습 목표가 되어서는 안 됩니다.</p>
+
+  <table>
+    <tr><th>타입</th><th>입력</th><th>목표</th></tr>
+    <tr><td class="fn">predict</td><td>프레임 + 액션</td><td>다음 프레임을 셀 diff로</td></tr>
+    <tr><td class="fn">probe</td><td>프레임 + 열린 질문</td><td>어떤 액션을 썼고 무엇이 돌아왔나</td></tr>
+    <tr><td class="fn">analyse</td><td>프레임</td><td>화면 위의 개체들</td></tr>
+    <tr><td class="fn">plan</td><td>프레임</td><td>그 레벨을 클리어하는 액션 열</td></tr>
+    <tr><td class="fn">repair</td><td>모델 소스 + 짚힌 셀</td><td>고쳐 쓴 소스, 그리고 그 이유</td></tr>
+  </table>
+
+  <p><span class="fn">repair</span>는 모델을 <i>쓰는</i> 법을 가르치는 유일한
+  타입이고 가장 희소합니다. 그리고 <b>거절된 제안 하나하나가 공짜로 이걸
+  만듭니다</b> — 검증기가 방금 셀 단위로 "이 소스의 무엇이 왜 틀렸는지" 말했고,
+  다음에 채택된 제안이 바로 그 답이기 때문입니다.</p>
+
+  <h2 id="now">지금 실제 상태</h2>
+  <p>2026년 7월 28일 기준, exporter가 "아무것도 가르치지 않는 쌍"을 버리도록
+  고친 뒤의 숫자입니다.</p>
+
+  <div class="flow"><span class="num">                analyse   plan   predict   probe   repair    합계</span>
+<span class="num">주장했던 값          59     47       251    1645        9    2011</span>
+<span class="num">실제                 15     15       251     200        0     481</span></div>
+
+  <p><b>repair가 0입니다.</b> 아홉 개 모두 반증을 막연한 불평보다 낫게 만들어주는
+  <b>짚힌 셀</b>이 비어 있었고, 그중 다섯은 반증을 엉뚱한 author 항목과 짝지어
+  놓은 것이었습니다 — 목표 설명이 "증거 16런에서 제안된 모델" 같은 정형 문구인
+  항목과요. 예전에 "버그의 해법은 아무것도 안 하는 것"을 가르치던 그 짝짓기
+  버그가 새 옷을 입고 남아 있었습니다.</p>
+
+  <p>버린 것은 전부 <span class="fn">&lt;게임&gt;.gaps.json</span>에 사유와 함께
+  기록됩니다. 숫자가 조용히 좋아지지 못하게 하기 위해서입니다.</p>
+
+  <p>이제 루프는 거절된 제안을 <b>그 소스와 함께</b> 저널에 남깁니다. 이것이
+  <span class="fn">repair</span>를 만들어내는 장치이고, KA59가 그 장치를 갖춘
+  상태로 도는 첫 게임입니다.</p>
+
+  <h2 id="repro">재현</h2>
+  <pre>cd code/ARC-AGI-3-Agents
+uv run python scripts/wm/autosolve.py --game ka59 --levels 5 --minutes 200 \
+    --max-brain 12 --budget-x 5 --brain-timeout 600
+uv run python scripts/wm/export_dataset.py --game ka59
+uv run pytest tests/unit/test_wm_autosolve_budget.py tests/unit/test_wm_dataset_quality.py</pre>
+
+</div>
+</main>
+
+<footer><div class="col">동역학은 게임 소스에서 읽어오지 않습니다. 엔진을 한 스텝씩
+밟고 프레임을 비교해서 얻습니다. 그리고 이 페이지의 모든 주장은 테스트로
+확인되었거나, 설명하는 그 파일에서 직접 추출한 값입니다.</div></footer>
+
+</body>
+</html>
